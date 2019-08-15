@@ -29,8 +29,8 @@ const initialState = {
       case LOGOUT_USER:
         return initialState
       case SET_USER: 
-        const {email} = payload
-        return {...state, email}
+        const {email, user_id, budget_id} = payload
+        return {...state, email, user_id, budget_id}
       default: return state
     }
   }

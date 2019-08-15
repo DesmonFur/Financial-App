@@ -6,7 +6,6 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 import {connect} from 'react-redux'
 import {setUser} from './ducks/reducer'
-
 export class App extends Component {
 
   state = {

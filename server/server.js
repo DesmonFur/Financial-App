@@ -5,7 +5,7 @@ const app = express()
 const session = require('express-session')
 const {CONNECTION_STRING, PORT, SESSION_SECRET} = process.env 
 const authCtrl = require('./controllers/authController')
-
+const budgCtrl = require('./controllers/budgetController')
 app.use(express.json())
 
 app.use(session({
@@ -18,6 +18,7 @@ app.use(session({
 }))
 
 app.get('/auth/session', authCtrl.getSession)
+app.get('/api/getAllData/:user_id', budgCtrl.getAllData)
 app.post('/auth/register', authCtrl.register )
 app.post('/auth/login', authCtrl.login)
 app.delete('/auth/logout', authCtrl.logout)
