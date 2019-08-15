@@ -4,19 +4,18 @@ import routes from "./routes";
 import Nav from "./components/Nav/Nav";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import {connect} from 'react-redux'
-import {setUser} from './ducks/reducer'
+import { connect } from "react-redux";
+import { setUser } from "./ducks/reducer";
 export class App extends Component {
-
-  state = {
-    email: ''
-  }
-
   componentDidMount() {
     axios.get("/auth/session").then(res => {
-      const {email} = this.state
-      this.props.setUser(res.data);
-      console.log(res.data)
+      try {
+        this.props.setUser(res.data.user);
+        console.log("USER SESSION", res.data);
+      } catch {
+        console.log("USER NEEDS TO LOG IN");
+        this.props.history.push("/");
+      }
     });
   }
 
@@ -25,14 +24,7 @@ export class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <div>
-            {location.pathname === "/" 
-             ? (
-              <> </>
-            ) : (
-              <Nav />
-            )}
-          </div>
+          <div>{location.pathname === "/" ? <> </> : <Nav />}</div>
         </header>
         {routes}
       </div>
@@ -40,5 +32,7 @@ export class App extends Component {
   }
 }
 
-export default  connect(null,
-  {setUser})(withRouter(App));
+export default connect(
+  null,
+  { setUser }
+)(withRouter(App));

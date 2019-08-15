@@ -18,8 +18,8 @@ app.use(session({
 }))
 
 app.get('/auth/session', authCtrl.getSession)
-app.get('/api/getAllData/:user_id', budgCtrl.getAllData)
-app.post('/auth/register', authCtrl.register )
+app.get('/api/getUserBudgets/:user_id', budgCtrl.getUserBudgets)
+app.post('/auth/register', authCtrl.register)
 app.post('/auth/login', authCtrl.login)
 app.delete('/auth/logout', authCtrl.logout)
 

@@ -39,14 +39,20 @@ export class LandingPage extends Component {
   };
 
   login = () => {
-    const { emailInput: email, passwordInput: password } = this.state;
-    axios.post("/auth/login", { email, password }).then(res => {
-      console.log(res.data);
-      console.log(res.data.user);
-      const { email, password } = res.data.user;
-      this.props.setUser({ email, password });
+   try { let { emailInput: email, passwordInput: password } = this.state;
+    email = email.toLowerCase()
+    axios.post("/auth/login", {email, password }).then(res => {
+      console.log('SESSION',res.data);
+      console.log('USERBUDGET',res.data.budgets)
+      console.log('USERINFO',res.data.user);
+      const { email,budgets,user_id } = res.data.user;
+      this.props.setUser({ email, budgets,user_id });
       this.props.history.push("/dashboard");
-    });
+    })
+  }
+    catch {
+      alert('Account not found, click register below')
+    }
   };
 
   render() {

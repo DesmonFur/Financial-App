@@ -15,7 +15,7 @@ export class Nav extends Component {
     const {email, user_id} = this.props
     return (
       <div>
-      <img src="expense" alt=""/>
+      {/* <img src="" alt=""/> */}
         <span>Welcome {email}</span>
         <button onClick={this.logout}>Logout</button>
       </div>
