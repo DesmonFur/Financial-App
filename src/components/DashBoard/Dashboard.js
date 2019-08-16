@@ -2,20 +2,48 @@ import React, { Component } from "react";
 import AllBudgets from "../AllBudgets/AllBudgets";
 import OneBudget from "../OneBudget/OneBudget";
 import { Link, Switch, Route } from "react-router-dom";
-import {connect} from 'react-redux'
+import { connect } from "react-redux";
+import axios from "axios";
+import { Container } from "./DashboardStyle";
+import {setUser} from '../../ducks/reducer'
 export class Dashboard extends Component {
-  
   state = {
     budgets: []
+  };
+
+  deleteBudget = budget_id => {
+    console.log(this.state.budgets);
+    console.log(this.props.user_id);
+    const { user_id } = this.props;
+    axios.delete(`/api/deleteBudget/${budget_id}/${user_id}`).then(
+      axios.get(`/api/budgets/${user_id}`).then(res => {
+        console.log(res.data);
+        this.setState({
+          budgets: res.data
+        });
+      })
+    ).catch(err => alert('failled to delete'))
+  };
+
+
+
+  componentDidMount() {
+    const {email, user_id,budgets } = this.props;
+    axios.get(`/api/getUserBudgets/${user_id}`).then(res => {
+      this.setState({
+        budgets: res.data
+      });
+    });
+    this.props.setUser({email,user_id,budgets})
   }
 
-  componentDidMount(){
-    console.log(this.props)
-  }
 
   render() {
-    console.log(this.props)
-    const {budgets} = this.props
+    // console.log(this.props)
+    // console.log(this.state.budgets);
+    // console.log(this.props.budgets);
+    // const { budgets } = this.props;
+    const { budgets } = this.state;
     return (
       <div>
         <h1>Dashboard</h1>
@@ -26,28 +54,29 @@ export class Dashboard extends Component {
           <Route exact path="/dashboard/allbudgets" component={AllBudgets} />
           <Route exact path="/dashboard/onebudget" component={OneBudget} />
         </Switch>
-
+      
         <Link to="/dashboard/allbudgets">
-          <button>Budget</button>
+          <button>All Budgets</button>
         </Link>
-        <Link to="/dashboard/onebudget">
-          <button>Budget</button>
-        </Link>
-        {budgets.map(budget => (
-          <AllBudgets 
-          key={budget.budget_id}
-          budget_id={budget.budget_id}
-          budget_name={budget.budget_name}
-          budget_balance={budget.budget_balance}
-          />
-        ))}
+        <Container>
+          {budgets.map(budget => (
+            <AllBudgets
+              key={budget.budget_id}
+              budget_id={budget.budget_id}
+              budget_name={budget.budget_name}
+              budget_balance={budget.budget_balance}
+              delete_budget={this.deleteBudget}
+              budget={budget}
+            />
+          ))}
+        </Container>
       </div>
     );
   }
 }
-function mapStateToProps(reduxState){
-const {email,user_id, budgets} = reduxState;
-return {email,user_id,budgets}
+function mapStateToProps(reduxState) {
+  const { email, user_id, budgets } = reduxState;
+  return { email, user_id, budgets };
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, {setUser})(Dashboard);

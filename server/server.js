@@ -19,9 +19,12 @@ app.use(session({
 
 app.get('/auth/session', authCtrl.getSession)
 app.get('/api/getUserBudgets/:user_id', budgCtrl.getUserBudgets)
+app.get('/api/budgets/:user_id', budgCtrl.getBudgets)
 app.post('/auth/register', authCtrl.register)
 app.post('/auth/login', authCtrl.login)
+app.post('/api/createBudget', budgCtrl.createBudget)
 app.delete('/auth/logout', authCtrl.logout)
+app.delete('/api/deleteBudget/:budget_id/:user_id', budgCtrl.deleteBudget)
 
 
 

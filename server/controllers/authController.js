@@ -47,7 +47,6 @@ module.exports = {
       return res.status(200).send({
         message: "Logged in",
         user: req.session.user,
-        budgets: user_budgets,
         loggedIn: true
       });
     }

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { setUser } from "../../ducks/reducer";
 export class Nav extends Component {
   logout = () => {
     axios.delete("/auth/logout").then(() => {
@@ -11,8 +10,8 @@ export class Nav extends Component {
   };
 
   render() {
-    console.log(this.props);
-    const {email, user_id} = this.props
+    // console.log(this.props);
+    const {email} = this.props
     return (
       <div>
       {/* <img src="" alt=""/> */}
