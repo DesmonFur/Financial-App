@@ -2,7 +2,15 @@ import React, { Component } from "react";
 import axios from "axios";
 import { setUser } from "../../ducks/reducer";
 import { connect } from "react-redux";
-import {Title,Form,Button,SignUp,Annotation,Wrapper,Container} from './Landing'
+import {
+  Title,
+  Form,
+  Button,
+  SignUp,
+  Annotation,
+  Wrapper,
+  Container
+} from "./Landing";
 export class LandingPage extends Component {
   state = {
     emailInput: "",
@@ -43,11 +51,11 @@ export class LandingPage extends Component {
       let { emailInput: email, passwordInput: password } = this.state;
       email = email.toLowerCase();
       axios.post("/auth/login", { email, password }).then(res => {
-        console.log("SESSION", res.data);
+        // console.log("SESSION", res.data);
         // console.log("USERBUDGET", res.data.budgets);
-        console.log("USERINFO", res.data.user);
+        // console.log("USERINFO", res.data.user);
         const { email, budgets, user_id } = res.data.user;
-        console.log('budgets',budgets)
+        // console.log("budgets", budgets);
         this.props.setUser({ email, budgets, user_id });
         this.props.history.push("/dashboard");
       });
@@ -101,7 +109,6 @@ export class LandingPage extends Component {
     );
   }
 }
-
 
 export default connect(
   null,

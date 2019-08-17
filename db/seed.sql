@@ -16,7 +16,7 @@ CREATE TABLE budgets (
 CREATE TABLE expenses(
   expenses_id SERIAL PRIMARY KEY,
   budget_id INTEGER REFERENCES budgets(budget_id),
-  "Rent/Mortgage" INTEGER,
+  Rent INTEGER Mortgage INTEGER,
   Electric INTEGER,
   Water INTEGER,
   Internet INTEGER,
@@ -26,7 +26,7 @@ CREATE TABLE expenses(
   Home_Maintenance INTEGER,
   Medical INTEGER,
   Clothing INTEGER,
-  "Gifts/Giving" INTEGER,
+  Gifts INTEGER,
   Computer_Replacement INTEGER,
   Student_Loan INTEGER,
   Auto_Loan INTEGER,
@@ -48,7 +48,7 @@ CREATE TABLE deposits(
 INSERT INTO
   user_info(username, email)
 VALUES
-  ('Des', 'des@mond.com'),
+  ('des', 'des'),
   ('Einstein', 'pellet@zer.com');
 INSERT INTO
   budgets(user_id, budget_name, budget_balance)
@@ -60,7 +60,7 @@ VALUES
 INSERT INTO
   expenses(
     budget_id,
-    "Rent/Mortgage",
+    Rent_Or_Mortgage,
     Electric,
     Water,
     Internet,
@@ -70,7 +70,7 @@ INSERT INTO
     Home_Maintenance,
     Medical,
     Clothing,
-    "Gifts/Giving",
+    Gifts,
     Computer_Replacement,
     Student_Loan,
     Auto_Loan,
@@ -106,12 +106,12 @@ VALUES(
     500,
     500,
     '04/09/2002',
-    'Where I from I rich'
+    'SO FRESH AND SO CLEAN CLEAN'
   );
 INSERT INTO
   expenses(
     budget_id,
-    "Rent/Mortgage",
+    Rent_Or_Mortgage,
     Electric,
     Water,
     Internet,
@@ -121,7 +121,58 @@ INSERT INTO
     Home_Maintenance,
     Medical,
     Clothing,
-    "Gifts/Giving",
+    Gifts,
+    Computer_Replacement,
+    Student_Loan,
+    Auto_Loan,
+    Vacation,
+    Fitness,
+    Education,
+    dining_Out,
+    Gaming,
+    Fun_Money,
+    dates,
+    note
+  )
+VALUES(
+    1,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    '04/09/2002',
+    'FINDING MY WAY DOWNTOWN'
+  );
+INSERT INTO
+  expenses(
+    budget_id,
+    Rent_Or_Mortgage,
+    Electric,
+    Water,
+    Internet,
+    Groceries,
+    Transportation,
+    Auto_Maintenance,
+    Home_Maintenance,
+    Medical,
+    Clothing,
+    Gifts,
     Computer_Replacement,
     Student_Loan,
     Auto_Loan,
@@ -156,110 +207,8 @@ VALUES(
     500,
     500,
     500,
-    '04/09/2002',
-    'Where I from I rich'
-  );
-INSERT INTO
-  expenses(
-    budget_id,
-    "Rent/Mortgage",
-    Electric,
-    Water,
-    Internet,
-    Groceries,
-    Transportation,
-    Auto_Maintenance,
-    Home_Maintenance,
-    Medical,
-    Clothing,
-    "Gifts/Giving",
-    Computer_Replacement,
-    Student_Loan,
-    Auto_Loan,
-    Vacation,
-    Fitness,
-    Education,
-    dining_Out,
-    Gaming,
-    Fun_Money,
-    dates,
-    note
-  )
-VALUES(
-    3,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    '04/09/2002',
-    'Where I from I rich'
-  );
-INSERT INTO
-  expenses(
-    budget_id,
-    "Rent/Mortgage",
-    Electric,
-    Water,
-    Internet,
-    Groceries,
-    Transportation,
-    Auto_Maintenance,
-    Home_Maintenance,
-    Medical,
-    Clothing,
-    "Gifts/Giving",
-    Computer_Replacement,
-    Student_Loan,
-    Auto_Loan,
-    Vacation,
-    Fitness,
-    Education,
-    dining_Out,
-    Gaming,
-    Fun_Money,
-    dates,
-    note
-  )
-VALUES(
-    4,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    '10/09/2012',
-    'Where I from I rich'
+    '04/04/1904',
+    'On the grind outchere grinding'
   );
 INSERT INTO
   deposits(budget_id, deposit_amount, note)

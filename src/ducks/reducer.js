@@ -8,6 +8,7 @@ const initialState = {
 // ACTION CONSTANTS
 const SET_USER = "SET_USER";
 const LOGOUT_USER = "LOGOUT_USER";
+
 // ACTION BUILDERS
 export function setUser(user) {
   return {
