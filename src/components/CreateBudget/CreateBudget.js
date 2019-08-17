@@ -40,9 +40,9 @@ export class createBudget extends Component {
     return (
       <div>
         <h1>Create Budget </h1>
-        <h3>Budget_Name</h3>
+        <h3>Budget Name</h3>
         <input onChange={this.handleChange} type="text" name="budget_name" />
-        <h3>Budget_Balance</h3>
+        <h3>Budget Balance</h3>
         <input onChange={this.handleChange} type="text" name="budget_balance" />
         <Link to="/dashboard">
           <Button onClick={this.postBudget}>Create Budget</Button>

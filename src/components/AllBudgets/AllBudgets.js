@@ -18,6 +18,9 @@ export class AllBudgets extends Component {
         <button onClick={() => this.props.delete_budget(this.props.budget_id)}>
           delete
         </button>
+        <button onClick={() => this.props.pick_budget(this.props.budget_id)}>
+          CHOOSE BUDGET
+        </button>
         {/* </Link> */}
         {/* <h2>{budget_balance}</h2> */}
       </Container>

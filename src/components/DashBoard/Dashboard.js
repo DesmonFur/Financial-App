@@ -25,6 +25,12 @@ export class Dashboard extends Component {
     ).catch(err => alert('failled to delete'))
   };
 
+  pickBudget = budget_id => {
+    const {user_id} = this.props
+    axios.get(`/api/specificBudget/${budget_id}`).then(res => {
+      console.log(res.data)
+    })
+  }
 
 
   componentDidMount() {
@@ -66,6 +72,7 @@ export class Dashboard extends Component {
               budget_name={budget.budget_name}
               budget_balance={budget.budget_balance}
               delete_budget={this.deleteBudget}
+              pick_budget={this.pickBudget}
               budget={budget}
             />
           ))}
