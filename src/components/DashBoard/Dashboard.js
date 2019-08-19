@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import AllBudgets from "../AllBudgets/AllBudgets";
+import AllBudgets from "../AllBudgets/AllBudgets.js";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -86,6 +86,7 @@ export class Dashboard extends Component {
       />
     ));
 
+    console.log(props);
     return (
       <div>
         <h1>Dashboard</h1>
@@ -102,14 +103,8 @@ export class Dashboard extends Component {
 
         <button onClick={this.getAllBudgets}> AllBudgets </button>
         <button onClick={this.toggle}>false</button>
-        {props === true ? (
-          <Container>{mappedBudgets}</Container>
-        ) : (
-         <div>
 
-           {mappedBudgets}
-         </div>
-        )}
+        <Container>{mappedBudgets}</Container>
       </div>
     );
   }
