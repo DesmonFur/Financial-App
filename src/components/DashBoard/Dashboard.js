@@ -103,7 +103,6 @@ export class Dashboard extends Component {
 
         <button onClick={this.getAllBudgets}> AllBudgets </button>
         <button onClick={this.toggle}>false</button>
-
         <Container>{mappedBudgets}</Container>
       </div>
     );

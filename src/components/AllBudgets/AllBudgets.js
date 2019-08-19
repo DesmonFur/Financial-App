@@ -4,21 +4,30 @@ import { withRouter } from "react-router-dom";
 export class AllBudgets extends Component {
   state = {
     budgets: [],
-    props: true,
+    editing: true,
     budget_balance: this.props.budget_balance
   };
+
+  editing = () => {
+  const {editing} = this.state 
+    this.setState({
+      editing: !editing
+    })
+  }
+
 
   balance = () => {
     const {budget_balance} = this.state 
     console.log(this.props.budget)
     this.setState({
-      budget_balance: budget_balance - this.props.budget.auto_loan,
       budget_balance: budget_balance - this.props.budget.auto_loan
     })
   }
   render() {
     // console.log(this.props);
-    const { budget_name, budget_balance, budget } = this.props;
+    const { budget_name, budget_balance,
+       budget } = this.props;
+    const {editing} = this.state 
 
     return (
       <div>
@@ -32,12 +41,13 @@ export class AllBudgets extends Component {
         <button onClick={() => this.props.pick_budget(this.props.budget_id)}>
           CHOOSE BUDGET
         </button>
+        <button onClick={this.editing}>Editing</button>
         <Container>
-          <h1>
+         { editing ? <h1>
             {budget.rent_or_mortgage
               ? `Rent/Mortgage  ${budget.rent_or_mortgage}`
-              : ""}
-          </h1>
+              : ""} 
+          </h1> : <input type='number' defaultValue={budget.rent_or_mortgage} />}
           <h1>{budget.electric ? `Electric  ${budget.electric}` : ""}</h1>
           <h1>{budget.water ? `Water  ${budget.water}` : ""}</h1>
           <h1>{budget.internet ? `Internet  ${budget.internet}` : ""}</h1>
@@ -87,10 +97,11 @@ export class AllBudgets extends Component {
 
 const Container = styled.div`
   /* display: flex; */
-  border: 3px solid red;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  /* flex-direction: row; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* flex-wrap: 1; */
+  border: 1px solid red 
   /* background: #282c34; */
 `;
 

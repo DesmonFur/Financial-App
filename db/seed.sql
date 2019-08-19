@@ -16,7 +16,7 @@ CREATE TABLE budgets (
 CREATE TABLE expenses(
   expenses_id SERIAL PRIMARY KEY,
   budget_id INTEGER REFERENCES budgets(budget_id),
-  Rent INTEGER Mortgage INTEGER,
+  rent_or_mortgage INTEGER,
   Electric INTEGER,
   Water INTEGER,
   Internet INTEGER,
@@ -46,10 +46,10 @@ CREATE TABLE deposits(
   note VARCHAR(9000)
 );
 INSERT INTO
-  user_info(username, email)
+  user_info(email)
 VALUES
-  ('des', 'des'),
-  ('Einstein', 'pellet@zer.com');
+  ('des'),
+  ('Einstein');
 INSERT INTO
   budgets(user_id, budget_name, budget_balance)
 VALUES
@@ -84,7 +84,7 @@ INSERT INTO
     note
   )
 VALUES(
-    1,
+    3,
     500,
     500,
     500,
@@ -238,3 +238,4 @@ FROM
   JOIN deposits d ON b.budget_id = d.budget_id
 WHERE
   u.user_id = 1
+  
