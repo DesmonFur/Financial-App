@@ -83,6 +83,7 @@ export class Dashboard extends Component {
         delete_budget={this.deleteBudget}
         pick_budget={this.pickBudget}
         budget={budget}
+        expense_id={budget.expenses_id}
       />
     ));
 
@@ -103,7 +104,9 @@ export class Dashboard extends Component {
 
         <button onClick={this.getAllBudgets}> AllBudgets </button>
         <button onClick={this.toggle}>false</button>
+        
         <Container>{mappedBudgets}</Container>
+
       </div>
     );
   }
