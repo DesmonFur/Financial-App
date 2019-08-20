@@ -2,17 +2,44 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 export class OneBudget extends Component {
+  state = {
+    editing: false
+  };
+
+  edit = () => {
+    const { editing } = this.state;
+    this.setState({
+      editing: !editing
+    });
+  };
   render() {
     const { keys, handleChange } = this.props;
+    const { editing } = this.state;
     return (
       <Budge>
-        <h1>{`Rent/Mortgage $${keys.rent_or_mortgage}`}</h1>
-        <input
+        <h1>
+          {!editing ? (
+            <h1 onClick={this.edit}>{`Rent/Mortgage $${keys.rent_or_mortgage}`}</h1>
+          ) : (
+            <>
+              <p onDoubleClick={this.edit}>{`Rent/Mortage`}
+              {/* <p onClick={this.edit}>{`${keys.rent_or_mortgage}`}</p> */}
+              <input
+                onChange={e => handleChange(e)}
+                type="number"
+                name="rent_or_mortgage"
+                defaultValue={keys.rent_or_mortgage}
+                />{" "}
+                </p>
+            </>
+          )}
+        </h1>
+        {/* <input
           onChange={e => handleChange(e)}
           type="number"
           name="rent_or_mortgage"
           // defaultValue={keys.rent_or_mortgage}
-        />
+        /> */}
         <h1>{`Electric  $${keys.electric}`}</h1>
         <input
           onChange={e => handleChange(e)}

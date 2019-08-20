@@ -36,6 +36,13 @@ export class AllBudgets extends Component {
     };
   }
 
+  dynamic = () => {
+    const {budget_balance, gaming} = this.state
+    this.setState({
+      budget_balance: budget_balance - gaming
+    });
+  };
+
   total = () => {
     let array = [];
     const { budget_balance } = this.state;
@@ -175,15 +182,15 @@ export class AllBudgets extends Component {
       <div>
         <Button onClick={this.updateExpenses}>POST UPDATE TO EXPENSES</Button>
 
-        <h1>{budget_name}</h1>
-        <h1 onClick={this.balance}>{this.state.budget_balance}</h1>
+        <h1> {budget_name}</h1>
+        <h1 onClick={this.balance}> Balance:{this.state.budget_balance}</h1>
         <button onClick={() => this.props.delete_budget(this.props.budget_id)}>
           delete
         </button>
-        <button onClick={() => this.props.pick_budget(this.props.budget_id)}>
+        <Button onClick={() => this.props.pick_budget(this.props.budget_id)}>
           CHOOSE BUDGET
-        </button>
-        <button onClick={this.editing}>Editing</button>
+        </Button>
+        <Button onClick={this.editing}>Editing</Button>
         <button onClick={this.getExpensesProps}> GET EXPENSES PROPS </button>
         <button onClick={this.total}>CLICK TO REDUCE</button>
         {mapped}
