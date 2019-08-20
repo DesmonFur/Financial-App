@@ -1,26 +1,31 @@
 import React, { Component } from "react";
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export class OneBudget extends Component {
   render() {
-    console.log(this.props);
     const { keys, handleChange } = this.props;
     return (
       <Budge>
-        <h1>Hallo</h1>
         <h1>{`Rent/Mortgage $${keys.rent_or_mortgage}`}</h1>
         <input
           onChange={e => handleChange(e)}
           type="number"
           name="rent_or_mortgage"
-          defaultValue={keys.rent_or_mortgage}
+          // defaultValue={keys.rent_or_mortgage}
         />
         <h1>{`Electric  $${keys.electric}`}</h1>
         <input
           onChange={e => handleChange(e)}
           type="number"
           name="electric"
-          defaultValue={keys.electric}
+          // defaultValue={keys.electric}
+        />
+        <h1>{`Water  $${keys.water}`}</h1>
+        <input
+          onChange={e => handleChange(e)}
+          type="number"
+          name="water"
+          defaultValue={keys.water}
         />
         <h1>{`Internet  $${keys.internet}`}</h1>
         <input
@@ -54,7 +59,7 @@ export class OneBudget extends Component {
         <input
           onChange={e => handleChange(e)}
           type="number"
-          name="house_maintenance"
+          name="home_maintenance"
           defaultValue={keys.home_maintenance}
         />
         <h1>{`Medical  $${keys.medical}`}</h1>
@@ -154,8 +159,8 @@ export class OneBudget extends Component {
 }
 
 const Budge = styled.div`
-display:flex;
-flex-direction: column;
-`
+  display: flex;
+  flex-direction: column;
+`;
 
 export default OneBudget;

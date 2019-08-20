@@ -17,7 +17,7 @@ export class Dashboard extends Component {
       .delete(`/api/deleteBudget/${budget_id}/${user_id}`)
       .then(
         axios.get(`/api/budgets/${user_id}`).then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           this.setState({
             budgets: res.data
           });
@@ -29,17 +29,13 @@ export class Dashboard extends Component {
   pickBudget = budget_id => {
     const { email, user_id, budgets, props } = this.props;
     axios.get(`/api/specificBudget/${budget_id}`).then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       this.setState({
         budgets: res.data
       });
     });
-
-    // this.props.history.push('/onebudget')
-    // this.props.setUser({ email, user_id, budgets });
   };
 
- 
   componentDidMount() {
     const { user_id } = this.props;
     axios.get(`/api/getUserBudgets/${user_id}`).then(res => {
@@ -70,12 +66,7 @@ export class Dashboard extends Component {
   };
 
   render() {
-    // console.log(this.props)
-    // console.log(this.state.budgets);
-    // console.log(this.props.budgets);
-    // const { budgets } = this.props;
     const { budgets, props } = this.state;
-    // console.log(props);
     let mappedBudgets = budgets.map(budget => (
       <AllBudgets
         key={budget.budget_id}
@@ -89,14 +80,14 @@ export class Dashboard extends Component {
       />
     ));
 
-    console.log(props);
+    // console.log(props);
     return (
       <div>
         <h1>Dashboard</h1>
         <Link to="/createBudget">
           <button> Create Budget</button>
         </Link>
-        
+
         <button onClick={this.getAllBudgets}> AllBudgets </button>
         <button onClick={this.toggle}>false</button>
 

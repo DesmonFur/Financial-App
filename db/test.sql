@@ -1,3 +1,5 @@
+INSERT INTO budgets (user_id,budget_name,budget_balance)
+VALUES ($23,$24,$25);
  
 INSERT INTO
   expenses(
@@ -49,8 +51,6 @@ VALUES(
    $22
   );
 
-INSERT INTO budgets (user_id,budget_name,budget_balance)
-VALUES ($23,$24,$25);
 
 SELECT * FROM budgets
 WHERE user_id = $23;

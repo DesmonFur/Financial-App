@@ -13,74 +13,6 @@ export class createBudget extends Component {
     expenses: []
   };
 
-  postExpenses = budget_id => {
-    // const { budget_id } = this.props;
-    const {
-      rent_or_mortgage,
-      electric,
-      water,
-      internet,
-      groceries,
-      transportation,
-      auto_maintenance,
-      home_maintenance,
-      medical,
-      clothing,
-      gifts,
-      computer_replacement,
-      student_loan,
-      auto_loan,
-      vacation,
-      fitness,
-      education,
-      dining_out,
-      gaming,
-      fun_money,
-      dates
-    } = this.state.expenses;
-
-    axios
-      .post(`/api/createexpenses/${budget_id}`, {
-        rent_or_mortgage,
-        electric,
-        water,
-        internet,
-        groceries,
-        transportation,
-        auto_maintenance,
-        home_maintenance,
-        medical,
-        clothing,
-        gifts,
-        computer_replacement,
-        student_loan,
-        auto_loan,
-        vacation,
-        fitness,
-        education,
-        dining_out,
-        gaming,
-        fun_money,
-        dates
-      })
-      .then(res => {
-        console.log(res.data);
-      });
-  };
-
-  postBudget = () => {
-    const { budget_balance, budget_name, budget_id } = this.state;
-    const { user_id, email, budgets } = this.props;
-    axios
-      .post("/api/createBudget", { user_id, budget_name, budget_balance })
-      .then(res => {
-        this.props.setUser({ email, user_id, budgets });
-        this.setState({
-          budget_id: res.data[res.data.length - 1].budget_id
-        });
-      });
-  };
-
   postEverything = () => {
     const { budget_balance, budget_name, budget_id } = this.state;
     const { user_id, email, budgets } = this.props;
@@ -111,28 +43,6 @@ export class createBudget extends Component {
 
     axios
       .post("/api/createBudget", {
-        budget_id,
-        rent_or_mortgage,
-        electric,
-        water,
-        internet,
-        groceries,
-        transportation,
-        auto_maintenance,
-        home_maintenance,
-        medical,
-        clothing,
-        gifts,
-        computer_replacement,
-        student_loan,
-        auto_loan,
-        vacation,
-        fitness,
-        education,
-        dining_out,
-        gaming,
-        fun_money,
-        dates,
         user_id,
         budget_name,
         budget_balance
@@ -142,31 +52,34 @@ export class createBudget extends Component {
         this.setState({
           budget_id: res.data[res.data.length - 1].budget_id
         });
-
+        console.log(res.data[res.data.length - 1].budget_id);
         axios
-          .post(`/api/createbudget/${res.data[res.data.length - 1].budget_id}`, {
-            rent_or_mortgage,
-            electric,
-            water,
-            internet,
-            groceries,
-            transportation,
-            auto_maintenance,
-            home_maintenance,
-            medical,
-            clothing,
-            gifts,
-            computer_replacement,
-            student_loan,
-            auto_loan,
-            vacation,
-            fitness,
-            education,
-            dining_out,
-            gaming,
-            fun_money,
-            dates
-          })
+          .post(
+            `/api/createexpenses/${res.data[res.data.length - 1].budget_id}`,
+            {
+              rent_or_mortgage,
+              electric,
+              water,
+              internet,
+              groceries,
+              transportation,
+              auto_maintenance,
+              home_maintenance,
+              medical,
+              clothing,
+              gifts,
+              computer_replacement,
+              student_loan,
+              auto_loan,
+              vacation,
+              fitness,
+              education,
+              dining_out,
+              gaming,
+              fun_money,
+              dates
+            }
+          )
           .then(res => {
             console.log(res.data);
           });
@@ -184,18 +97,15 @@ export class createBudget extends Component {
     console.log(this.state.expenses);
     return (
       <div>
-        <Button onClick={budget_id => this.postExpenses(this.state.budget_id)}>
-          POST SOME EXPESNSESS
-        </Button>
-
         <h1>Create Budget </h1>
         <h3>Budget Name</h3>
         <input onChange={this.handleChange} type="text" name="budget_name" />
         <h3>Budget Balance</h3>
         <input onChange={this.handleChange} type="text" name="budget_balance" />
         <Button onClick={this.postBudget}>Create Budget</Button>
-        <Button onClick={this.postEverything}> CREATE EVERYTHING</Button>
-        <Link to="/dashboard" />
+        <Link to="/dashboard">
+          <Button onClick={this.postEverything}> CREATE EVERYTHING</Button>
+        </Link>
       </div>
     );
   }

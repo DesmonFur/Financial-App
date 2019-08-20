@@ -28,9 +28,10 @@ app.delete('/api/deleteBudget/:budget_id/:user_id', budgCtrl.deleteBudget)
 app.get('/api/getexpenses/:expenses_id', budgCtrl.getExpenses)
 app.put('/api/updateexpenses/:expenses_id', budgCtrl.updateExpenses)
 
-app.post('/api/createbudget/:budget_id', budgCtrl.createBudget)
-// app.post('/api/createBudget', budgCtrl.createBudget)
-// app.post('/api/createexpenses/:budget_id', budgCtrl.createBudgetExpenses)
+app.post('/api/createBudget', budgCtrl.createBudget)
+app.post('/api/createexpenses/:budget_id', budgCtrl.createBudgetExpenses)
+
+// app.post('/api/createAll/:budget_id', budgCtrl.createAll)
 
 
 massive(CONNECTION_STRING).then(db =>{

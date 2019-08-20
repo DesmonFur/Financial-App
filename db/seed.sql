@@ -16,26 +16,26 @@ CREATE TABLE budgets (
 CREATE TABLE expenses(
   expenses_id SERIAL PRIMARY KEY,
   budget_id INTEGER REFERENCES budgets(budget_id),
-  rent_or_mortgage INTEGER,
-  Electric INTEGER,
-  Water INTEGER,
-  Internet INTEGER,
-  Groceries INTEGER,
-  Transportation INTEGER,
-  Auto_Maintenance INTEGER,
-  Home_Maintenance INTEGER,
-  Medical INTEGER,
-  Clothing INTEGER,
-  Gifts INTEGER,
-  Computer_Replacement INTEGER,
-  Student_Loan INTEGER,
-  Auto_Loan INTEGER,
-  Vacation INTEGER,
-  Fitness INTEGER,
-  Education INTEGER,
-  Dining_Out INTEGER,
-  Gaming INTEGER,
-  Fun_Money INTEGER,
+  rent_or_mortgage INTEGER  DEFAULT 0 ,
+  Electric INTEGER   DEFAULT 0,
+  Water INTEGER   DEFAULT 0,
+  Internet INTEGER   DEFAULT 0,
+  Groceries INTEGER   DEFAULT 0,
+  Transportation INTEGER   DEFAULT 0,
+  Auto_Maintenance INTEGER   DEFAULT 0,
+  Home_Maintenance INTEGER   DEFAULT 0,
+  Medical INTEGER   DEFAULT 0,
+  Clothing INTEGER   DEFAULT 0,
+  Gifts INTEGER   DEFAULT 0,
+  Computer_Replacement INTEGER   DEFAULT 0,
+  Student_Loan INTEGER   DEFAULT 0,
+  Auto_Loan INTEGER   DEFAULT 0,
+  Vacation INTEGER   DEFAULT 0,
+  Fitness INTEGER   DEFAULT 0,
+  Education INTEGER   DEFAULT 0,
+  Dining_Out INTEGER   DEFAULT 0,
+  Gaming INTEGER   DEFAULT 0,
+  Fun_Money INTEGER   DEFAULT 0,
   dates VARCHAR(9000),
   note VARCHAR(9000)
 );
@@ -229,13 +229,4 @@ SELECT
   *
 FROM
   deposits;
-SELECT
-  *
-FROM
-  budgets b
-  JOIN expenses e ON b.budget_id = e.budget_id
-  JOIN user_info u ON b.user_id = u.user_id
-  JOIN deposits d ON b.budget_id = d.budget_id
-WHERE
-  u.user_id = 1
   

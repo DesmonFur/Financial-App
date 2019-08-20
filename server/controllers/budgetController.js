@@ -165,7 +165,6 @@ module.exports = {
     const { user_id } = req.session.user;
     const { budget_id } = req.params;
     console.log("body", req.body);
-    console.log(req.params);
     const {
       budget_name,
       budget_balance,
@@ -191,7 +190,7 @@ module.exports = {
       fun_money,
       dates
     } = req.body;
-    const budget = db.create_user_budget([
+    const budget = db.test([
       budget_id,
       rent_or_mortgage,
       electric,

@@ -1,3 +1,5 @@
+DELETE FROM deposits 
+WHERE budget_id = $1;
 DELETE FROM expenses 
 WHERE budget_id = $1;
 DELETE FROM budgets 
