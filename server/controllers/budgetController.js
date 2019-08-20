@@ -149,14 +149,75 @@ module.exports = {
       dates,
       expenses_id
     ]);
-    console.log('req.params',expenses_id,'req.body',req.body)
+    console.log("req.params", expenses_id, "req.body", req.body);
     res.status(200).send(expenses);
   },
-  getExpenses: async (req,res) => {
-    const db = req.app.get('db')
-    const {expenses_id} = req.params
-    const expenses = await db.get_expenses([expenses_id])
+  getExpenses: async (req, res) => {
+    const db = req.app.get("db");
+    const { expenses_id } = req.params;
+    const expenses = await db.get_expenses([expenses_id]);
 
-    res.status(200).send(expenses)
+    res.status(200).send(expenses);
+  },
+
+  createAll: (req, res) => {
+    const db = req.app.get("db");
+    const { user_id } = req.session.user;
+    const { budget_id } = req.params;
+    console.log("body", req.body);
+    console.log(req.params);
+    const {
+      budget_name,
+      budget_balance,
+      rent_or_mortgage,
+      electric,
+      water,
+      internet,
+      groceries,
+      transportation,
+      auto_maintenance,
+      home_maintenance,
+      medical,
+      clothing,
+      gifts,
+      computer_replacement,
+      student_loan,
+      auto_loan,
+      vacation,
+      fitness,
+      education,
+      dining_out,
+      gaming,
+      fun_money,
+      dates
+    } = req.body;
+    const budget = db.create_user_budget([
+      budget_id,
+      rent_or_mortgage,
+      electric,
+      water,
+      internet,
+      groceries,
+      transportation,
+      auto_maintenance,
+      home_maintenance,
+      medical,
+      clothing,
+      gifts,
+      computer_replacement,
+      student_loan,
+      auto_loan,
+      vacation,
+      fitness,
+      education,
+      dining_out,
+      gaming,
+      fun_money,
+      dates,
+      user_id,
+      budget_name,
+      budget_balance
+    ]);
+    res.status(200).send(budget)
   }
 };

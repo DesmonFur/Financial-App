@@ -34,10 +34,12 @@ export class Dashboard extends Component {
         budgets: res.data
       });
     });
+
     // this.props.history.push('/onebudget')
     // this.props.setUser({ email, user_id, budgets });
   };
 
+ 
   componentDidMount() {
     const { user_id } = this.props;
     axios.get(`/api/getUserBudgets/${user_id}`).then(res => {
@@ -73,7 +75,7 @@ export class Dashboard extends Component {
     // console.log(this.props.budgets);
     // const { budgets } = this.props;
     const { budgets, props } = this.state;
-    console.log(props);
+    // console.log(props);
     let mappedBudgets = budgets.map(budget => (
       <AllBudgets
         key={budget.budget_id}
@@ -94,19 +96,11 @@ export class Dashboard extends Component {
         <Link to="/createBudget">
           <button> Create Budget</button>
         </Link>
-
-        <Link to="/onebudget">
-          <button>One budget</button>
-        </Link>
-        <Link to="/dashboard">
-          <button>dashboard</button>
-        </Link>
-
+        
         <button onClick={this.getAllBudgets}> AllBudgets </button>
         <button onClick={this.toggle}>false</button>
-        
-        <Container>{mappedBudgets}</Container>
 
+        <Container>{mappedBudgets}</Container>
       </div>
     );
   }

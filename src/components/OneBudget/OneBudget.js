@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import { Container } from "./DashboardStyle";
+import styled from 'styled-components'
+
 export class OneBudget extends Component {
   render() {
     console.log(this.props);
     const { keys, handleChange } = this.props;
     return (
-      <div>
-        <h1>{keys.rent_or_mortgage}</h1>
+      <Budge>
+        <h1>Hallo</h1>
+        <h1>{`Rent/Mortgage $${keys.rent_or_mortgage}`}</h1>
         <input
           onChange={e => handleChange(e)}
           type="number"
@@ -48,12 +50,12 @@ export class OneBudget extends Component {
           name="auto_maintenance"
           defaultValue={keys.auto_maintenance}
         />
-        <h1>{`house_maintenance  $${keys.house_maintenance}`}</h1>
+        <h1>{`home_maintenance  $${keys.home_maintenance}`}</h1>
         <input
           onChange={e => handleChange(e)}
           type="number"
           name="house_maintenance"
-          defaultValue={keys.house_maintenance}
+          defaultValue={keys.home_maintenance}
         />
         <h1>{`Medical  $${keys.medical}`}</h1>
         <input
@@ -139,23 +141,21 @@ export class OneBudget extends Component {
           name="fun_money"
           defaultValue={keys.fun_money}
         />
-        <h1>{`Date  $${keys.dates}`}</h1>
+        <h1>{`Date:${keys.dates}`}</h1>
         <input
           onChange={e => handleChange(e)}
-          type="number"
+          type="text"
           name="dates"
           defaultValue={keys.dates}
         />
-        <h1>{`Electric  $${keys.electric}`}</h1>
-        <input
-          onChange={e => handleChange(e)}
-          type="number"
-          name="electric"
-          defaultValue={keys.electric}
-        />
-      </div>
+      </Budge>
     );
   }
 }
+
+const Budge = styled.div`
+display:flex;
+flex-direction: column;
+`
 
 export default OneBudget;

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 import OneBudget from ".././OneBudget/OneBudget";
+import CreateBudget from '../CreateBudget/CreateBudget'
 export class AllBudgets extends Component {
   constructor(props) {
     super(props);
@@ -36,13 +37,31 @@ export class AllBudgets extends Component {
   }
 
   getExpensesProps = () => {
-    const { expenses, electric, rent_or_mortgage } = this.state;
     const { expenses_id } = this.props.budget;
     axios.get(`/api/getexpenses/${expenses_id}`).then(res => {
       this.setState({
         expenses: res.data,
         rent_or_mortgage: res.data[0].rent_or_mortgage,
-        electric: res.data[0].electric
+        electric: res.data[0].electric,
+        electric: res.data[0].water,
+        internet: res.data[0].internet,
+        groceries: res.data[0].groceries,
+        transporation: res.data[0].transporation,
+        auto_maintenance: res.data[0].auto_maintenance,
+        home_maintenance: res.data[0].home_maintenance,
+        medical: res.data[0].medical,
+        clothing: res.data[0].clothing,
+        gifts: res.data[0].gifts,
+        computer_replacement: res.data[0].computer_replacement,
+        student_loan: res.data[0].student_loan,
+        auto_loan: res.data[0].auto_loan,
+        vacation: res.data[0].vacation,
+        fitness: res.data[0].fitness,
+        education: res.data[0].education,
+        dining_out: res.data[0].dining_out,
+        gaming: res.data[0].gaming,
+        fun_money: res.data[0].fun_money,
+        dates: res.data[0].dates
       });
       console.log(res.data);
     });
@@ -61,62 +80,6 @@ export class AllBudgets extends Component {
     });
     console.log(e.target.value);
   };
-
-  // updateExpenses = () => {
-  //   const {
-  //     expenses_id,
-  //     rent_or_mortgage,
-  //     electric,
-  //     water,
-  //     internet,
-  //     groceries,
-  //     transportation,
-  //     auto_maintenance,
-  //     home_maintenance,
-  //     medical,
-  //     clothing,
-  //     gifts,
-  //     computer_replacement,
-  //     student_loan,
-  //     auto_loan,
-  //     vacation,
-  //     fitness,
-  //     education,
-  //     dining_out,
-  //     gaming,
-  //     fun_money,
-  //     dates
-  //   } = this.state.expenses[0];
-  //   console.log(this.state.expenses)
-  //   axios
-  //     .put(`/api/updateexpenses/${expenses_id}`, {
-  //       expenses_id,
-  //       rent_or_mortgage,
-  //       electric,
-  //       water,
-  //       internet,
-  //       groceries,
-  //       transportation,
-  //       auto_maintenance,
-  //       home_maintenance,
-  //       medical,
-  //       clothing,
-  //       gifts,
-  //       computer_replacement,
-  //       student_loan,
-  //       auto_loan,
-  //       vacation,
-  //       fitness,
-  //       education,
-  //       dining_out,
-  //       gaming,
-  //       fun_money,
-  //       dates
-  //     })
-  //     .then(res => {
-  //       console.log(res.data);
-  //     });
-  // };
 
   updateExpenses = () => {
     const {
@@ -174,7 +137,7 @@ export class AllBudgets extends Component {
       });
   };
 
-  postExpenses() {
+  postExpenses = () => {
     const { budget_id } = this.props;
     const {
       rent_or_mortgage,
@@ -201,7 +164,7 @@ export class AllBudgets extends Component {
     } = this.props.budget;
 
     axios
-      .post("/api/createexpenses", {
+      .post(`/api/createexpenses/${budget_id}`, {
         rent_or_mortgage,
         electric,
         water,
@@ -228,184 +191,32 @@ export class AllBudgets extends Component {
         console.log(res.data);
       });
   }
+
   render() {
     // console.log(this.props);
     const { budget_name, budget_balance, budget } = this.props;
     const { editing, expenses } = this.state;
+    console.log(this.props.budget_id);
     // console.log(this.props.budget);
     // console.log(this.props.budget.expenses_id);
     console.log(this.state);
     // console.log(this.state.expenses);
-    let mapped = expenses.map(
-      keys => <OneBudget key={keys.expenses_id} 
+    let mapped = expenses.map(keys => (
+      <OneBudget
+        key={keys.expenses_id}
         keys={keys}
         handleChange={this.handleChange}
       />
-      //   return (
-      //     <div>
-      //       <h1>{keys.rent_or_mortgage}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="rent_or_mortgage"
-      //         defaultValue={keys.rent_or_mortgage}
-      //       />
-      //       <h1>{keys.electric}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="electric"
-      //         defaultValue={keys.electric}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //       <h1>{keys.water}</h1>
-      //       <input
-      //         onChange={e => this.handleChange(e)}
-      //         type="number"
-      //         name="water"
-      //         defaultValue={keys.water}
-      //       />
-      //     </div>
-      //   );
-      // }
-    );
+    ));
 
     return (
       <div>
+        {/* <CreateBudget budget_id={this.props.budget_id}
+        budget_id={this.props.budget_id}
+        /> */}
         <button onClick={this.updateExpenses}>POST UPDATE TO EXPENSES</button>
-        {/* <h1>{budget_id}</h1> */}
+        <button onClick={() => this.props.post_expenses(this.props.budget_id)}>POST</button>
+        {/* <h1>{budget_itd}</h1> */}
         {/* <Link to="/dashboard/onebudget"> */}
         <h1>{budget_name}</h1>
         <h1 onClick={this.balance}>{this.state.budget_balance}</h1>
