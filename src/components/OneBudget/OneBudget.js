@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 export class OneBudget extends Component {
   state = {
-    editing: false
+    editing: false,
+    budget_balance: this.props.budget_balance
   };
 
   edit = () => {
@@ -12,25 +14,42 @@ export class OneBudget extends Component {
       editing: !editing
     });
   };
-  render() {
-    const { keys, handleChange } = this.props;
+
+  updateBalance = () => {
     const { editing } = this.state;
+    const {budget_balance,budget_id} = this.props
+    console.log(budget_balance, budget_id)
+    this.setState({
+      editing: !editing
+    });
+    this.props.dynamic();
+    this.props.updateExpenses();
+ 
+  };
+
+  render() {
+    const { keys, handleChange, dynamic } = this.props;
+    const { editing } = this.state;
+    console.log('onebudget',this.state.budget_balance)
     return (
       <Budge>
         <h1>
           {!editing ? (
-            <h1 onClick={this.edit}>{`Rent/Mortgage $${keys.rent_or_mortgage}`}</h1>
+            <h1 onDoubleClick={this.edit}>{`Rent/Mortgage $${
+              keys.rent_or_mortgage
+            }`}</h1>
           ) : (
             <>
-              <p onDoubleClick={this.edit}>{`Rent/Mortage`}
-              {/* <p onClick={this.edit}>{`${keys.rent_or_mortgage}`}</p> */}
+              <p onDoubleClick={this.updateBalance}>
+                {`Rent/Mortage`}
+                {/* <p onClick={this.edit}>{`${keys.rent_or_mortgage}`}</p> */}
+              </p>
               <input
                 onChange={e => handleChange(e)}
                 type="number"
                 name="rent_or_mortgage"
                 defaultValue={keys.rent_or_mortgage}
-                />{" "}
-                </p>
+              />
             </>
           )}
         </h1>

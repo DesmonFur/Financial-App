@@ -34,7 +34,9 @@ export class Dashboard extends Component {
         budgets: res.data
       });
     });
+
   };
+
 
   componentDidMount() {
     const { user_id } = this.props;
@@ -59,10 +61,7 @@ export class Dashboard extends Component {
         budgets: res.data
       });
     });
-
-    this.setState({
-      props: !props
-    });
+    window.location.reload()
   };
 
   render() {

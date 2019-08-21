@@ -16,7 +16,7 @@ export class AllBudgets extends Component {
       auto_maintenance: 0,
       home_maintenance: 0,
       medical: 0,
-      clothing: 1,
+      clothing: 0,
       gifts: 0,
       computer_replacement: 0,
       student_loan: 0,
@@ -29,7 +29,7 @@ export class AllBudgets extends Component {
       fun_money: 0,
       budgets: [],
       editing: true,
-      budget_balance: this.props.budget_balance,
+      balance: this.props.budget_balance,
       dates: "",
       expenses: [],
       totalExpenses: 0
@@ -37,10 +37,14 @@ export class AllBudgets extends Component {
   }
 
   dynamic = () => {
-    const {budget_balance, gaming} = this.state
+    const { balance, rent_or_mortgage } = this.state;
+    const {budget_id} = this.props
+    let budget_balance = balance - rent_or_mortgage;
+    console.log(balance);
     this.setState({
-      budget_balance: budget_balance - gaming
+      balance: budget_balance
     });
+    axios.put('/api/updateBudget', {budget_balance,budget_id})
   };
 
   total = () => {
@@ -166,15 +170,20 @@ export class AllBudgets extends Component {
   };
 
   render() {
-    console.log("expenses total", this.state.totalExpenses);
     const { budget_name, budget_balance, budget } = this.props;
     const { editing, expenses } = this.state;
-
+    
+    console.log("expenses total", this.state.totalExpenses);
+    console.log('budget_balance', budget_balance)
     let mapped = expenses.map(keys => (
       <OneBudget
         key={keys.expenses_id}
         keys={keys}
         handleChange={this.handleChange}
+        dynamic={this.dynamic}
+        budget_balance={this.state.balance}
+        updateExpenses={this.updateExpenses}
+        budget_id={this.props.budget_id}
       />
     ));
 
@@ -182,17 +191,20 @@ export class AllBudgets extends Component {
       <div>
         <Button onClick={this.updateExpenses}>POST UPDATE TO EXPENSES</Button>
 
-        <h1> {budget_name}</h1>
-        <h1 onClick={this.balance}> Balance:{this.state.budget_balance}</h1>
-        <button onClick={() => this.props.delete_budget(this.props.budget_id)}>
+        <h1 onClick={this.dynamic}> {budget_name}</h1>
+        <h1 onClick={this.balance}>
+          {" "}
+          Budget Balance:{this.state.balance}
+        </h1>
+        <Button onClick={() => this.props.delete_budget(this.props.budget_id)}>
           delete
-        </button>
+        </Button>
         <Button onClick={() => this.props.pick_budget(this.props.budget_id)}>
           CHOOSE BUDGET
         </Button>
         <Button onClick={this.editing}>Editing</Button>
-        <button onClick={this.getExpensesProps}> GET EXPENSES PROPS </button>
-        <button onClick={this.total}>CLICK TO REDUCE</button>
+        <Button onClick={this.getExpensesProps}> GET EXPENSES PROPS </Button>
+        <Button onClick={this.total}>CLICK TO REDUCE</Button>
         {mapped}
       </div>
     );
