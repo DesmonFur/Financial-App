@@ -25,6 +25,8 @@ export class Dashboard extends Component {
     console.log(this.props);
     return (
       <div>
+
+        <Container>
         <h1>Dashboard</h1>
         <Link to="/createBudget">
           <button> Create Budget</button>
@@ -33,7 +35,7 @@ export class Dashboard extends Component {
           <button onClick={this.getAllBudgets}> AllBudgets </button>
         </Link>
 
-        {/* <Container>{mappedBudgets}</Container> */}
+        </Container>
       </div>
     );
   }

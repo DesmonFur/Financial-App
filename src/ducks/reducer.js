@@ -60,12 +60,10 @@ export default (state = initialState, action) => {
     case GET_EXPENSES_INFO:
       const { expenses } = payload;
       return { ...state, expenses};
-    case GET_EXPENSE_ID:
-      const { expenses_id } = payload;
-      return { ...state, expenses_id};
+ 
     case GET_BUDGET:
       const { budget } = payload;
-      return { ...state, budget};
+      return { ...state, budget,expenses_id};
     default:
       return state;
   }

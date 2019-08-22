@@ -14,7 +14,7 @@ export class createBudget extends Component {
   };
 
   postEverything = () => {
-    const { budget_balance, budget_name, budget_id } = this.state;
+    const { budget_balance, budget_name} = this.state;
     const { user_id, email, budgets } = this.props;
 
     const {
@@ -52,7 +52,7 @@ export class createBudget extends Component {
         this.setState({
           budget_id: res.data[res.data.length - 1].budget_id
         });
-        console.log(res.data[res.data.length - 1].budget_id);
+        // console.log(res.data[res.data.length - 1].budget_id);
         axios
           .post(
             `/api/createexpenses/${res.data[res.data.length - 1].budget_id}`,
@@ -93,8 +93,8 @@ export class createBudget extends Component {
   };
 
   render() {
-    console.log(this.state.budget_id);
-    console.log(this.state.expenses);
+    // console.log(this.state.budget_id);
+    // console.log(this.state.expenses);
     return (
       <div>
         <h1>Create Budget </h1>

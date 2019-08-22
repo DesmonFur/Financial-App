@@ -95,7 +95,7 @@ module.exports = {
     const { user_id } = req.session.user;
     const budget = await db.select_user_budget([user_id, budget_id]);
 
-    console.log("budget_param", budget_id);
+    console.log("budget_id", budget_id);
     res.status(200).send(budget);
   },
   updateExpenses: async (req, res) => {

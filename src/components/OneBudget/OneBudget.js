@@ -7,34 +7,40 @@ import { createPublicKey } from "crypto";
 import { Link } from "react-router-dom";
 import AllBudgets from ".././AllBudgets/AllBudgets";
 import { Button } from "../LandingPage/Landing.js";
+import "./bud.css";
 export class OneBudget extends Component {
-  state = {
-    editing: false,
-    rent_or_mortgage: 0,
-    electric: 0,
-    water: 0,
-    internet: 0,
-    groceries: 0,
-    transportation: 0,
-    auto_maintenance: 0,
-    home_maintenance: 0,
-    medical: 0,
-    clothing: 0,
-    gifts: 0,
-    computer_replacement: 0,
-    student_loan: 0,
-    auto_loan: 0,
-    vacation: 0,
-    fitness: 0,
-    education: 0,
-    dining_out: 0,
-    gaming: 0,
-    fun_money: 0,
-    budgets: [],
-    edit: true,
-    budget_balance: 0,
-    totalExpenses: 0
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      editing: false,
+      rent_or_mortgage: 0,
+      electric: 0,
+      water: 0,
+      internet: 0,
+      groceries: 0,
+      transportation: 0,
+      auto_maintenance: 0,
+      home_maintenance: 0,
+      medical: 0,
+      clothing: 0,
+      gifts: 0,
+      computer_replacement: 0,
+      student_loan: 0,
+      auto_loan: 0,
+      vacation: 0,
+      fitness: 0,
+      education: 0,
+      dining_out: 0,
+      gaming: 0,
+      fun_money: 0,
+      budgets: [],
+      edit: true,
+      balance: 0,
+      total_budgeted: 0,
+      expenses_id: 0,
+      budget_id: 0
+    };
+  }
 
   edit = () => {
     const { editing } = this.state;
@@ -53,24 +59,65 @@ export class OneBudget extends Component {
   //   this.props.updateExpenses();
 
   // };
+
+  dynamic = () => {
+    const { balance, total_budgeted, budget_id } = this.state;
+    // console.log('BDHFAKSBJFBDSAKFDSFLB',budget_id)
+    console.log("budget_balance", total_budgeted);
+    // if (total_budgeted) {
+      let budget_balance = balance - total_budgeted;
+      this.setState({
+        balance: budget_balance
+      });
+      axios.put("/api/updateTotalBudgeted", { total_budgeted, budget_id });
+      axios.put("/api/updateBudget", { budget_balance, budget_id });
+    // }
+
+    // console.log("TOTAL_BUDGETED", total_budgeted);
+  };
+
+  total = () => {
+    let array = [];
+    const { balance, total_budgeted, expenses_id, budget_id } = this.state;
+    for (let key in this.state) {
+      if (
+        Number.isInteger(this.state[key]) &&
+        this.state[key] !== balance &&
+        this.state[key] !== total_budgeted &&
+        this.state[key] !== expenses_id &&
+        this.state[key] !== budget_id
+      ) {
+        array.push(this.state[key]);
+        // console.log(array.reduce((acc, cv) => cv + acc));
+        console.log(this.state[key]);
+        // console.log(key);
+
+        this.setState({
+          total_budgeted: array.reduce((acc, cv) => cv + acc)
+          // totalExpenses: 10000
+        });
+      }
+    }
+    this.dynamic();
+    // this.props.getBudgetBalanceInfo({ budget_balance, totalExpenses });
+  };
   updateBalance = () => {
     // const { editing, totalExpenses } = this.state;
     // const { budget_balance, budget_id } = this.props;
     // console.log(budget_balance, budget_id);
     const { expenses_id } = this.props.budget[0];
-    console.log(expenses_id);
+    console.log("updatebalanceid", expenses_id);
     this.edit();
     this.updateExpenses(expenses_id);
     this.getExpensesProps();
-    // this.props.dynamic();
-    //  this.props.total()
+    this.total();
   };
 
   getExpensesProps = () => {
-    console.log(this.props.budget[0].expenses_id);
+    // console.log('this is expense id',this.props.budget[0].expenses_id);
     const { expenses_id } = this.props.budget[0];
     axios.get(`/api/getexpenses/${expenses_id}`).then(res => {
-      console.log("expenses_id", expenses_id);
+      // console.log("expenses_id", expenses_id);
 
       this.setState({
         // expenses: res.data,
@@ -94,10 +141,14 @@ export class OneBudget extends Component {
         dining_out: res.data[0].dining_out,
         gaming: res.data[0].gaming,
         fun_money: res.data[0].fun_money,
-        dates: res.data[0].dates
-        // totalExpenses:res.data[0].fun_money + res.data[0].fun_money
+        dates: res.data[0].dates,
+        balance: res.data[0].budget_balance,
+        expenses_id: res.data[0].expenses_id,
+        totalExpenses: res.data[0].totalExpenses,
+        budgets: res.data,
+        budget_id: res.data[0].budget_id
       });
-      console.log(res.data);
+      // console.log(res.data);
     });
   };
 
@@ -153,20 +204,25 @@ export class OneBudget extends Component {
         dates
       })
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         this.getExpensesProps(res.data[0].expenses_id);
       });
   };
 
-  // componentDidMount = () => {
-  //   const { expenses_id } = this.props;
-  //   axios.get(`/api/getexpenses/${expenses_id}`).then(res => {
-  //     const { data: expenses } = res;
-  //     this.props.getBudgetExpenses({ expenses });
-  //   });
-  //   // this.getExpensesProps();
-  //   console.log("this.props.expenses_id", this.props);
-  // };
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log(nextProps, nextState);
+  //   console.log(this.props, this.state);
+  //  return false
+  // }
+
+  componentDidMount = () => {
+    // const { expenses_id } = this.props.budget[0].expenses_id
+    // axios.get(`/api/getexpenses/${expenses_id}`).then(res => {
+    //   const { data: expenses } = res;
+    //   this.props.getBudgetExpenses({ expenses });
+    // });
+    // this.getExpensesProps();
+  };
 
   componentDidUpdate = (prevProps, prevState) => {
     if (prevProps !== this.props) {
@@ -176,7 +232,7 @@ export class OneBudget extends Component {
       //   this.props.getBudgetExpenses({ expenses });
       // });
       this.getExpensesProps();
-      console.log("this.props.expenses_id", this.props);
+      // console.log("this.props.expenses_id", this.props);
     }
   };
 
@@ -184,14 +240,14 @@ export class OneBudget extends Component {
     this.setState({
       [e.target.name]: e.target.value
     });
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   render() {
     const { expenses, budget } = this.props;
     const { editing } = this.state;
     const { handleChange } = this;
-    console.log("STATETATATETA", this.state);
+    // console.log("Gotten State from componentDidUPdate", this.state);
 
     let mapped = budget.map(keys => {
       return (
@@ -202,13 +258,13 @@ export class OneBudget extends Component {
           <Button onClick={this.getExpensesProps}> GET EXPENSES PROPS </Button>
           <Button onClick={this.total}>CLICK TO REDUCE</Button>}
           <Link to={"/allbudgets"}>
-            <button> AllBudgets </button>
+            <Button> AllBudgets </Button>
           </Link>
           <h1>
             Budget Balance
-            {keys.budget_balance}
+            {this.state.balance}
           </h1>
-          {keys.total_budgeted}
+          {this.state.total_budgeted}
           <h1>
             {!editing ? (
               <p onDoubleClick={this.edit}>{`Rent/Mortgage $${
@@ -222,7 +278,7 @@ export class OneBudget extends Component {
                     onChange={e => handleChange(e)}
                     type="number"
                     name="rent_or_mortgage"
-                    defaultValue={keys.rent_or_mortgage}
+                    defaultValue={this.state.rent_or_mortgage}
                   />
                 </p>
               </>
@@ -235,14 +291,14 @@ export class OneBudget extends Component {
             name="electric"
             defaultValue={keys.electric}
           />
-          <h1>{`Water  $${keys.water}`}</h1>
+          <h1>{`Water  $${this.state.water}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="water"
             defaultValue={keys.water}
           />
-          <h1>{`Internet  $${keys.internet}`}</h1>
+          <h1>{`Internet  $${this.state.internet}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"

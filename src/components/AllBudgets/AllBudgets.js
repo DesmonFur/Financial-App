@@ -72,15 +72,9 @@ class AllBudgets extends Component {
   pickBudget = budget_id => {
     // const { email, user_id, budgets, props } = this.props;
     axios.get(`/api/specificBudget/${budget_id}`).then(res => {
-      console.log("undefined catch", res.data);
-      const { data: budget } = res;
-let expenses_id = res.data.map(data => data.expenses_id[0])
-let string = expenses_id.toString()
-console.log('amepfmepfme', expenses_id)
+      console.log("res.data", res.data);
+      const { data: budget, } = res;
       this.props.getBudget({ budget});
-      // this.setState({
-      //   budgets: res.data
-      // });
     });
   };
 
@@ -196,27 +190,28 @@ console.log('amepfmepfme', expenses_id)
     const { editing, expenses, budgets } = this.state;
     // console.log('total budgeted',budget.total_budgeted)
     console.log("user budgets", budgets);
-    console.log("all props", this.props);
-    console.log("everything", this.state.budgets);
+    // console.log("all props", this.props);
+    // console.log("budgets", this.state.budgets);
+    console.log("expenses", this.state.expenses);
     // console.log("everything", this.state.budgets[0].expenses_id);
 
-    // let mapped = expenses.map(keys => (
-    //   <OneBudget
-    //     key={keys.expenses_id}
-    //     // keys={keys}
-    //     expenses_id={keys.expenses_id}
-    //     budget_id={this.props.budget_id}
-    //     pickBudget={this.pickBudget}
-    //     // dynamic={this.dynamic}
-    //     // updateExpenses={this.updateExpenses}
-    //     // updateBalance={this.updateBalance}
-    //     // total={this.total}
-    //   />
-    // ));
+    let mapped = expenses.map(keys => (
+      <OneBudget
+        key={keys.expenses_id}
+        // keys={keys}
+        expenses_id={keys.expenses_id}
+        budget_id={this.props.budget_id}
+        pickBudget={this.pickBudget}
+        // dynamic={this.dynamic}
+        // updateExpenses={this.updateExpenses}
+        // updateBalance={this.updateBalance}
+        // total={this.total}
+      />
+    ));
 
     let mappedBudgets = budgets.map(budget => {
       const { budget_name, budget_balance, budget_id } = budget;
-
+      console.log(budget_id)
       return (
         <div key={budget.budget_id}>
           {/* console.log(budgets) */}
@@ -224,7 +219,7 @@ console.log('amepfmepfme', expenses_id)
 
           <h1 onClick={this.dynamic}> {budget_name}</h1>
           <h1 onClick={this.balance}> Budget Balance:{budget_balance}</h1>
-          <button onClick={this.getAllBudgets}> AllBudgets </button>
+          {/* <button onClick={this.getAllBudgets}> AllBudgets </button> */}
           <Button onClick={() => this.deleteBudget(budget_id)}>delete</Button>
           <Link to={"/onebudget"}>
             <Button onClick={() => this.pickBudget(budget_id)}>
@@ -250,8 +245,8 @@ console.log('amepfmepfme', expenses_id)
 
 function mapStateToProps(reduxState) {
   console.log("reduxstate", reduxState);
-  const { user_id } = reduxState;
-  return { user_id };
+  const { user_id,budget } = reduxState;
+  return { user_id, budget };
 }
 
 export default connect(
