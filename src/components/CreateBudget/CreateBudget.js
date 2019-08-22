@@ -103,7 +103,7 @@ export class createBudget extends Component {
         <h3>Budget Balance</h3>
         <input onChange={this.handleChange} type="text" name="budget_balance" />
         <Button onClick={this.postBudget}>Create Budget</Button>
-        <Link to="/dashboard">
+        <Link to="/allbudgets">
           <Button onClick={this.postEverything}> CREATE EVERYTHING</Button>
         </Link>
       </div>

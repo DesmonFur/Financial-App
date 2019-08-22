@@ -6,12 +6,12 @@ import { HashRouter } from "react-router-dom";
 import {Provider} from 'react-redux'
 import store from './store'
 ReactDOM.render(
-  <HashRouter>
-
-    <Provider store={store}>
+  
+  <Provider store={store}>
+    <HashRouter>
         <App />
-    </Provider>
-  </HashRouter>,
+  </HashRouter>
+    </Provider>,
   document.getElementById("root")
 );
 

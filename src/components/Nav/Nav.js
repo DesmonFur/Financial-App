@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { withRouter } from "react-router-dom";
+import { withRouter,Link } from "react-router-dom";
 import { connect } from "react-redux";
 export class Nav extends Component {
   logout = () => {
@@ -17,6 +17,9 @@ export class Nav extends Component {
       {/* <img src="" alt=""/> */}
         <span>Welcome {email}</span>
         <button onClick={this.logout}>Logout</button>
+         <Link to="/dashboard">
+         <button> Dashboard</button>
+       </Link>
       </div>
     );
   }

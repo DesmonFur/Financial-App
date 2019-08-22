@@ -28,6 +28,7 @@ app.delete('/api/deleteBudget/:budget_id/:user_id', budgCtrl.deleteBudget)
 app.get('/api/getexpenses/:expenses_id', budgCtrl.getExpenses)
 app.put('/api/updateexpenses/:expenses_id', budgCtrl.updateExpenses)
 app.put('/api/updateBudget', budgCtrl.updateBudget)
+app.put('/api/updateTotalBudgeted', budgCtrl.updateTotalExpenses)
 app.post('/api/createBudget', budgCtrl.createBudget)
 app.post('/api/createexpenses/:budget_id', budgCtrl.createBudgetExpenses)
 

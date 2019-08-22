@@ -11,7 +11,8 @@ CREATE TABLE budgets (
   budget_id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES user_info(user_id),
   budget_name VARCHAR(9000),
-  budget_balance INTEGER
+  budget_balance INTEGER,
+  budget_cap INTEGER
 );
 CREATE TABLE expenses(
   expenses_id SERIAL PRIMARY KEY,

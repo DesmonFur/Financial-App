@@ -1,115 +1,126 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
 import OneBudget from ".././OneBudget/OneBudget";
 import { Button } from "../LandingPage/Landing";
-export class AllBudgets extends Component {
+import {
+  getExpenseId,
+  expenseFn,
+  getBudget
+} from "../../ducks/reducer";
+import { connect } from "react-redux";
+
+class AllBudgets extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rent_or_mortgage: 0,
-      electric: 0,
-      water: 0,
-      internet: 0,
-      groceries: 0,
-      transportation: 0,
-      auto_maintenance: 0,
-      home_maintenance: 0,
-      medical: 0,
-      clothing: 0,
-      gifts: 0,
-      computer_replacement: 0,
-      student_loan: 0,
-      auto_loan: 0,
-      vacation: 0,
-      fitness: 0,
-      education: 0,
-      dining_out: 0,
-      gaming: 0,
-      fun_money: 0,
       budgets: [],
-      editing: true,
-      balance: this.props.budget_balance,
-      dates: "",
-      expenses: [],
-      totalExpenses: 0
+      expenses: []
     };
   }
 
+  deleteBudget = budget_id => {
+    const { user_id } = this.props;
+    axios
+      .delete(`/api/deleteBudget/${budget_id}/${user_id}`)
+      .then(
+        axios.get(`/api/budgets/${user_id}`).then(res => {
+          // console.log(res.data);
+          this.setState({
+            budgets: res.data
+          });
+        })
+      )
+      .catch(err => alert("failled to delete"));
+  };
+
   dynamic = () => {
-    const { balance, rent_or_mortgage } = this.state;
-    const {budget_id} = this.props
-    let budget_balance = balance - rent_or_mortgage;
-    console.log(balance);
+    const { balance, totalExpenses: total_budgeted } = this.state;
+    const { budget_id } = this.props;
+    console.log("balance", balance);
+    let budget_balance = balance - total_budgeted;
     this.setState({
       balance: budget_balance
     });
-    axios.put('/api/updateBudget', {budget_balance,budget_id})
+    axios.put("/api/updateTotalBudgeted", { total_budgeted, budget_id });
+    axios.put("/api/updateBudget", { budget_balance, budget_id });
+    console.log("TOTAL_BUDGETED", total_budgeted);
   };
 
   total = () => {
     let array = [];
-    const { budget_balance } = this.state;
+    const { balance: budget_balance, totalExpenses } = this.state;
     for (let key in this.state) {
       if (
         Number.isInteger(this.state[key]) &&
-        this.state[key] !== budget_balance
+        this.state[key] !== budget_balance &&
+        this.state[key] !== totalExpenses
       ) {
-        // array.push(this.state[key])
         array.push(this.state[key]);
         console.log(array.reduce((acc, cv) => cv + acc));
       }
-      array.reduce((acc, cv) => cv + acc);
+
       this.setState({
-        totalExpenses: array
+        totalExpenses: array.reduce((acc, cv) => cv + acc)
+        // totalExpenses: 10000
       });
     }
-    // this.getExpensesProps();
+    this.props.getBudgetBalanceInfo({ budget_balance, totalExpenses });
+    this.dynamic();
   };
 
-  getExpensesProps = () => {
-    const { expenses_id } = this.props.budget;
-    axios.get(`/api/getexpenses/${expenses_id}`).then(res => {
-      this.setState({
-        expenses: res.data,
-        rent_or_mortgage: res.data[0].rent_or_mortgage,
-        electric: res.data[0].electric,
-        water: res.data[0].water,
-        internet: res.data[0].internet,
-        groceries: res.data[0].groceries,
-        transportation: res.data[0].transportation,
-        auto_maintenance: res.data[0].auto_maintenance,
-        home_maintenance: res.data[0].home_maintenance,
-        medical: res.data[0].medical,
-        clothing: res.data[0].clothing,
-        gifts: res.data[0].gifts,
-        computer_replacement: res.data[0].computer_replacement,
-        student_loan: res.data[0].student_loan,
-        auto_loan: res.data[0].auto_loan,
-        vacation: res.data[0].vacation,
-        fitness: res.data[0].fitness,
-        education: res.data[0].education,
-        dining_out: res.data[0].dining_out,
-        gaming: res.data[0].gaming,
-        fun_money: res.data[0].fun_money,
-        dates: res.data[0].dates
-      });
-      // console.log(res.data);
+  pickBudget = budget_id => {
+    // const { email, user_id, budgets, props } = this.props;
+    axios.get(`/api/specificBudget/${budget_id}`).then(res => {
+      console.log("undefined catch", res.data);
+      const { data: budget } = res;
+let expenses_id = res.data.map(data => data.expenses_id[0])
+let string = expenses_id.toString()
+console.log('amepfmepfme', expenses_id)
+      this.props.getBudget({ budget});
+      // this.setState({
+      //   budgets: res.data
+      // });
     });
   };
+
+  // getExpensesProps = () => {
+  //   const { expenses_id } = this.props.budget;
+  //   axios.get(`/api/getexpenses/${expenses_id}`).then(res => {
+  //     this.setState({
+  //       expenses: res.data,
+  //       rent_or_mortgage: res.data[0].rent_or_mortgage,
+  //       electric: res.data[0].electric,
+  //       water: res.data[0].water,
+  //       internet: res.data[0].internet,
+  //       groceries: res.data[0].groceries,
+  //       transportation: res.data[0].transportation,
+  //       auto_maintenance: res.data[0].auto_maintenance,
+  //       home_maintenance: res.data[0].home_maintenance,
+  //       medical: res.data[0].medical,
+  //       clothing: res.data[0].clothing,
+  //       gifts: res.data[0].gifts,
+  //       computer_replacement: res.data[0].computer_replacement,
+  //       student_loan: res.data[0].student_loan,
+  //       auto_loan: res.data[0].auto_loan,
+  //       vacation: res.data[0].vacation,
+  //       fitness: res.data[0].fitness,
+  //       education: res.data[0].education,
+  //       dining_out: res.data[0].dining_out,
+  //       gaming: res.data[0].gaming,
+  //       fun_money: res.data[0].fun_money,
+  //       dates: res.data[0].dates
+  //       // totalExpenses:res.data[0].fun_money + res.data[0].fun_money
+  //     });
+  //     // console.log(res.data);
+  //   });
+  // };
 
   editing = () => {
     const { editing } = this.state;
     this.setState({
       editing: !editing
     });
-  };
-
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-    // console.log(e.target.value);
   };
 
   updateExpenses = () => {
@@ -168,47 +179,82 @@ export class AllBudgets extends Component {
         this.getExpensesProps();
       });
   };
+  componentDidMount() {
+    this.getAllBudgets();
+  }
+
+  getAllBudgets = () => {
+    const { user_id, props } = this.props;
+    axios.get(`/api/getUserBudgets/${user_id}`).then(res => {
+      this.setState({
+        budgets: res.data
+      });
+    });
+  };
 
   render() {
-    const { budget_name, budget_balance, budget } = this.props;
-    const { editing, expenses } = this.state;
-    
-    console.log("expenses total", this.state.totalExpenses);
-    console.log('budget_balance', budget_balance)
-    let mapped = expenses.map(keys => (
-      <OneBudget
-        key={keys.expenses_id}
-        keys={keys}
-        handleChange={this.handleChange}
-        dynamic={this.dynamic}
-        budget_balance={this.state.balance}
-        updateExpenses={this.updateExpenses}
-        budget_id={this.props.budget_id}
-      />
-    ));
+    const { editing, expenses, budgets } = this.state;
+    // console.log('total budgeted',budget.total_budgeted)
+    console.log("user budgets", budgets);
+    console.log("all props", this.props);
+    console.log("everything", this.state.budgets);
+    // console.log("everything", this.state.budgets[0].expenses_id);
+
+    // let mapped = expenses.map(keys => (
+    //   <OneBudget
+    //     key={keys.expenses_id}
+    //     // keys={keys}
+    //     expenses_id={keys.expenses_id}
+    //     budget_id={this.props.budget_id}
+    //     pickBudget={this.pickBudget}
+    //     // dynamic={this.dynamic}
+    //     // updateExpenses={this.updateExpenses}
+    //     // updateBalance={this.updateBalance}
+    //     // total={this.total}
+    //   />
+    // ));
+
+    let mappedBudgets = budgets.map(budget => {
+      const { budget_name, budget_balance, budget_id } = budget;
+
+      return (
+        <div key={budget.budget_id}>
+          {/* console.log(budgets) */}
+          {/* <Button onClick={this.updateExpenses}>POST UPDATE TO EXPENSES</Button> */}
+
+          <h1 onClick={this.dynamic}> {budget_name}</h1>
+          <h1 onClick={this.balance}> Budget Balance:{budget_balance}</h1>
+          <button onClick={this.getAllBudgets}> AllBudgets </button>
+          <Button onClick={() => this.deleteBudget(budget_id)}>delete</Button>
+          <Link to={"/onebudget"}>
+            <Button onClick={() => this.pickBudget(budget_id)}>
+              CHOOSE BUDGET
+            </Button>
+          </Link>
+          {/* 
+          <Button onClick={this.getExpensesProps}> GET EXPENSES PROPS </Button>
+          <Button onClick={this.total}>CLICK TO REDUCE</Button> */}
+          {/* {mapped} */}
+        </div>
+      );
+    });
 
     return (
       <div>
-        <Button onClick={this.updateExpenses}>POST UPDATE TO EXPENSES</Button>
-
-        <h1 onClick={this.dynamic}> {budget_name}</h1>
-        <h1 onClick={this.balance}>
-          {" "}
-          Budget Balance:{this.state.balance}
-        </h1>
-        <Button onClick={() => this.props.delete_budget(this.props.budget_id)}>
-          delete
-        </Button>
-        <Button onClick={() => this.props.pick_budget(this.props.budget_id)}>
-          CHOOSE BUDGET
-        </Button>
-        <Button onClick={this.editing}>Editing</Button>
-        <Button onClick={this.getExpensesProps}> GET EXPENSES PROPS </Button>
-        <Button onClick={this.total}>CLICK TO REDUCE</Button>
-        {mapped}
+        {mappedBudgets}
+        {/* {mapped} */}
       </div>
     );
   }
 }
 
-export default withRouter(AllBudgets);
+function mapStateToProps(reduxState) {
+  console.log("reduxstate", reduxState);
+  const { user_id } = reduxState;
+  return { user_id };
+}
+
+export default connect(
+  mapStateToProps,
+  { getExpenseId, getBudget }
+)(AllBudgets);

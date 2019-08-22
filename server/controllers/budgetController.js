@@ -225,6 +225,14 @@ module.exports = {
     console.log(req.body)
      const balance =  await db.update_budget_balance([budget_balance, budget_id])
       res.status(200).send(balance)
+  },
+  
+  updateTotalExpenses: async (req,res) => {
+    const db = req.app.get('db')
+    const {budget_id, total_budgeted} = req.body
+    console.log('TOTAL BUDGETED', req.body)
+     const balance =  await db.update_total_budgeted([total_budgeted, budget_id])
+      res.status(200).send(balance)
   }
   
 };
