@@ -63,7 +63,7 @@ export default (state = initialState, action) => {
  
     case GET_BUDGET:
       const { budget } = payload;
-      return { ...state, budget,expenses_id};
+      return { ...state, budget};
     default:
       return state;
   }

@@ -10,13 +10,14 @@ module.exports = {
   },
   createBudget: async (req, res) => {
     const db = req.app.get("db");
-    const { budget_name, budget_balance } = req.body;
+    const { budget_name, budget_balance,default_balance } = req.body;
     const { user_id } = req.session.user;
     console.log("body", req.body);
     const budget = await db.create_user_budget([
       user_id,
       budget_name,
-      budget_balance
+      budget_balance,
+      default_balance
     ]);
     // res.sendStatus(200)
     res.status(200).send(budget);
@@ -233,6 +234,13 @@ module.exports = {
     console.log('TOTAL BUDGETED', req.body)
      const balance =  await db.update_total_budgeted([total_budgeted, budget_id])
       res.status(200).send(balance)
+  },
+  createTotalExpenses: async (req,res) => {
+    const db = req.app.get('db')
+    const {budget_id, total_budgeted} = req.body 
+    console.log('TOTAL BUDGETED', req.body)
+    const balance = await db.create_total_budgeted([budget_id, total_budgeted])
+    res.status(200).send(balance)
   }
   
 };

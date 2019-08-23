@@ -17,9 +17,15 @@ export class Nav extends Component {
       {/* <img src="" alt=""/> */}
         <span>Welcome {email}</span>
         <button onClick={this.logout}>Logout</button>
+        <Link to="/createBudget">
+            <button> Create Budget</button>
+          </Link>
          <Link to="/dashboard">
          <button> Dashboard</button>
        </Link>
+       <Link to={"/allbudgets"}>
+            <button> AllBudgets </button>
+          </Link>
       </div>
     );
   }

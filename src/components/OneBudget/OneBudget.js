@@ -3,44 +3,41 @@ import styled from "styled-components";
 import axios from "axios";
 import { getBudgetExpenses, getBudgetBalanceInfo } from "../../ducks/reducer";
 import { connect } from "react-redux";
-import { createPublicKey } from "crypto";
 import { Link } from "react-router-dom";
 import AllBudgets from ".././AllBudgets/AllBudgets";
 import { Button } from "../LandingPage/Landing.js";
 import "./bud.css";
 export class OneBudget extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editing: false,
-      rent_or_mortgage: 0,
-      electric: 0,
-      water: 0,
-      internet: 0,
-      groceries: 0,
-      transportation: 0,
-      auto_maintenance: 0,
-      home_maintenance: 0,
-      medical: 0,
-      clothing: 0,
-      gifts: 0,
-      computer_replacement: 0,
-      student_loan: 0,
-      auto_loan: 0,
-      vacation: 0,
-      fitness: 0,
-      education: 0,
-      dining_out: 0,
-      gaming: 0,
-      fun_money: 0,
-      budgets: [],
-      edit: true,
-      balance: 0,
-      total_budgeted: 0,
-      expenses_id: 0,
-      budget_id: 0
-    };
-  }
+  state = {
+    rent_or_mortgage: 0,
+    electric: 0,
+    water: 0,
+    internet: 0,
+    groceries: 0,
+    transportation: 0,
+    auto_maintenance: 0,
+    home_maintenance: 0,
+    medical: 0,
+    clothing: 0,
+    gifts: 0,
+    computer_replacement: 0,
+    student_loan: 0,
+    auto_loan: 0,
+    vacation: 0,
+    fitness: 0,
+    education: 0,
+    dining_out: 0,
+    gaming: 0,
+    fun_money: 0,
+    budgets: [],
+    editing: false,
+    balance: 0,
+    defaultBalance: 0,
+    total_budgeted: 0,
+    previous_total: 0,
+    expenses_id: 0,
+    budget_id: 0
+  };
 
   edit = () => {
     const { editing } = this.state;
@@ -61,44 +58,68 @@ export class OneBudget extends Component {
   // };
 
   dynamic = () => {
-    const { balance, total_budgeted, budget_id } = this.state;
-    // console.log('BDHFAKSBJFBDSAKFDSFLB',budget_id)
-    console.log("budget_balance", total_budgeted);
-    // if (total_budgeted) {
-      let budget_balance = balance - total_budgeted;
-      this.setState({
-        balance: budget_balance
-      });
+    const {
+      balance,
+      total_budgeted,
+      budget_id,
+      previous_total,
+      defaultBalance
+    } = this.state;
+    
+    console.log("total_budgeted", total_budgeted);
+    console.log("previous_total", previous_total);
+    console.log("BUDGET BALANCE", defaultBalance);
+    console.log("UPDATED BALANCE", balance);
+      let budget_balance = defaultBalance - total_budgeted;
       axios.put("/api/updateTotalBudgeted", { total_budgeted, budget_id });
       axios.put("/api/updateBudget", { budget_balance, budget_id });
-    // }
-
-    // console.log("TOTAL_BUDGETED", total_budgeted);
+    
   };
 
   total = () => {
     let array = [];
-    const { balance, total_budgeted, expenses_id, budget_id } = this.state;
+    const {
+      balance,
+      total_budgeted,
+      expenses_id,
+      budget_id,
+      editing,
+      dates,
+      budgets,
+      defaultBalance,
+      previous_total
+    } = this.state;
+    console.log("hit");
+    // console.log(this.state)
     for (let key in this.state) {
+      // console.log(this.state)
       if (
         Number.isInteger(this.state[key]) &&
         this.state[key] !== balance &&
         this.state[key] !== total_budgeted &&
         this.state[key] !== expenses_id &&
-        this.state[key] !== budget_id
+        this.state[key] !== budget_id &&
+        this.state[key] !== editing &&
+        this.state[key] !== dates &&
+        // this.state[key] !== budgets
+        this.state[key] !== defaultBalance &&
+        this.state[key] !== previous_total
       ) {
+        
+        // console.log(key);
         array.push(this.state[key]);
         // console.log(array.reduce((acc, cv) => cv + acc));
-        console.log(this.state[key]);
-        // console.log(key);
-
+        // console.log(this.state[key]);
         this.setState({
-          total_budgeted: array.reduce((acc, cv) => cv + acc)
+          total_budgeted: array.reduce((acc, cv) => cv + acc),
+          previous_total: total_budgeted
           // totalExpenses: 10000
         });
       }
     }
-    this.dynamic();
+ 
+    // this.dynamic();
+    // this.dynamic();
     // this.props.getBudgetBalanceInfo({ budget_balance, totalExpenses });
   };
   updateBalance = () => {
@@ -106,11 +127,13 @@ export class OneBudget extends Component {
     // const { budget_balance, budget_id } = this.props;
     // console.log(budget_balance, budget_id);
     const { expenses_id } = this.props.budget[0];
-    console.log("updatebalanceid", expenses_id);
-    this.edit();
+    // console.log("updatebalanceid", expenses_id);
     this.updateExpenses(expenses_id);
     this.getExpensesProps();
+    this.edit();
     this.total();
+    this.dynamic();
+    // console.log("state string/number", this.state);
   };
 
   getExpensesProps = () => {
@@ -144,7 +167,7 @@ export class OneBudget extends Component {
         dates: res.data[0].dates,
         balance: res.data[0].budget_balance,
         expenses_id: res.data[0].expenses_id,
-        totalExpenses: res.data[0].totalExpenses,
+        defaultBalance: res.data[0].default_balance,
         budgets: res.data,
         budget_id: res.data[0].budget_id
       });
@@ -215,15 +238,6 @@ export class OneBudget extends Component {
   //  return false
   // }
 
-  componentDidMount = () => {
-    // const { expenses_id } = this.props.budget[0].expenses_id
-    // axios.get(`/api/getexpenses/${expenses_id}`).then(res => {
-    //   const { data: expenses } = res;
-    //   this.props.getBudgetExpenses({ expenses });
-    // });
-    // this.getExpensesProps();
-  };
-
   componentDidUpdate = (prevProps, prevState) => {
     if (prevProps !== this.props) {
       const { expenses_id } = this.props;
@@ -238,33 +252,39 @@ export class OneBudget extends Component {
 
   handleChange = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]:
+        e.target.type === "number" ? parseInt(e.target.value) : e.target.value
     });
     // console.log(e.target.value);
   };
 
   render() {
     const { expenses, budget } = this.props;
-    const { editing } = this.state;
+    const { editing, budgets, balance, defaultBalance } = this.state;
     const { handleChange } = this;
     // console.log("Gotten State from componentDidUPdate", this.state);
 
-    let mapped = budget.map(keys => {
+    let mapped = budgets.map(keys => {
       return (
         <div key={keys.expenses_id}>
-          <Button onClick={() => this.updateExpenses(keys.expenses_id)}>
+          {/* <Button onClick={() => this.updateExpenses(keys.expenses_id)}>
             POST UPDATE TO EXPENSES
-          </Button>
+          </Button> */}
           <Button onClick={this.getExpensesProps}> GET EXPENSES PROPS </Button>
-          <Button onClick={this.total}>CLICK TO REDUCE</Button>}
+          <Button onClick={this.total}>CLICK TO REDUCE</Button>
           <Link to={"/allbudgets"}>
             <Button> AllBudgets </Button>
           </Link>
-          <h1>
-            Budget Balance
-            {this.state.balance}
-          </h1>
-          {this.state.total_budgeted}
+          {defaultBalance < balance ? (
+            <h1> Default Balance: {defaultBalance}</h1>
+          ) : (
+            <h1>Updated Balance: {balance}</h1>
+          )}
+
+          {/* <h1> UPDATE BALANCE: {balance}</h1> */}
+
+          <h2>THIS STATE TOTAL BUDGET:{this.state.total_budgeted}</h2>
+
           <h1>
             {!editing ? (
               <p onDoubleClick={this.edit}>{`Rent/Mortgage $${
@@ -284,12 +304,13 @@ export class OneBudget extends Component {
               </>
             )}
           </h1>
+
           <h1>{`Electric  $${this.state.electric}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="electric"
-            defaultValue={keys.electric}
+            defaultValue={this.state.electric}
           />
           <h1>{`Water  $${this.state.water}`}</h1>
           <input
@@ -305,119 +326,119 @@ export class OneBudget extends Component {
             name="internet"
             defaultValue={keys.internet}
           />
-          <h1>{`Groceries  $${keys.groceries}`}</h1>
+          <h1>{`Groceries  $${this.state.groceries}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="groceries"
             defaultValue={keys.groceries}
           />
-          <h1>{`Transportation  $${keys.transportation}`}</h1>
+          <h1>{`Transportation  $${this.state.transportation}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="transportation"
-            defaultValue={keys.transportation}
+            defaultValue={this.state.transportation}
           />
-          <h1>{`auto_maintenance  $${keys.auto_maintenance}`}</h1>
+          <h1>{`auto_maintenance  $${this.state.auto_maintenance}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="auto_maintenance"
-            defaultValue={keys.auto_maintenance}
+            defaultValue={this.state.auto_maintenance}
           />
-          <h1>{`home_maintenance  $${keys.home_maintenance}`}</h1>
+          <h1>{`home_maintenance  $${this.state.home_maintenance}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="home_maintenance"
-            defaultValue={keys.home_maintenance}
+            defaultValue={this.state.home_maintenance}
           />
-          <h1>{`Medical  $${keys.medical}`}</h1>
+          <h1>{`Medical  $${this.state.medical}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="medical"
-            defaultValue={keys.medical}
+            defaultValue={this.state.medical}
           />
-          <h1>{`Clothing  $${keys.clothing}`}</h1>
+          <h1>{`Clothing  $${this.state.clothing}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="clothing"
-            defaultValue={keys.clothing}
+            defaultValue={this.state.clothing}
           />
-          <h1>{`gifts  $${keys.gifts}`}</h1>
+          <h1>{`gifts  $${this.state.gifts}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="gifts"
             defaultValue={keys.gifts}
           />
-          <h1>{`Computer_Replacement  $${keys.computer_replacement}`}</h1>
+          <h1>{`Computer_Replacement  $${this.state.computer_replacement}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="computer_replacement"
             defaultValue={keys.computer_replacement}
           />
-          <h1>{`Student Loan  $${keys.student_loan}`}</h1>
+          <h1>{`Student Loan  $${this.state.student_loan}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="student_loan"
             defaultValue={keys.student_loan}
           />
-          <h1>{`auto_loan  $${keys.auto_loan}`}</h1>
+          <h1>{`auto_loan  $${this.state.auto_loan}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="auto_loan"
             defaultValue={keys.auto_loan}
           />
-          <h1>{`Vacation  $${keys.vacation}`}</h1>
+          <h1>{`Vacation  $${this.state.vacation}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="vacation"
             defaultValue={keys.vacation}
           />
-          <h1>{`Fitness  $${keys.fitness}`}</h1>
+          <h1>{`Fitness  $${this.state.fitness}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="fitness"
             defaultValue={keys.fitness}
           />
-          <h1>{`Education  $${keys.education}`}</h1>
+          <h1>{`Education  $${this.state.education}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="education"
             defaultValue={keys.education}
           />
-          <h1>{`Dining Out  $${keys.dining_out}`}</h1>
+          <h1>{`Dining Out  $${this.state.dining_out}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="dining_out"
             defaultValue={keys.dining_out}
           />
-          <h1>{`gaming  $${keys.gaming}`}</h1>
+          <h1>{`gaming  $${this.state.gaming}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="gaming"
             defaultValue={keys.gaming}
           />
-          <h1>{`Fun Money  $${keys.fun_money}`}</h1>
+          <h1>{`Fun Money  $${this.state.fun_money}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="number"
             name="fun_money"
             defaultValue={keys.fun_money}
           />
-          <h1>{`Date:${keys.dates}`}</h1>
+          <h1>{`Date:${this.state.dates}`}</h1>
           <input
             onChange={e => handleChange(e)}
             type="text"
@@ -428,7 +449,7 @@ export class OneBudget extends Component {
       );
     });
     // console.log(this.state.rent_or_mortgage);
-    return <Budge>{mapped}</Budge>;
+    return <Budge>{mapped} </Budge>;
   }
 }
 

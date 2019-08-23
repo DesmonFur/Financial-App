@@ -31,6 +31,7 @@ app.put('/api/updateBudget', budgCtrl.updateBudget)
 app.put('/api/updateTotalBudgeted', budgCtrl.updateTotalExpenses)
 app.post('/api/createBudget', budgCtrl.createBudget)
 app.post('/api/createexpenses/:budget_id', budgCtrl.createBudgetExpenses)
+app.post('/api/createtotal', budgCtrl.createTotalExpenses)
 
 // app.post('/api/createAll/:budget_id', budgCtrl.createAll)
 

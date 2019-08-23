@@ -21,7 +21,7 @@ SET
   dining_out = $18,
   gaming = $19,
   fun_money = $20,
-  dates = $21
+  dates = DEFAULT
 WHERE
   expenses_id = $22;
 

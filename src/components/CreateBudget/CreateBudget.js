@@ -8,13 +8,14 @@ import { setUser } from "../../ducks/reducer";
 export class createBudget extends Component {
   state = {
     budget_balance: 0,
+    default_balance:0,
     budget_name: "",
     budget_id: 0,
     expenses: []
   };
 
   postEverything = () => {
-    const { budget_balance, budget_name} = this.state;
+    const { budget_balance, budget_name,budget_balance:default_balance } = this.state;
     const { user_id, email, budgets } = this.props;
 
     const {
@@ -40,17 +41,18 @@ export class createBudget extends Component {
       fun_money,
       dates
     } = this.state.expenses;
-
+    
     axios
       .post("/api/createBudget", {
         user_id,
         budget_name,
-        budget_balance
+        budget_balance,
+        default_balance
       })
       .then(res => {
         this.props.setUser({ email, user_id, budgets });
         this.setState({
-          budget_id: res.data[res.data.length - 1].budget_id
+          budget_id: res.data[res.data.length - 1].budget_id,
         });
         // console.log(res.data[res.data.length - 1].budget_id);
         axios
@@ -102,7 +104,6 @@ export class createBudget extends Component {
         <input onChange={this.handleChange} type="text" name="budget_name" />
         <h3>Budget Balance</h3>
         <input onChange={this.handleChange} type="text" name="budget_balance" />
-        <Button onClick={this.postBudget}>Create Budget</Button>
         <Link to="/allbudgets">
           <Button onClick={this.postEverything}> CREATE EVERYTHING</Button>
         </Link>
