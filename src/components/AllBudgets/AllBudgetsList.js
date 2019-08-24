@@ -3,29 +3,13 @@ import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { getExpenseId, expenseFn, getBudget } from "../../ducks/reducer";
-import NumberFormat from "react-number-format";
 import { connect } from "react-redux";
 class AllBudgets extends Component {
   constructor(props) {
     super(props);
     this.state = {
       budgets: [],
-      expenses: [],
-      data: {
-        labels: ["1", "2", "3", "4", "5"],
-        datasets: [
-          {
-            label: "videos mades",
-            backgroundColor: "rgba(100,0,200,155)",
-            data: [90, 11, 22, 24, 43, 55, 50]
-          },
-          {
-            label: "Subscriptions",
-            backgroundColor: "rgba(255,0,200,0.75)",
-            data: [4, 5, 6, 424, 8, 13, 40]
-          }
-        ]
-      }
+      expenses: []
     };
   }
 
@@ -75,26 +59,22 @@ class AllBudgets extends Component {
   render() {
     const { editing, expenses, budgets } = this.state;
     // console.log('total budgeted',budget.total_budgeted)
-    console.log("user budgets", budgets);
+    // console.log("user budgets", budgets);
     // console.log("all props", this.props);
     // console.log("budgets", this.state.budgets);
-    console.log("expenses", this.state.expenses);
+    // console.log("expenses", this.state.expenses);
     // console.log("everything", this.state.budgets[0].expenses_id);
-    console.log(this.props);
+    console.log(this.props)
     let mappedBudgets = budgets.map(budget => {
       const { budget_name, budget_balance, budget_id } = budget;
       console.log(budget_id);
       return (
-        <div key={budget.budget_id}>
+        <BudgetInfo key={budget.budget_id}>
           {/* console.log(budgets) */}
           {/* <Button onClick={this.updateExpenses}>POST UPDATE TO EXPENSES</Button> */}
 
-          <h4 Button onClick={() => this.pickBudget(budget_id)}>
-            {" "}
-            {budget_name}
-          </h4>
-          {/* <span onClick={this.balance}> {budget_balance}</span> */}
-          <NumberFormat value={budget_balance} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+          <span  Button onClick={() => this.pickBudget(budget_id)}> {budget_name}</span>
+          <span onClick={this.balance}> {budget_balance}</span>
           {/* <Button onClick={() => this.deleteBudget(budget_id)}>delete</Button> */}
 
           {/* <button onClick={this.getAllBudgets}> AllBudgets </button> */}
@@ -103,7 +83,7 @@ class AllBudgets extends Component {
             CHOOSE BUDGET
           </Button> */}
           {/* </Link> */}
-        </div>
+        </BudgetInfo>
       );
     });
 
@@ -111,12 +91,15 @@ class AllBudgets extends Component {
   }
 }
 
-const BudgetInfo = styled.div`
-  display: flex;
-  border: 1px solid red;
-  justify-content: space-between;
-  /* position: relative; */
-`;
+const BudgetInfo = styled.div `
+display:flex;
+border: 1px solid red;
+justify-content: space-between;
+position: relative;
+/* font-weight: bold; */
+color:white;
+font-family: Arial, Helvetica, sans-serif;
+`
 
 function mapStateToProps(reduxState) {
   console.log("reduxstate", reduxState);

@@ -1,7 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Slab|Lexend+Peta&display=swap');
+
 .App {
   text-align: center;
   /* height: 100vh;
   width: 100vw; */
+  font-family: 'Josefin Slab', serif;
+  font-size: 20px;
 }
 
 .App-header {
