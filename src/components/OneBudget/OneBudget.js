@@ -65,20 +65,25 @@ export class OneBudget extends Component {
       previous_total,
       defaultBalance
     } = this.state;
-    
-    console.log("total_budgeted", total_budgeted);
-    console.log("previous_total", previous_total);
-    console.log("BUDGET BALANCE", defaultBalance);
-    console.log("UPDATED BALANCE", balance);
-      let budget_balance = defaultBalance - total_budgeted;
-      axios.put("/api/updateTotalBudgeted", { total_budgeted, budget_id });
-      axios.put("/api/updateBudget", { budget_balance, budget_id });
-    
+
+    axios.get(`/api/specificBudget/${budget_id}`).then(res => {
+      console.log("res.data", res.data);
+      this.setState({
+        balance: res.data[0].budget_balance
+      })
+    });
+    // console.log("total_budgeted", total_budgeted);
+    // console.log("previous_total", previous_total);
+    // console.log("BUDGET BALANCE", defaultBalance);
+    // console.log("UPDATED BALANCE", balance);
+    // let budget_balance = defaultBalance - total_budgeted;
+    // axios.put("/api/updateTotalBudgeted", { total_budgeted, budget_id });
+    // axios.put("/api/updateBudget", { budget_balance, budget_id });
   };
 
   total = () => {
     let array = [];
-    const {
+    let {
       balance,
       total_budgeted,
       expenses_id,
@@ -89,7 +94,7 @@ export class OneBudget extends Component {
       defaultBalance,
       previous_total
     } = this.state;
-    console.log("hit");
+    console.log("hit", budget_id);
     // console.log(this.state)
     for (let key in this.state) {
       // console.log(this.state)
@@ -105,21 +110,25 @@ export class OneBudget extends Component {
         this.state[key] !== defaultBalance &&
         this.state[key] !== previous_total
       ) {
-        
-        // console.log(key);
         array.push(this.state[key]);
-        // console.log(array.reduce((acc, cv) => cv + acc));
+        let total_budgeted = array.reduce((acc, cv) => cv + acc);
+        axios
+          .put("/api/updateTotalBudgeted", { total_budgeted, budget_id })
+          .then(res => {
+            console.log(res.data);
+            let budget_balance = defaultBalance - res.data[0].total_budgeted;
+            axios.put("/api/updateBudget", { budget_balance, budget_id });
+            this.setState({
+              // total_budgeted: array.reduce((acc, cv) => cv + acc),
+              // previous_total: total_budgeted
+            });
+          });
         // console.log(this.state[key]);
-        this.setState({
-          total_budgeted: array.reduce((acc, cv) => cv + acc),
-          previous_total: total_budgeted
-          // totalExpenses: 10000
-        });
       }
     }
- 
-    // this.dynamic();
-    // this.dynamic();
+
+    this.dynamic();
+    this.dynamic();
     // this.props.getBudgetBalanceInfo({ budget_balance, totalExpenses });
   };
   updateBalance = () => {
@@ -249,6 +258,8 @@ export class OneBudget extends Component {
       // console.log("this.props.expenses_id", this.props);
     }
   };
+
+  getBalance = () => {};
 
   handleChange = e => {
     this.setState({
