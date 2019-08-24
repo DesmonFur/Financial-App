@@ -3,7 +3,7 @@ import AllBudgets from "../AllBudgets/AllBudgets.js";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
-import { Container } from "./DashboardStyle";
+import { OneBudget } from "../OneBudget/OneBudget.js";
 // import { getBudgetExpenses } from "../../ducks/reducer.js";
 export class Dashboard extends Component {
   state = {
@@ -50,16 +50,16 @@ export class Dashboard extends Component {
     console.log(this.props);
     return (
       <div>
-        <Container>
+        <div>
           <h1>Dashboard {this.state.allBudgets}</h1>
-
+        
           <Link to="/createBudget">
             <button> Create Budget</button>
           </Link>
           <Link to="/allbudgets">
             <button onClick={this.getAllBudgets}> AllBudgets </button>
           </Link>
-        </Container>
+        </div>
       </div>
     );
   }

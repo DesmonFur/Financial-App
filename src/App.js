@@ -6,6 +6,8 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
 import { setUser } from "./ducks/reducer";
+import OneBudget from "./components/OneBudget/OneBudget";
+
 export class App extends Component {
   componentDidMount() {
     axios.get("/auth/session").then(res => {
@@ -23,10 +25,10 @@ export class App extends Component {
     const { location } = this.props;
     return (
       <div className="App">
-        <header className="App-header">
-          <div>{location.pathname === "/" ? <> </> : <Nav />}</div>
-        </header>
+        <div>{location.pathname === "/" ? <> </> : <Nav />}</div>
+
         {routes}
+        <OneBudget />
       </div>
     );
   }

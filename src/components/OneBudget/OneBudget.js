@@ -115,7 +115,7 @@ export class OneBudget extends Component {
         axios
           .put("/api/updateTotalBudgeted", { total_budgeted, budget_id })
           .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             let budget_balance = defaultBalance - res.data[0].total_budgeted;
             axios.put("/api/updateBudget", { budget_balance, budget_id });
             this.setState({
@@ -281,11 +281,11 @@ export class OneBudget extends Component {
           {/* <Button onClick={() => this.updateExpenses(keys.expenses_id)}>
             POST UPDATE TO EXPENSES
           </Button> */}
-          <Button onClick={this.getExpensesProps}> GET EXPENSES PROPS </Button>
-          <Button onClick={this.total}>CLICK TO REDUCE</Button>
-          <Link to={"/allbudgets"}>
+          {/* <Button onClick={this.getExpensesProps}> GET EXPENSES PROPS </Button> */}
+          {/* <Button onClick={this.total}>CLICK TO REDUCE</Button> */}
+          {/* <Link to={"/allbudgets"}>
             <Button> AllBudgets </Button>
-          </Link>
+          </Link> */}
           {defaultBalance < balance ? (
             <h1> Default Balance: {defaultBalance}</h1>
           ) : (

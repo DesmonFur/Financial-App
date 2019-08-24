@@ -22,7 +22,7 @@ export const device = {
 };
 export const Wrapper = styled.div`
   background-color: #f8f9fe;
-  height: 90vh;
+  height: 100vh;
 `;
 
 export const Container = styled.div`
