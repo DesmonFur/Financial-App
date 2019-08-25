@@ -38,8 +38,8 @@ export const Container = styled.div`
   width: 25%;
   /* height: 45vh; */
   position: relative;
-  top: 20%;
-  left: 35%;
+  top: 30%;
+  left: 37%;
 `;
 export const Title = styled.h1`
   font-size: 1.5em;

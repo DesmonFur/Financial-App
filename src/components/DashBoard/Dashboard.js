@@ -59,7 +59,7 @@ export class Dashboard extends Component {
         // return data
       })
       .catch(() =>
-        Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
+   console.log('no worries')
       );
   }
 

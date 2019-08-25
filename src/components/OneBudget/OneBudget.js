@@ -70,7 +70,7 @@ export class OneBudget extends Component {
       console.log("res.data", res.data);
       this.setState({
         balance: res.data[0].budget_balance
-      })
+      });
     });
     // console.log("total_budgeted", total_budgeted);
     // console.log("previous_total", previous_total);
@@ -277,7 +277,7 @@ export class OneBudget extends Component {
 
     let mapped = budgets.map(keys => {
       return (
-        <div key={keys.expenses_id}>
+        <div className="onebudget" key={keys.expenses_id}>
           {/* <Button onClick={() => this.updateExpenses(keys.expenses_id)}>
             POST UPDATE TO EXPENSES
           </Button> */}
@@ -286,6 +286,19 @@ export class OneBudget extends Component {
           {/* <Link to={"/allbudgets"}>
             <Button> AllBudgets </Button>
           </Link> */}
+          <div className="top-labels">
+            <h6>Category</h6>
+            <h6>Budgeted</h6>
+            <h6>Activity</h6>
+            <h6>Available</h6>
+          </div>
+          <div className="category-list">
+            <h4>Immediate Obligations</h4>
+            <h4>True Expenses</h4>
+            <h4>Debt Payments</h4>
+            <h4>Qualiy of life goals</h4>
+            <h4>Just for Fun</h4>
+          </div>
           {defaultBalance < balance ? (
             <h1> Default Balance: {defaultBalance}</h1>
           ) : (
@@ -295,167 +308,168 @@ export class OneBudget extends Component {
           {/* <h1> UPDATE BALANCE: {balance}</h1> */}
 
           <h2>THIS STATE TOTAL BUDGET:{this.state.total_budgeted}</h2>
+          <div className="budgetlist">
+            <h1>
+              {!editing ? (
+                <p
+                  onDoubleClick={this.edit}
+                >{`Rent/Mortgage $${this.state.rent_or_mortgage}`}</p>
+              ) : (
+                <>
+                  <p onDoubleClick={this.updateBalance}>
+                    {`Rent/Mortage`}
+                    <input
+                      onChange={e => handleChange(e)}
+                      type="number"
+                      name="rent_or_mortgage"
+                      defaultValue={this.state.rent_or_mortgage}
+                    />
+                  </p>
+                </>
+              )}
+            </h1>
 
-          <h1>
-            {!editing ? (
-              <p onDoubleClick={this.edit}>{`Rent/Mortgage $${
-                this.state.rent_or_mortgage
-              }`}</p>
-            ) : (
-              <>
-                <p onDoubleClick={this.updateBalance}>
-                  {`Rent/Mortage`}
-                  <input
-                    onChange={e => handleChange(e)}
-                    type="number"
-                    name="rent_or_mortgage"
-                    defaultValue={this.state.rent_or_mortgage}
-                  />
-                </p>
-              </>
-            )}
-          </h1>
-
-          <h1>{`Electric  $${this.state.electric}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="electric"
-            defaultValue={this.state.electric}
-          />
-          <h1>{`Water  $${this.state.water}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="water"
-            defaultValue={keys.water}
-          />
-          <h1>{`Internet  $${this.state.internet}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="internet"
-            defaultValue={keys.internet}
-          />
-          <h1>{`Groceries  $${this.state.groceries}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="groceries"
-            defaultValue={keys.groceries}
-          />
-          <h1>{`Transportation  $${this.state.transportation}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="transportation"
-            defaultValue={this.state.transportation}
-          />
-          <h1>{`auto_maintenance  $${this.state.auto_maintenance}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="auto_maintenance"
-            defaultValue={this.state.auto_maintenance}
-          />
-          <h1>{`home_maintenance  $${this.state.home_maintenance}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="home_maintenance"
-            defaultValue={this.state.home_maintenance}
-          />
-          <h1>{`Medical  $${this.state.medical}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="medical"
-            defaultValue={this.state.medical}
-          />
-          <h1>{`Clothing  $${this.state.clothing}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="clothing"
-            defaultValue={this.state.clothing}
-          />
-          <h1>{`gifts  $${this.state.gifts}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="gifts"
-            defaultValue={keys.gifts}
-          />
-          <h1>{`Computer_Replacement  $${this.state.computer_replacement}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="computer_replacement"
-            defaultValue={keys.computer_replacement}
-          />
-          <h1>{`Student Loan  $${this.state.student_loan}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="student_loan"
-            defaultValue={keys.student_loan}
-          />
-          <h1>{`auto_loan  $${this.state.auto_loan}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="auto_loan"
-            defaultValue={keys.auto_loan}
-          />
-          <h1>{`Vacation  $${this.state.vacation}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="vacation"
-            defaultValue={keys.vacation}
-          />
-          <h1>{`Fitness  $${this.state.fitness}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="fitness"
-            defaultValue={keys.fitness}
-          />
-          <h1>{`Education  $${this.state.education}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="education"
-            defaultValue={keys.education}
-          />
-          <h1>{`Dining Out  $${this.state.dining_out}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="dining_out"
-            defaultValue={keys.dining_out}
-          />
-          <h1>{`gaming  $${this.state.gaming}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="gaming"
-            defaultValue={keys.gaming}
-          />
-          <h1>{`Fun Money  $${this.state.fun_money}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="number"
-            name="fun_money"
-            defaultValue={keys.fun_money}
-          />
-          <h1>{`Date:${this.state.dates}`}</h1>
-          <input
-            onChange={e => handleChange(e)}
-            type="text"
-            name="dates"
-            defaultValue={keys.dates}
-          />
+            <h1>{`Electric  $${this.state.electric}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="electric"
+              defaultValue={this.state.electric}
+            />
+            <h1>{`Water  $${this.state.water}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="water"
+              defaultValue={keys.water}
+            />
+            <h1>{`Internet  $${this.state.internet}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="internet"
+              defaultValue={keys.internet}
+            />
+            <h1>{`Groceries  $${this.state.groceries}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="groceries"
+              defaultValue={keys.groceries}
+            />
+            <h1>{`Transportation  $${this.state.transportation}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="transportation"
+              defaultValue={this.state.transportation}
+            />
+            <h1>{`auto_maintenance  $${this.state.auto_maintenance}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="auto_maintenance"
+              defaultValue={this.state.auto_maintenance}
+            />
+            <h1>{`home_maintenance  $${this.state.home_maintenance}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="home_maintenance"
+              defaultValue={this.state.home_maintenance}
+            />
+            <h1>{`Medical  $${this.state.medical}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="medical"
+              defaultValue={this.state.medical}
+            />
+            <h1>{`Clothing  $${this.state.clothing}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="clothing"
+              defaultValue={this.state.clothing}
+            />
+            <h1>{`gifts  $${this.state.gifts}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="gifts"
+              defaultValue={keys.gifts}
+            />
+            <h1>{`Computer_Replacement  $${this.state.computer_replacement}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="computer_replacement"
+              defaultValue={keys.computer_replacement}
+            />
+            <h1>{`Student Loan  $${this.state.student_loan}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="student_loan"
+              defaultValue={keys.student_loan}
+            />
+            <h1>{`auto_loan  $${this.state.auto_loan}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="auto_loan"
+              defaultValue={keys.auto_loan}
+            />
+            <h1>{`Vacation  $${this.state.vacation}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="vacation"
+              defaultValue={keys.vacation}
+            />
+            <h1>{`Fitness  $${this.state.fitness}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="fitness"
+              defaultValue={keys.fitness}
+            />
+            <h1>{`Education  $${this.state.education}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="education"
+              defaultValue={keys.education}
+            />
+            <h1>{`Dining Out  $${this.state.dining_out}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="dining_out"
+              defaultValue={keys.dining_out}
+            />
+            <h1>{`gaming  $${this.state.gaming}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="gaming"
+              defaultValue={keys.gaming}
+            />
+            <h1>{`Fun Money  $${this.state.fun_money}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="fun_money"
+              defaultValue={keys.fun_money}
+            />
+            <h1>{`Date:${this.state.dates}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="text"
+              name="dates"
+              defaultValue={keys.dates}
+            />
+          </div>
         </div>
       );
     });
@@ -467,7 +481,7 @@ export class OneBudget extends Component {
 const Budge = styled.div`
   display: flex;
   flex-direction: row;
-  color:black;
+  color: black;
 `;
 
 function mapStateToProps(reduxState) {

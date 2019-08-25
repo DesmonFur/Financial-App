@@ -1,4 +1,35 @@
-/* body{
-    background-color: red
-} */
+.onebudget {
+    display: flex;
+    border:10px solid green;
+    position: absolute;
+    left:20vw;
+    top: 15vh;
+}
 
+.onebudget>h1 {
+    color: blue;
+    /* position:relative; */
+    position:absolute;
+    top: 10vh;
+    left:113vh;
+    
+}
+
+
+.budgetlist {
+    color: green;
+    position: absolute;
+    top: 19vh;
+    display: flex;
+    flex-direction: column;
+
+    /* left:20vw */
+}
+
+.budgetlist > input {
+    display: flex;
+    border:3px solid red;
+    position: relative;
+    /* left: 5vw; */
+    /* top: 50vh; */
+}
