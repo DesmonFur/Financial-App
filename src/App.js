@@ -7,7 +7,8 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { setUser } from "./ducks/reducer";
 import OneBudget from "./components/OneBudget/OneBudget";
-
+import HeaderBar from "./components/Nav/HeaderBar";
+import styled from "styled-components";
 export class App extends Component {
   componentDidMount() {
     axios.get("/auth/session").then(res => {
@@ -25,14 +26,32 @@ export class App extends Component {
     const { location } = this.props;
     return (
       <div className="App">
-        <div>{location.pathname === "/" ? <> </> : <Nav />}</div>
+        <div>
+          {location.pathname === "/" ? (
+            <> </>
+          ) : (
+            <div>
+              <Nav />
 
+        <HeaderBar />
+            </div>
+          )}
+        </div>
+        <div>{location.pathname === "/dashboard" ? <OneBudget /> : <> </>}</div>
+        {/* <OneBudget /> */}
         {routes}
-        <OneBudget />
       </div>
     );
   }
 }
+const Headers = styled.div`
+  display: flex;
+  background-color: black;
+  border: 1px solid red;
+  width: 100vw;
+  height: 100vh;
+  justify-content: space-between;
+`;
 
 export default connect(
   null,

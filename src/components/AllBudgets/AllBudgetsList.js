@@ -4,6 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { getExpenseId, expenseFn, getBudget } from "../../ducks/reducer";
 import { connect } from "react-redux";
+import NumberFormat from "react-number-format";
 class AllBudgets extends Component {
   constructor(props) {
     super(props);
@@ -64,7 +65,7 @@ class AllBudgets extends Component {
     // console.log("budgets", this.state.budgets);
     // console.log("expenses", this.state.expenses);
     // console.log("everything", this.state.budgets[0].expenses_id);
-    console.log(this.props)
+    console.log(this.props);
     let mappedBudgets = budgets.map(budget => {
       const { budget_name, budget_balance, budget_id } = budget;
       console.log(budget_id);
@@ -72,11 +73,22 @@ class AllBudgets extends Component {
         <BudgetInfo key={budget.budget_id}>
           {/* console.log(budgets) */}
           {/* <Button onClick={this.updateExpenses}>POST UPDATE TO EXPENSES</Button> */}
-
-          <span  Button onClick={() => this.pickBudget(budget_id)}> {budget_name}</span>
-          <span onClick={this.balance}> {budget_balance}</span>
+          <Link to='/dashboard'>
+            <ShowExpenses Button onClick={() => this.pickBudget(budget_id)}>
+              {" "}
+              {budget_name}
+            </ShowExpenses>
+          </Link>
+          {/* <span onClick={this.balance}> {budget_balance}</span> */}
           {/* <Button onClick={() => this.deleteBudget(budget_id)}>delete</Button> */}
-
+          <NumberFormat
+            value={budget_balance}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"$"}
+            decimalScale={2}
+            fixedDecimalScale={true}
+          />
           {/* <button onClick={this.getAllBudgets}> AllBudgets </button> */}
           {/* <Link to={"/onebudget"}> */}
           {/* <Button onClick={() => this.pickBudget(budget_id)}>
@@ -91,14 +103,18 @@ class AllBudgets extends Component {
   }
 }
 
-const BudgetInfo = styled.div `
-display:flex;
-border: 1px solid red;
-justify-content: space-between;
-position: relative;
-/* font-weight: bold; */
-color:white;
-font-family: Arial, Helvetica, sans-serif;
+const BudgetInfo = styled.div`
+  display: flex;
+  border: 1px solid red;
+  justify-content: space-between;
+  position: relative;
+  /* font-weight: bold; */
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+`;
+
+const ShowExpenses = styled.span `
+color: white
 `
 
 function mapStateToProps(reduxState) {

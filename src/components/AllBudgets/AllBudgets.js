@@ -10,22 +10,7 @@ class AllBudgets extends Component {
     super(props);
     this.state = {
       budgets: [],
-      expenses: [],
-      data: {
-        labels: ["1", "2", "3", "4", "5"],
-        datasets: [
-          {
-            label: "videos mades",
-            backgroundColor: "rgba(100,0,200,155)",
-            data: [90, 11, 22, 24, 43, 55, 50]
-          },
-          {
-            label: "Subscriptions",
-            backgroundColor: "rgba(255,0,200,0.75)",
-            data: [4, 5, 6, 424, 8, 13, 40]
-          }
-        ]
-      }
+      expenses: []
     };
   }
 
@@ -94,7 +79,14 @@ class AllBudgets extends Component {
             {budget_name}
           </h4>
           {/* <span onClick={this.balance}> {budget_balance}</span> */}
-          <NumberFormat value={budget_balance} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+          <NumberFormat
+            value={budget_balance}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"$"}
+            decimalScale={2}
+            fixedDecimalScale={true}
+          />
           {/* <Button onClick={() => this.deleteBudget(budget_id)}>delete</Button> */}
 
           {/* <button onClick={this.getAllBudgets}> AllBudgets </button> */}

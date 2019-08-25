@@ -23,6 +23,8 @@ export const device = {
 export const Wrapper = styled.div`
   background-color: #f8f9fe;
   height: 100vh;
+  width: 100vw;
+  position: absolute;
 `;
 
 export const Container = styled.div`
@@ -32,11 +34,12 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   /* background: #282c34; */
+  /* border: 1px solid red; */
   width: 25%;
-  height: 45vh;
+  /* height: 45vh; */
   position: relative;
-  top: 20vh;
-  left: 35vw;
+  top: 20%;
+  left: 35%;
 `;
 export const Title = styled.h1`
   font-size: 1.5em;

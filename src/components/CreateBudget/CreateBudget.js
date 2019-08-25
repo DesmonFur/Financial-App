@@ -4,6 +4,7 @@ import { Button } from "../LandingPage/Landing.js";
 import { connect } from "react-redux";
 import axios from "axios";
 import { setUser } from "../../ducks/reducer";
+import styled from 'styled-components'
 
 export class createBudget extends Component {
   state = {
@@ -98,7 +99,7 @@ export class createBudget extends Component {
     // console.log(this.state.budget_id);
     // console.log(this.state.expenses);
     return (
-      <div>
+      <CreatedWrapper>
         <h1>Create Budget </h1>
         <h3>Budget Name</h3>
         <input onChange={this.handleChange} type="text" name="budget_name" />
@@ -107,10 +108,22 @@ export class createBudget extends Component {
         <Link to="/allbudgets">
           <Button onClick={this.postEverything}> CREATE EVERYTHING</Button>
         </Link>
-      </div>
+      </CreatedWrapper>
     );
   }
 }
+
+const CreatedWrapper = styled.div `
+display: flex;
+border: 1px solid red;
+flex-direction: column;
+position: relative;
+justify-content:center;
+/* width: 50%; */
+/* top: 20vh; */
+/* left:7%; */
+color: black
+`
 
 function mapStateToProps(reduxState) {
   const { user_id, email, budgets } = reduxState;

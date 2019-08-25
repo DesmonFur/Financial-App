@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import AllBudgets from "../AllBudgets/AllBudgets.js";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
-import { OneBudget } from "../OneBudget/OneBudget.js";
+import NumberFormat from "react-number-format";
+import Swal from "sweetalert2";
 // import { getBudgetExpenses } from "../../ducks/reducer.js";
 export class Dashboard extends Component {
   state = {
@@ -13,52 +13,63 @@ export class Dashboard extends Component {
 
   componentDidMount() {
     const { user_id, budgets } = this.props;
-    const { allBudgets } = this.state;
-    axios.get(`/api/getUserBudgets/${user_id}`).then(res => {
-      this.setState({
-        budgets: res.data
-      });
-      if (res.data[0].budget_balance) {
-        console.log(
-          res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
-        );
-        let all = res.data
-          .map(b => b.budget_balance)
-          .reduce((acc, cv) => acc + cv);
+    axios
+      .get(`/api/getUserBudgets/${user_id}`)
+      .then(res => {
         this.setState({
-          allBudgets: all
+          budgets: res.data
         });
-      }
-      // const data = this.state.data;
+        if (budgets !== undefined || budgets !== 2) {
+          console.log(
+            res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
+          );
+          let all = res.data
+            .map(b => b.budget_balance)
+            .reduce((acc, cv) => acc + cv);
+          this.setState({
+            allBudgets: all
+          });
+        }
+        // const data = this.state.data;
 
-      // if(data.datasets)
-      // {
-      //   let colors = ["rgba(255,0,200,0.75)"]
-      //   data.datasets.forEach((set, i) => {
-      //     set.backgroundColor = this.setGradientColor(canvas,colors[i])
-      //     set.borderColor = 'white';
-      //     set.borderWidth = 2;
-      //   })
-      // }
-      // return data
-    });
+        // if(data.datasets)
+        // {
+        //   let colors = ["rgba(255,0,200,0.75)"]
+        //   data.datasets.forEach((set, i) => {
+        //     set.backgroundColor = this.setGradientColor(canvas,colors[i])
+        //     set.borderColor = 'white';
+        //     set.borderWidth = 2;
+        //   })
+        // }
+        // return data
+      })
+      .catch(() =>
+        Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
+      );
   }
 
   render() {
-    const { budgets } = this.state;
+    const { allBudgets } = this.state;
 
     console.log(this.props);
+
     return (
       <div>
         <div>
-          <h1>Dashboard {this.state.allBudgets}</h1>
-        
-          <Link to="/createBudget">
+          <NumberFormat
+            value={allBudgets}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"$"}
+            decimalScale={2}
+            fixedDecimalScale={true}
+          />
+          {/* <Link to="/createBudget">
             <button> Create Budget</button>
           </Link>
           <Link to="/allbudgets">
             <button onClick={this.getAllBudgets}> AllBudgets </button>
-          </Link>
+          </Link> */}
         </div>
       </div>
     );

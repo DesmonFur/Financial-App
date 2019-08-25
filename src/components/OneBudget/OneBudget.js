@@ -467,6 +467,7 @@ export class OneBudget extends Component {
 const Budge = styled.div`
   display: flex;
   flex-direction: column;
+  color:black;
 `;
 
 function mapStateToProps(reduxState) {

@@ -3,6 +3,7 @@ import axios from "axios";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import AllBudgetsList from "../AllBudgets/AllBudgetsList";
+import Dashboard from "../DashBoard/Dashboard";
 import styled from "styled-components";
 
 export class Nav extends Component {
@@ -48,15 +49,18 @@ export class Nav extends Component {
 
         {dropDownClosed ? (
           <div>
-            <AlignBudget onClick={this.toggle}>Budget</AlignBudget>
-            <Dashboard />
-            <div>
-              <AllBudgetsList />
-            </div>
+            <AlignNav onClick={this.toggle}>
+            &#9655; Budget
+              <Dashboard />
+            </AlignNav>
           </div>
         ) : (
           <div>
-            <AlignBudget onClick={this.toggle}>Budget</AlignBudget>
+            <AlignNav onClick={this.toggle}>
+              {" "}
+              &#9661; Budget
+              <Dashboard />
+            </AlignNav>
             <div>
               <AllBudgetsList />
             </div>
@@ -76,19 +80,23 @@ function mapStateToProps(reduxState) {
   return { email, user_id };
 }
 
-const AlignBudget = styled.span`
+const AlignNav = styled.span`
   display: flex;
   border: 1px solid red;
+  justify-content: space-around;
 `;
 
 const Contain = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  width: 15%;
+  width: 20%;
   height: 100vh;
   background-color: #2c97ad;
+  position: absolute;
   /* width:50%; */
 `;
+
+
 
 export default connect(mapStateToProps)(withRouter(Nav));
