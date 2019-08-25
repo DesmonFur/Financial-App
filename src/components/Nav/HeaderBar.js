@@ -50,8 +50,6 @@ export class HeaderBar extends Component {
 
   render() {
     const { allBudgets } = this.state;
-    console.log(this.props);
-    console.log(allBudgets);
 
     return (
       <div>
@@ -69,6 +67,7 @@ export class HeaderBar extends Component {
                 decimalScale={2}
                 fixedDecimalScale={true}
               />
+                 <SpanBox annotation>To be Budgeted</SpanBox>
             </BudgetBalance>
           ) : (
             <BudgetBalance negative>
@@ -111,9 +110,9 @@ const SpanBox = styled.span`
   color: ${props => (props.annotation ? "black" : "normal")};
 `;
 const BudgetBalance = styled.div`
-  background-color: ${props => (props.negative ? "red" : "green")};
+  background-color: ${props => (props.negative ? "rgb(211, 60, 45)" : "green")};
   height: 6vh;
-  background-color: rgb(211, 60, 45);
+  /* background-color: rgb(211, 60, 45); */
   border-bottom-left-radius: 7.2px;
   border-bottom-right-radius: 7.2px;
   border-top-left-radius: 7.2px;
@@ -134,11 +133,10 @@ const BudgetBalance = styled.div`
   padding-left: 10.8px;
   padding-right: 10.8px;
   padding-top: 7.92px;
-  text-align: center;
-  text-rendering: auto;
+  /* text-align: center;
+  text-rendering: auto; */
   text-size-adjust: 100%;
   width: 222.109px;
-  word-spacing: 0px;
   font-size: 30px;
   justify-content: center;
   align-items: center;

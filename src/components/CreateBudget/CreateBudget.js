@@ -85,8 +85,11 @@ export class createBudget extends Component {
           )
           .then(res => {
             console.log(res.data);
-          });
-      });
+          window.location.reload()
+          })
+      })
+      console.log(this.props.location)
+      // window.location.reload()
   };
 
   handleChange = e => {
@@ -104,10 +107,10 @@ export class createBudget extends Component {
         <h3>Budget Name</h3>
         <input onChange={this.handleChange} type="text" name="budget_name" />
         <h3>Budget Balance</h3>
-        <input onChange={this.handleChange} type="text" name="budget_balance" />
-        <Link to="/allbudgets">
+        <input onChange={this.handleChange} type="number" name="budget_balance" />
+        {/* <Link to="/allbudgets"> */}
           <Button onClick={this.postEverything}> CREATE EVERYTHING</Button>
-        </Link>
+        {/* </Link> */}
       </CreatedWrapper>
     );
   }

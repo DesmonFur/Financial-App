@@ -20,6 +20,7 @@ app.use(session({
 app.get('/auth/session', authCtrl.getSession)
 app.get('/api/getUserBudgets/:user_id', budgCtrl.getUserBudgets)
 app.get('/api/budgets/:user_id', budgCtrl.getBudgets)
+app.get('/api/sumUserBudgets', budgCtrl.sumBudgets)
 app.get('/api/specificBudget/:budget_id', budgCtrl.selectUserBudget)
 app.post('/auth/register', authCtrl.register)
 app.post('/auth/login', authCtrl.login)

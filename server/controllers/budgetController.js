@@ -241,6 +241,13 @@ module.exports = {
     console.log('TOTAL BUDGETED', req.body)
     const balance = await db.create_total_budgeted([budget_id, total_budgeted])
     res.status(200).send(balance)
+  },
+  sumBudgets: async (req,res) => {
+    const db = req.app.get('db')
+    const {user_id} = req.session.user 
+    console.log(user_id)
+    const balance = await db.total_user_budgets([user_id])
+    res.status(200).send(balance)
   }
   
 };

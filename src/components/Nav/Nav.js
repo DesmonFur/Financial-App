@@ -12,7 +12,8 @@ export class Nav extends Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      dropDownClosed: true
+      dropDownClosed: true,
+      sumBudgets: 0
     };
   }
 
@@ -50,7 +51,7 @@ export class Nav extends Component {
         {dropDownClosed ? (
           <div>
             <AlignNav onClick={this.toggle}>
-            &#9655; Budget
+              &#9655; Budget
               <Dashboard />
             </AlignNav>
           </div>
@@ -96,7 +97,5 @@ const Contain = styled.div`
   position: absolute;
   /* width:50%; */
 `;
-
-
 
 export default connect(mapStateToProps)(withRouter(Nav));

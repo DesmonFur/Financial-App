@@ -14,7 +14,7 @@ export class App extends Component {
     axios.get("/auth/session").then(res => {
       try {
         this.props.setUser(res.data.user);
-        console.log("USER SESSION", res.data);
+        // console.log("USER SESSION", res.data);
       } catch {
         console.log("USER NEEDS TO LOG IN");
         this.props.history.push("/");

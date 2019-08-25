@@ -8,14 +8,66 @@ import Swal from "sweetalert2";
 export class Dashboard extends Component {
   state = {
     budgets: [],
-    allBudgets: 0
+    allBudgets: 0,
+    sumBudgets: 0
   };
 
-  componentDidMount() {
-    const { user_id, budgets } = this.props;
-    axios
-      .get(`/api/getUserBudgets/${user_id}`)
-      .then(res => {
+  getSum = () => {
+    const { user_id } = this.props;
+    console.log(user_id);
+    axios.get("/api/sumUserBudgets").then(res => {
+      console.log(res.data[0].sum);
+
+      this.setState({
+        sumBudgets: res.data[0].sum
+      });
+    });
+  };
+
+  // componentDidMount() {
+  //   const { user_id, budgets } = this.props;
+  //   axios
+  //     .get(`/api/getUserBudgets/${user_id}`)
+  //     .then(res => {
+  //       this.setState({
+  //         budgets: res.data
+  //       });
+  //       if (budgets !== undefined || budgets !== 2) {
+  //         console.log(
+  //           res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
+  //         );
+  //         let all = res.data
+  //           .map(b => b.budget_balance)
+  //           .reduce((acc, cv) => acc + cv);
+  //         this.setState({
+  //           allBudgets: all
+  //         });
+  //         this.getSum();
+  //       }
+
+  //       // const data = this.state.data;
+
+  //       // if(data.datasets)
+  //       // {
+  //       //   let colors = ["rgba(255,0,200,0.75)"]
+  //       //   data.datasets.forEach((set, i) => {
+  //       //     set.backgroundColor = this.setGradientColor(canvas,colors[i])
+  //       //     set.borderColor = 'white';
+  //       //     set.borderWidth = 2;
+  //       //   })
+  //       // }
+  //       // return data
+  //     })
+  //     .catch(() =>
+  //       Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
+  //     );
+  // }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps !== this.props) {
+      // this.getExpensesProps();
+      const { user_id, budgets } = this.props;
+      axios.get(`/api/getUserBudgets/${user_id}`).then(res => {
         this.setState({
           budgets: res.data
         });
@@ -29,35 +81,26 @@ export class Dashboard extends Component {
           this.setState({
             allBudgets: all
           });
+          this.getSum();
         }
-        // const data = this.state.data;
-
-        // if(data.datasets)
-        // {
-        //   let colors = ["rgba(255,0,200,0.75)"]
-        //   data.datasets.forEach((set, i) => {
-        //     set.backgroundColor = this.setGradientColor(canvas,colors[i])
-        //     set.borderColor = 'white';
-        //     set.borderWidth = 2;
-        //   })
-        // }
-        // return data
-      })
-      .catch(() =>
-        Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
-      );
+      });
+      // .catch(() =>
+      //   Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
+      // );
+    }
   }
 
   render() {
-    const { allBudgets } = this.state;
+    const { allBudgets, sumBudgets } = this.state;
 
     console.log(this.props);
+    console.log(sumBudgets);
 
     return (
       <div>
         <div>
           <NumberFormat
-            value={allBudgets}
+            value={sumBudgets}
             displayType={"text"}
             thousandSeparator={true}
             prefix={"$"}
