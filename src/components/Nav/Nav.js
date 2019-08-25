@@ -85,6 +85,7 @@ const AlignNav = styled.span`
   display: flex;
   border: 1px solid red;
   justify-content: space-around;
+  cursor: pointer;
 `;
 
 const Contain = styled.div`

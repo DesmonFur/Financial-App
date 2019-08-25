@@ -466,7 +466,7 @@ export class OneBudget extends Component {
 
 const Budge = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   color:black;
 `;
 

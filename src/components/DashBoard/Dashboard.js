@@ -24,50 +24,11 @@ export class Dashboard extends Component {
     });
   };
 
-  // componentDidMount() {
-  //   const { user_id, budgets } = this.props;
-  //   axios
-  //     .get(`/api/getUserBudgets/${user_id}`)
-  //     .then(res => {
-  //       this.setState({
-  //         budgets: res.data
-  //       });
-  //       if (budgets !== undefined || budgets !== 2) {
-  //         console.log(
-  //           res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
-  //         );
-  //         let all = res.data
-  //           .map(b => b.budget_balance)
-  //           .reduce((acc, cv) => acc + cv);
-  //         this.setState({
-  //           allBudgets: all
-  //         });
-  //         this.getSum();
-  //       }
-
-  //       // const data = this.state.data;
-
-  //       // if(data.datasets)
-  //       // {
-  //       //   let colors = ["rgba(255,0,200,0.75)"]
-  //       //   data.datasets.forEach((set, i) => {
-  //       //     set.backgroundColor = this.setGradientColor(canvas,colors[i])
-  //       //     set.borderColor = 'white';
-  //       //     set.borderWidth = 2;
-  //       //   })
-  //       // }
-  //       // return data
-  //     })
-  //     .catch(() =>
-  //       Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
-  //     );
-  // }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps !== this.props) {
-      // this.getExpensesProps();
-      const { user_id, budgets } = this.props;
-      axios.get(`/api/getUserBudgets/${user_id}`).then(res => {
+  componentDidMount() {
+    const { user_id, budgets } = this.props;
+    axios
+      .get(`/api/getUserBudgets/${user_id}`)
+      .then(res => {
         this.setState({
           budgets: res.data
         });
@@ -83,12 +44,51 @@ export class Dashboard extends Component {
           });
           this.getSum();
         }
-      });
-      // .catch(() =>
-      //   Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
-      // );
-    }
+
+        // const data = this.state.data;
+
+        // if(data.datasets)
+        // {
+        //   let colors = ["rgba(255,0,200,0.75)"]
+        //   data.datasets.forEach((set, i) => {
+        //     set.backgroundColor = this.setGradientColor(canvas,colors[i])
+        //     set.borderColor = 'white';
+        //     set.borderWidth = 2;
+        //   })
+        // }
+        // return data
+      })
+      .catch(() =>
+        Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
+      );
   }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevProps !== this.props) {
+  //     // this.getExpensesProps();
+  //     const { user_id, budgets } = this.props;
+  //     axios.get(`/api/getUserBudgets/${user_id}`).then(res => {
+  //       this.setState({
+  //         budgets: res.data
+  //       });
+  //       if (budgets !== undefined || budgets !== 2) {
+  //         console.log(
+  //           res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
+  //         );
+  //         let all = res.data
+  //           .map(b => b.budget_balance)
+  //           .reduce((acc, cv) => acc + cv);
+  //         this.setState({
+  //           allBudgets: all
+  //         });
+  //         this.getSum();
+  //       }
+  //     });
+  //     // .catch(() =>
+  //     //   Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
+  //     // );
+  //   }
+  // }
 
   render() {
     const { allBudgets, sumBudgets } = this.state;
