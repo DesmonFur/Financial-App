@@ -152,12 +152,10 @@ export class createBudget extends Component {
           type="number"
           name="budget_balance"
         />
-        <Link to="/dashboard">
           <CreateButton onClick={this.postEverything}>
             {" "}
             Create Budget
           </CreateButton>
-        </Link>
       </CreatedWrapper>
     );
   }

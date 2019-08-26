@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import AllBudgets from ".././AllBudgets/AllBudgets";
 import { Button } from "../LandingPage/Landing.js";
+import NumberFormat from "react-number-format";
 import "./bud.css";
 export class OneBudget extends Component {
   state = {
@@ -41,7 +42,8 @@ export class OneBudget extends Component {
     openCat2: false,
     openCat3: false,
     openCat4: false,
-    openCat5: false
+    openCat5: false,
+    total_inflow: 0
   };
 
   edit = () => {
@@ -110,7 +112,8 @@ export class OneBudget extends Component {
     axios.get(`/api/specificBudget/${budget_id}`).then(res => {
       console.log("res.data", res.data);
       this.setState({
-        balance: res.data[0].budget_balance
+        balance: res.data[0].budget_balance,
+        total_budgeted: res.data[0].total_budgeted
       });
     });
     // console.log("total_budgeted", total_budgeted);
@@ -219,7 +222,8 @@ export class OneBudget extends Component {
         expenses_id: res.data[0].expenses_id,
         defaultBalance: res.data[0].default_balance,
         budgets: res.data,
-        budget_id: res.data[0].budget_id
+        budget_id: res.data[0].budget_id,
+        total_budgeted: res.data[0].total_budgeted
       });
       // console.log(res.data);
     });
@@ -277,16 +281,10 @@ export class OneBudget extends Component {
         dates
       })
       .then(res => {
-        // console.log(res.data);
+        console.log(res.data);
         this.getExpensesProps(res.data[0].expenses_id);
       });
   };
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log(nextProps, nextState);
-  //   console.log(this.props, this.state);
-  //  return false
-  // }
 
   componentDidUpdate = (prevProps, prevState) => {
     if (prevProps !== this.props) {
@@ -296,11 +294,26 @@ export class OneBudget extends Component {
       //   this.props.getBudgetExpenses({ expenses });
       // });
       this.getExpensesProps();
+      this.getBalance();
+      
       // console.log("this.props.expenses_id", this.props);
     }
   };
 
-  getBalance = () => {};
+  getBalance = () => {
+    const { user_id } = this.props;
+    console.log(user_id);
+    axios
+      .get("/api/sumUserBudgets")
+      .then(res => {
+        console.log(res.data[0].sum);
+
+        this.setState({
+          total_inflow: res.data[0].sum
+        });
+      })
+      .catch(() => console.log("hitttttt"));
+  };
 
   handleChange = e => {
     this.setState({
@@ -321,9 +334,11 @@ export class OneBudget extends Component {
       openCat2,
       openCat3,
       openCat4,
-      openCat5
+      openCat5,
+      total_budgeted
     } = this.state;
     const { handleChange } = this;
+
     // console.log("Gotten State from componentDidUPdate", this.state);
     let mapped = budgets.map(keys => {
       return (
@@ -344,37 +359,98 @@ export class OneBudget extends Component {
           </div>
 
           {!openCat1 ? (
-            <div className="category-list">
+            <div className="category-list" id="immediate-obligations">
               <Header onClick={this.cat1}>
                 {" "}
                 &#9658; Immediate Obligations
               </Header>
             </div>
           ) : (
-            <div className="category-list">
+            <div className="category-list" id="immediate-obligations">
               <Header onClick={this.cat1}>
                 {" "}
                 &#9660; Immediate Obligations
               </Header>
-              <h1>
-                {!editing ? (
-                  <p
-                    onDoubleClick={this.edit}
-                  >{`Rent/Mortgage $${this.state.rent_or_mortgage}`}</p>
-                ) : (
-                  <>
-                    <p onDoubleClick={this.updateBalance}>
-                      {`Rent/Mortage`}
-                      <input
-                        onChange={e => handleChange(e)}
-                        type="number"
-                        name="rent_or_mortgage"
-                        defaultValue={this.state.rent_or_mortgage}
-                      />
-                    </p>
-                  </>
-                )}
-              </h1>
+
+              {!editing ? (
+          <div className="rent-mortgage">
+          <h4 onDoubleClick={this.edit}>
+            {`Rent/Mortage`}
+            {/* <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="rent_or_mortgage"
+              defaultValue={keys.rent_or_mortgage}
+            /> */}
+              </h4>
+            <NumberFormat
+              value={keys.rent_or_mortgage}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"$"}
+              decimalScale={2}
+              fixedDecimalScale={true}
+              id="budgeted"
+            />
+            <NumberFormat
+              value={keys.rent_or_mortgage}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"$"}
+              decimalScale={2}
+              fixedDecimalScale={true}
+              id="budgeted"
+            />
+            <NumberFormat
+              value={keys.rent_or_mortgage}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"$"}
+              decimalScale={2}
+              fixedDecimalScale={true}
+              id="budgeted"
+            />
+        </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4 onDoubleClick={this.updateBalance}>
+                    {`Rent/Mortage`}
+                    <input
+                      onChange={e => handleChange(e)}
+                      type="number"
+                      name="rent_or_mortgage"
+                      defaultValue={keys.rent_or_mortgage}
+                    />
+                      </h4>
+                    <NumberFormat
+                      value={keys.rent_or_mortgage}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                      id="budgeted"
+                    />
+                    <NumberFormat
+                      value={keys.rent_or_mortgage}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                      id="budgeted"
+                    />
+                    <NumberFormat
+                      value={keys.rent_or_mortgage}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                      id="budgeted"
+                    />
+                </div>
+              )}
 
               <h1>{`Electric  $${this.state.electric}`}</h1>
               <input
@@ -414,11 +490,11 @@ export class OneBudget extends Component {
             </div>
           )}
           {!openCat2 ? (
-            <div className="category-list">
+            <div className="category-list" id="true-expenses">
               <Header onClick={this.cat2}> &#9658; True Expenses</Header>
             </div>
           ) : (
-            <div className="category-list">
+            <div className="category-list" id="true-expenses">
               <Header onClick={this.cat2}> &#9660; True Expenses</Header>
               <h1>{`auto_maintenance  $${this.state.auto_maintenance}`}</h1>
               <input
@@ -465,11 +541,11 @@ export class OneBudget extends Component {
             </div>
           )}
           {!openCat3 ? (
-            <div className="category-list">
+            <div className="category-list" id="debt-payments">
               <Header onClick={this.cat3}> &#9658; Debt Payments</Header>
             </div>
           ) : (
-            <div className="category-list">
+            <div className="category-list" id="debt-payments">
               <Header onClick={this.cat3}> &#9660; Debt Payments</Header>
               <h1>{`Student Loan  $${this.state.student_loan}`}</h1>
               <input
@@ -488,11 +564,11 @@ export class OneBudget extends Component {
             </div>
           )}
           {!openCat4 ? (
-            <div className="category-list">
+            <div className="category-list" id="quality-of-life-goals">
               <Header onClick={this.cat4}> &#9658; Qualiy of life goals</Header>
             </div>
           ) : (
-            <div className="category-list">
+            <div className="category-list" id="quality-of-life-goals">
               <Header onClick={this.cat4}> &#9660; Qualiy of life goals</Header>
               <h1>{`Vacation  $${this.state.vacation}`}</h1>
               <input
@@ -518,11 +594,11 @@ export class OneBudget extends Component {
             </div>
           )}
           {!openCat5 ? (
-            <div className="category-list">
+            <div className="category-list" id="just-for-fun">
               <Header onClick={this.cat5}> &#9658; Just for Fun</Header>
             </div>
           ) : (
-            <div className="category-list">
+            <div className="category-list" id="just-for-fun">
               <Header onClick={this.cat5}> &#9660; Just for Fun</Header>
               <h1>{`Dining Out  $${this.state.dining_out}`}</h1>
               <input
@@ -545,26 +621,51 @@ export class OneBudget extends Component {
                 name="fun_money"
                 defaultValue={keys.fun_money}
               />
-              <h1>{`Date:${this.state.dates}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="text"
-                name="dates"
-                defaultValue={keys.dates}
-              />
             </div>
           )}
 
-          {defaultBalance < balance ? (
-            <h1> Default Balance: {defaultBalance}</h1>
-          ) : (
-            <h1>Updated Balance: {balance}</h1>
-          )}
-
-          {/* <h1> UPDATE BALANCE: {balance}</h1> */}
-
-          <h2>THIS STATE TOTAL BUDGET:{this.state.total_budgeted}</h2>
-          <div className="budgetlist"></div>
+          <div className="budget-info">
+            <h1 id="total-budgeted">
+              Total Budgeted
+              <br />
+              <NumberFormat
+                value={this.state.total_budgeted}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"$"}
+                decimalScale={2}
+                fixedDecimalScale={true}
+                id="number"
+              />
+            </h1>
+            <hr />
+            <h1 id="total-balance">
+              Total Balance <br />
+              <NumberFormat
+                value={balance}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"$"}
+                decimalScale={2}
+                fixedDecimalScale={true}
+                id="number"
+              />
+            </h1>
+            <hr />
+            <h1 id="total-inflow">
+              total inflow
+              <br />
+              <NumberFormat
+                value={this.state.total_inflow}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"$"}
+                decimalScale={2}
+                fixedDecimalScale={true}
+                id="number"
+              />
+            </h1>
+          </div>
         </div>
       );
     });

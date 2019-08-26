@@ -48,6 +48,31 @@ export class HeaderBar extends Component {
       );
   }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    console.log('ONE BUDGET BUDGET',this.props)
+    if (this.state.allBudgets !== this.state.allBudgets) {
+  const { user_id, budgets } = this.props;
+    axios
+      .get(`/api/getUserBudgets/${user_id}`)
+      .then(res => {
+        this.setState({
+          budgets: res.data
+        });
+        if (budgets !== undefined || budgets !== 2) {
+          console.log(
+            res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
+          );
+          let all = res.data
+            .map(b => b.budget_balance)
+            .reduce((acc, cv) => acc + cv);
+          this.setState({
+            allBudgets: all
+          });
+        }
+      })
+    }
+  };
+
   render() {
     const { allBudgets } = this.state;
 
@@ -95,7 +120,7 @@ const HeaderRow = styled.div`
   justify-content: space-around;
   position: absolute;
   width: 80vw;
-  border: 1px solid red;
+  /* border-bottom: px solid grey; */
   color: black;
   left: 20vw;
   background: #003540;

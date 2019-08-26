@@ -1,51 +1,98 @@
 .onebudget {
     display: flex;
-    border-top:1px solid gray;
+    border-top: 1px solid gray;
     position: relative;
-    right:41vh;
+    right: 41vh;
     top: 13vh;
     flex-direction: column;
-    width:59.5vw;
+    width: 59.5vw;
 }
 
-.onebudget>h1 {
-    color: blue;
-    /* position:relative; */
-    position:absolute;
-    top: 40vh;
-    /* left:11vh; */
-    width:100%;   
+#number {
+    color: rgb(88, 134, 151);
+    font-weight: 900;
 }
+
+hr {
+    width: 14vw;
+
+}
+
+.budget-info {
+    /* border:1px solid red; */
+    width: 5vw;
+    position: absolute;
+    left: 126vh;
+    display: flex;
+    flex-direction: column;
+    height: 75vh;
+    justify-content: space-evenly;
+    text-transform: uppercase;
+    /* font-size: 200rem; */
+    color: rgb(88, 134, 151);
+}
+
+#total-budgeted {
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: 3.5vw;
+}
+
+#total-balance {
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: 3.5vw;
+}
+
+#total-inflow {
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: 3.5vw;
+}
+
 
 .top-labels {
     display: flex;
     /* border-top:1px solid grey; */
     justify-content: space-around;
     align-items: center;
-    margin:10px;
+    margin: 10px;
 }
 
 #category-label {
- display: flex;   
- /* border: 1px solid green; */
- position: relative;
- right: 6vh;
+    display: flex;
+    /* border: 1px solid green; */
+    position: relative;
+    right: 6vh;
 }
 
 .category-list {
     display: flex;
-    border: 1px solid green;
+    border-top: grey;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     margin-left: .4vw;
-    background-color:#E5F5F9;
+    background-color: #E5F5F9;
+    width:59.9vw;
 }
 
 
 
 .budgetlist {
-    color: green;
+    /* color: green; */
     position: absolute;
     top: 29vh;
     display: flex;
@@ -53,10 +100,47 @@
     /* left:20vw */
 }
 
-.budgetlist > input {
+.budgetlist>input {
     display: flex;
-    border:3px solid red;
+    border: 3px solid red;
     position: relative;
     /* left: 5vw; */
     /* top: 50vh; */
+}
+
+#immediate-obligations{
+    display: flex;
+    border: 1px solid grey;
+}
+#immediate-obligations > input{
+    font-size: 5px;
+    position: relative;
+    left:10vw;
+    border: 1px solid red;
+}
+#true-expenses{
+    display: flex;
+    border: 1px solid grey;
+}
+#debt-payments{
+    display: flex;
+    border: 1px solid grey;
+}
+#quality-of-life-goals{
+    display: flex;
+    border: 1px solid grey;
+}
+#just-for-fun{
+    display: flex;
+    border: 1px solid grey;
+}
+
+.rent-mortgage{
+    display: flex;
+    justify-content: space-between;
+    width: 59.7vw;
+    border:1px solid gray;
+    align-content: center;
+    align-items: center;
+    
 }

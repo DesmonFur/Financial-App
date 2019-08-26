@@ -4,6 +4,7 @@ import axios from "axios";
 import NumberFormat from "react-number-format";
 import Swal from "sweetalert2";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 export class SideBar extends Component {
   state = {
@@ -43,9 +44,7 @@ export class SideBar extends Component {
         // }
         // return data
       })
-      .catch(() =>
-      console.log('caught error')
-      );
+      .catch(() => console.log("caught error"));
   }
 
   render() {
@@ -53,10 +52,28 @@ export class SideBar extends Component {
 
     return (
       <div>
-        <HeaderRow>
-          <div>
-            {/* <h1>Calendar</h1> */}
-          </div>
+        {this.props.location !== "/allbudgets" ? (
+          <HeaderRow>
+            <div>{/* <h1>Calendar</h1> */}</div>
+          </HeaderRow>
+        ) : (
+          <HeaderRow>
+            <div>{/* <h1>Calendar</h1> */}</div>
+            <BudgetBalance>
+              <h1>Calendar</h1>
+              <NumberFormat
+                value={allBudgets}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"$"}
+                decimalScale={2}
+                fixedDecimalScale={true}
+              />
+            </BudgetBalance>
+          </HeaderRow>
+        )}
+        {/* <HeaderRow>
+          <div><h1>Calendar</h1></div>
           <BudgetBalance>
             <NumberFormat
               value={allBudgets}
@@ -67,7 +84,7 @@ export class SideBar extends Component {
               fixedDecimalScale={true}
             />
           </BudgetBalance>
-        </HeaderRow>
+        </HeaderRow> */}
       </div>
     );
   }
@@ -79,7 +96,7 @@ const HeaderRow = styled.div`
   flex-direction: column;
   position: absolute;
   width: 20vw;
-  border: 1px solid red;
+  border-left: 1px solid grey;
   color: black;
   right: 0;
   top: 10vh;
@@ -108,4 +125,4 @@ function mapStateToProps(reduxState) {
 export default connect(
   mapStateToProps
   // { getBudgetExpenses }
-)(SideBar);
+)(withRouter(SideBar));

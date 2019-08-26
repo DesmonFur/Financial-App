@@ -64,33 +64,6 @@ export class Dashboard extends Component {
       );
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevProps !== this.props) {
-  //     // this.getExpensesProps();
-  //     const { user_id, budgets } = this.props;
-  //     axios.get(`/api/getUserBudgets/${user_id}`).then(res => {
-  //       this.setState({
-  //         budgets: res.data
-  //       });
-  //       if (budgets !== undefined || budgets !== 2) {
-  //         console.log(
-  //           res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
-  //         );
-  //         let all = res.data
-  //           .map(b => b.budget_balance)
-  //           .reduce((acc, cv) => acc + cv);
-  //         this.setState({
-  //           allBudgets: all
-  //         });
-  //         this.getSum();
-  //       }
-  //     });
-  //     // .catch(() =>
-  //     //   Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
-  //     // );
-  //   }
-  // }
-
   render() {
     const { allBudgets, sumBudgets } = this.state;
 
