@@ -7,7 +7,7 @@ const { CONNECTION_STRING, PORT, SESSION_SECRET } = process.env;
 const authCtrl = require("./controllers/authController");
 const budgCtrl = require("./controllers/budgetController");
 app.use(express.json());
-
+app.use( express.static( `${__dirname}/../build` ) );
 app.use(
   session({
     secret: SESSION_SECRET,
