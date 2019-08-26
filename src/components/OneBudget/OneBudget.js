@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import AllBudgets from ".././AllBudgets/AllBudgets";
 import { Button } from "../LandingPage/Landing.js";
 import "./bud.css";
+import { thisExpression } from "@babel/types";
 export class OneBudget extends Component {
   state = {
     rent_or_mortgage: 0,
@@ -36,7 +37,12 @@ export class OneBudget extends Component {
     total_budgeted: 0,
     previous_total: 0,
     expenses_id: 0,
-    budget_id: 0
+    budget_id: 0,
+    openCat1: false,
+    openCat2: false,
+    openCat3: false,
+    openCat4: false,
+    openCat5: false
   };
 
   edit = () => {
@@ -45,6 +51,42 @@ export class OneBudget extends Component {
       editing: !editing
     });
   };
+
+  cat1 = () => {
+    const { openCat1 } = this.state;
+    this.setState({
+      openCat1: !openCat1
+    });
+  };
+
+  cat2 = () => {
+    const { openCat2 } = this.state;
+    this.setState({
+      openCat2: !openCat2
+    });
+  };
+
+  cat3 = () => {
+    const { openCat3 } = this.state;
+    this.setState({
+      openCat3: !openCat3
+    });
+  };
+
+  cat4 = () => {
+    const { openCat4 } = this.state;
+    this.setState({
+      openCat4: !openCat4
+    });
+  };
+
+  cat5 = () => {
+    const { openCat5 } = this.state;
+    this.setState({
+      openCat5: !openCat5
+    });
+  };
+
   // updateBalance = () => {
   //   const { editing } = this.state;
   //   const {budget_balance,budget_id} = this.props
@@ -271,10 +313,19 @@ export class OneBudget extends Component {
 
   render() {
     const { expenses, budget } = this.props;
-    const { editing, budgets, balance, defaultBalance } = this.state;
+    const {
+      editing,
+      budgets,
+      balance,
+      defaultBalance,
+      openCat1,
+      openCat2,
+      openCat3,
+      openCat4,
+      openCat5
+    } = this.state;
     const { handleChange } = this;
     // console.log("Gotten State from componentDidUPdate", this.state);
-
     let mapped = budgets.map(keys => {
       return (
         <div className="onebudget" key={keys.expenses_id}>
@@ -287,18 +338,218 @@ export class OneBudget extends Component {
             <Button> AllBudgets </Button>
           </Link> */}
           <div className="top-labels">
-            <h6>Category</h6>
+            <h6 id="category-label">Category</h6>
             <h6>Budgeted</h6>
             <h6>Activity</h6>
             <h6>Available</h6>
           </div>
-          <div className="category-list">
-            <h4>Immediate Obligations</h4>
-            <h4>True Expenses</h4>
-            <h4>Debt Payments</h4>
-            <h4>Qualiy of life goals</h4>
-            <h4>Just for Fun</h4>
-          </div>
+
+          {!openCat1 ? (
+            <div className="category-list">
+              <h4 onClick={this.cat1}> &#9658; Immediate Obligations</h4>
+            </div>
+          ) : (
+            <div className="category-list">
+              <h4  onClick={this.cat1}> &#9660; Immediate Obligations</h4>
+              <h1>
+                {!editing ? (
+                  <p
+                    onDoubleClick={this.edit}
+                  >{`Rent/Mortgage $${this.state.rent_or_mortgage}`}</p>
+                ) : (
+                  <>
+                    <p onDoubleClick={this.updateBalance}>
+                      {`Rent/Mortage`}
+                      <input
+                        onChange={e => handleChange(e)}
+                        type="number"
+                        name="rent_or_mortgage"
+                        defaultValue={this.state.rent_or_mortgage}
+                      />
+                    </p>
+                  </>
+                )}
+              </h1>
+
+              <h1>{`Electric  $${this.state.electric}`}</h1>
+              <input
+                onChange={e => handleChange(e)}
+                type="number"
+                name="electric"
+                defaultValue={this.state.electric}
+              />
+              <h1>{`Water  $${this.state.water}`}</h1>
+              <input
+                onChange={e => handleChange(e)}
+                type="number"
+                name="water"
+                defaultValue={keys.water}
+              />
+              <h1>{`Internet  $${this.state.internet}`}</h1>
+              <input
+                onChange={e => handleChange(e)}
+                type="number"
+                name="internet"
+                defaultValue={keys.internet}
+              />
+              <h1>{`Groceries  $${this.state.groceries}`}</h1>
+              <input
+                onChange={e => handleChange(e)}
+                type="number"
+                name="groceries"
+                defaultValue={keys.groceries}
+              />
+              <h1>{`Transportation  $${this.state.transportation}`}</h1>
+              <input
+                onChange={e => handleChange(e)}
+                type="number"
+                name="transportation"
+                defaultValue={this.state.transportation}
+              />
+            </div>
+          )}
+          {!openCat2 ? (
+            <div className="category-list">
+              <h4 onClick={this.cat2}> &#9658; True Expenses</h4>
+            </div>
+          ) : (
+            <div className="category-list">
+              <h4 onClick={this.cat2}> &#9660; True Expenses</h4>
+              <h1>{`auto_maintenance  $${this.state.auto_maintenance}`}</h1>
+              <input
+                onChange={e => handleChange(e)}
+                type="number"
+                name="auto_maintenance"
+                defaultValue={this.state.auto_maintenance}
+              />
+              <h1>{`home_maintenance  $${this.state.home_maintenance}`}</h1>
+              <input
+                onChange={e => handleChange(e)}
+                type="number"
+                name="home_maintenance"
+                defaultValue={this.state.home_maintenance}
+              />
+              <h1>{`Medical  $${this.state.medical}`}</h1>
+              <input
+                onChange={e => handleChange(e)}
+                type="number"
+                name="medical"
+                defaultValue={this.state.medical}
+              />
+              <h1>{`Clothing  $${this.state.clothing}`}</h1>
+              <input
+                onChange={e => handleChange(e)}
+                type="number"
+                name="clothing"
+                defaultValue={this.state.clothing}
+              />
+              <h1>{`gifts  $${this.state.gifts}`}</h1>
+              <input
+                onChange={e => handleChange(e)}
+                type="number"
+                name="gifts"
+                defaultValue={keys.gifts}
+              />
+              <h1>{`Computer_Replacement  $${this.state.computer_replacement}`}</h1>
+              <input
+                onChange={e => handleChange(e)}
+                type="number"
+                name="computer_replacement"
+                defaultValue={keys.computer_replacement}
+              />
+            </div>
+          )}
+          {!openCat3 ? (
+            <div className="category-list">
+              <h4 onClick={this.cat3}> &#9658; Debt Payments</h4>
+            </div>
+          ) : (
+            <div className="category-list">
+              <h4 onClick={this.cat3}> &#9660; Debt Payments</h4>
+              <h1>{`Student Loan  $${this.state.student_loan}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="student_loan"
+              defaultValue={keys.student_loan}
+            />
+            <h1>{`auto_loan  $${this.state.auto_loan}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="auto_loan"
+              defaultValue={keys.auto_loan}
+            />
+            </div>
+          )}
+          {!openCat4 ? (
+            <div className="category-list">
+              <h4 onClick={this.cat4}> &#9658; Qualiy of life goals</h4>
+            </div>
+          ) : (
+            <div className="category-list">
+              <h4 onClick={this.cat4}> &#9660; Qualiy of life goals</h4>
+              <h1>{`Vacation  $${this.state.vacation}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="vacation"
+              defaultValue={keys.vacation}
+            />
+            <h1>{`Fitness  $${this.state.fitness}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="fitness"
+              defaultValue={keys.fitness}
+            />
+            <h1>{`Education  $${this.state.education}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="education"
+              defaultValue={keys.education}
+            />
+            </div>
+          )}
+          {!openCat5 ? (
+            <div className="category-list">
+              <h4 onClick={this.cat5}> &#9658; Just for Fun</h4>
+            </div>
+          ) : (
+            <div className="category-list">
+              <h4 onClick={this.cat5}> &#9660; Just for Fun</h4>
+              <h1>{`Dining Out  $${this.state.dining_out}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="dining_out"
+              defaultValue={keys.dining_out}
+            />
+            <h1>{`gaming  $${this.state.gaming}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="gaming"
+              defaultValue={keys.gaming}
+            />
+            <h1>{`Fun Money  $${this.state.fun_money}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="number"
+              name="fun_money"
+              defaultValue={keys.fun_money}
+            />
+            <h1>{`Date:${this.state.dates}`}</h1>
+            <input
+              onChange={e => handleChange(e)}
+              type="text"
+              name="dates"
+              defaultValue={keys.dates}
+            />
+            </div>
+          )}
+
           {defaultBalance < balance ? (
             <h1> Default Balance: {defaultBalance}</h1>
           ) : (
@@ -309,7 +560,7 @@ export class OneBudget extends Component {
 
           <h2>THIS STATE TOTAL BUDGET:{this.state.total_budgeted}</h2>
           <div className="budgetlist">
-            <h1>
+            {/* <h1>
               {!editing ? (
                 <p
                   onDoubleClick={this.edit}
@@ -363,8 +614,8 @@ export class OneBudget extends Component {
               type="number"
               name="transportation"
               defaultValue={this.state.transportation}
-            />
-            <h1>{`auto_maintenance  $${this.state.auto_maintenance}`}</h1>
+            /> */}
+            {/* <h1>{`auto_maintenance  $${this.state.auto_maintenance}`}</h1>
             <input
               onChange={e => handleChange(e)}
               type="number"
@@ -405,8 +656,8 @@ export class OneBudget extends Component {
               type="number"
               name="computer_replacement"
               defaultValue={keys.computer_replacement}
-            />
-            <h1>{`Student Loan  $${this.state.student_loan}`}</h1>
+            /> */}
+            {/* <h1>{`Student Loan  $${this.state.student_loan}`}</h1>
             <input
               onChange={e => handleChange(e)}
               type="number"
@@ -419,8 +670,8 @@ export class OneBudget extends Component {
               type="number"
               name="auto_loan"
               defaultValue={keys.auto_loan}
-            />
-            <h1>{`Vacation  $${this.state.vacation}`}</h1>
+            /> */}
+            {/* <h1>{`Vacation  $${this.state.vacation}`}</h1>
             <input
               onChange={e => handleChange(e)}
               type="number"
@@ -440,8 +691,8 @@ export class OneBudget extends Component {
               type="number"
               name="education"
               defaultValue={keys.education}
-            />
-            <h1>{`Dining Out  $${this.state.dining_out}`}</h1>
+            /> */}
+            {/* <h1>{`Dining Out  $${this.state.dining_out}`}</h1>
             <input
               onChange={e => handleChange(e)}
               type="number"
@@ -468,7 +719,7 @@ export class OneBudget extends Component {
               type="text"
               name="dates"
               defaultValue={keys.dates}
-            />
+            /> */}
           </div>
         </div>
       );

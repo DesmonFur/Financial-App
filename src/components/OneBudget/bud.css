@@ -1,28 +1,53 @@
 .onebudget {
     display: flex;
-    border:10px solid green;
-    position: absolute;
-    left:20vw;
-    top: 15vh;
+    border-top:1px solid gray;
+    position: relative;
+    right:41vh;
+    top: 13vh;
+    flex-direction: column;
+    width:59.5vw;
 }
 
 .onebudget>h1 {
     color: blue;
     /* position:relative; */
     position:absolute;
-    top: 10vh;
-    left:113vh;
-    
+    top: 40vh;
+    /* left:11vh; */
+    width:100%;   
 }
 
+.top-labels {
+    display: flex;
+    /* border-top:1px solid grey; */
+    justify-content: space-around;
+    align-items: center;
+    margin:10px;
+}
+
+#category-label {
+ display: flex;   
+ /* border: 1px solid green; */
+ position: relative;
+ right: 6vh;
+}
+
+.category-list {
+    display: flex;
+    border: 1px solid green;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: .4vw;
+    background-color:blue;
+}
 
 .budgetlist {
     color: green;
     position: absolute;
-    top: 19vh;
+    top: 29vh;
     display: flex;
     flex-direction: column;
-
     /* left:20vw */
 }
 
