@@ -12,32 +12,34 @@ CREATE TABLE budgets (
   user_id INTEGER REFERENCES user_info(user_id),
   budget_name VARCHAR(9000),
   budget_balance INTEGER,
-  budget_cap INTEGER
+  default_balance INTEGER,
+  total_budgeted INTEGER,
+  creation_date varchar(20) default to_char(CURRENT_DATE, 'MM/dd/yyyy'),
 );
 CREATE TABLE expenses(
   expenses_id SERIAL PRIMARY KEY,
   budget_id INTEGER REFERENCES budgets(budget_id),
-  rent_or_mortgage INTEGER  DEFAULT 0 ,
-  Electric INTEGER   DEFAULT 0,
-  Water INTEGER   DEFAULT 0,
-  Internet INTEGER   DEFAULT 0,
-  Groceries INTEGER   DEFAULT 0,
-  Transportation INTEGER   DEFAULT 0,
-  Auto_Maintenance INTEGER   DEFAULT 0,
-  Home_Maintenance INTEGER   DEFAULT 0,
-  Medical INTEGER   DEFAULT 0,
-  Clothing INTEGER   DEFAULT 0,
-  Gifts INTEGER   DEFAULT 0,
-  Computer_Replacement INTEGER   DEFAULT 0,
-  Student_Loan INTEGER   DEFAULT 0,
-  Auto_Loan INTEGER   DEFAULT 0,
-  Vacation INTEGER   DEFAULT 0,
-  Fitness INTEGER   DEFAULT 0,
-  Education INTEGER   DEFAULT 0,
-  Dining_Out INTEGER   DEFAULT 0,
-  Gaming INTEGER   DEFAULT 0,
-  Fun_Money INTEGER   DEFAULT 0,
-  dates VARCHAR(9000),
+  rent_or_mortgage INTEGER DEFAULT 0,
+  Electric INTEGER DEFAULT 0,
+  Water INTEGER DEFAULT 0,
+  Internet INTEGER DEFAULT 0,
+  Groceries INTEGER DEFAULT 0,
+  Transportation INTEGER DEFAULT 0,
+  Auto_Maintenance INTEGER DEFAULT 0,
+  Home_Maintenance INTEGER DEFAULT 0,
+  Medical INTEGER DEFAULT 0,
+  Clothing INTEGER DEFAULT 0,
+  Gifts INTEGER DEFAULT 0,
+  Computer_Replacement INTEGER DEFAULT 0,
+  Student_Loan INTEGER DEFAULT 0,
+  Auto_Loan INTEGER DEFAULT 0,
+  Vacation INTEGER DEFAULT 0,
+  Fitness INTEGER DEFAULT 0,
+  Education INTEGER DEFAULT 0,
+  Dining_Out INTEGER DEFAULT 0,
+  Gaming INTEGER DEFAULT 0,
+  Fun_Money INTEGER DEFAULT 0,
+  dates varchar(20) default to_char(CURRENT_DATE, 'Mon/yyyy'),
   note VARCHAR(9000)
 );
 CREATE TABLE deposits(
@@ -46,182 +48,16 @@ CREATE TABLE deposits(
   deposit_amount INTEGER,
   note VARCHAR(9000)
 );
-INSERT INTO
-  user_info(email)
-VALUES
-  ('des'),
-  ('Einstein');
-INSERT INTO
-  budgets(user_id, budget_name, budget_balance)
-VALUES
-  (1, 'Desmond1', 12345),
-  (1, 'Desmond2', 50193),
-  (2, 'Einstein1', 50193),
-  (2, 'Einstein2', 50193);
-INSERT INTO
-  expenses(
-    budget_id,
-    Rent_Or_Mortgage,
-    Electric,
-    Water,
-    Internet,
-    Groceries,
-    Transportation,
-    Auto_Maintenance,
-    Home_Maintenance,
-    Medical,
-    Clothing,
-    Gifts,
-    Computer_Replacement,
-    Student_Loan,
-    Auto_Loan,
-    Vacation,
-    Fitness,
-    Education,
-    dining_Out,
-    Gaming,
-    Fun_Money,
-    dates,
-    note
-  )
-VALUES(
-    3,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    '04/09/2002',
-    'SO FRESH AND SO CLEAN CLEAN'
-  );
-INSERT INTO
-  expenses(
-    budget_id,
-    Rent_Or_Mortgage,
-    Electric,
-    Water,
-    Internet,
-    Groceries,
-    Transportation,
-    Auto_Maintenance,
-    Home_Maintenance,
-    Medical,
-    Clothing,
-    Gifts,
-    Computer_Replacement,
-    Student_Loan,
-    Auto_Loan,
-    Vacation,
-    Fitness,
-    Education,
-    dining_Out,
-    Gaming,
-    Fun_Money,
-    dates,
-    note
-  )
-VALUES(
-    1,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    '04/09/2002',
-    'FINDING MY WAY DOWNTOWN'
-  );
-INSERT INTO
-  expenses(
-    budget_id,
-    Rent_Or_Mortgage,
-    Electric,
-    Water,
-    Internet,
-    Groceries,
-    Transportation,
-    Auto_Maintenance,
-    Home_Maintenance,
-    Medical,
-    Clothing,
-    Gifts,
-    Computer_Replacement,
-    Student_Loan,
-    Auto_Loan,
-    Vacation,
-    Fitness,
-    Education,
-    dining_Out,
-    Gaming,
-    Fun_Money,
-    dates,
-    note
-  )
-VALUES(
-    2,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    500,
-    '04/04/1904',
-    'On the grind outchere grinding'
-  );
-INSERT INTO
-  deposits(budget_id, deposit_amount, note)
-VALUES(2, 76657, 'jdjd');
-SELECT
-  *
-FROM
-  user_info;
 SELECT
   *
 FROM
   budgets;
+SELECT
+  SUM(default_balance)
+FROM
+  budgets
+WHERE
+  user_id = 6;
 SELECT
   *
 FROM
@@ -230,4 +66,32 @@ SELECT
   *
 FROM
   deposits;
-  
+-- UPDATE budgets
+  -- SET budget_balance = 4000
+  -- WHERE budget_id = 1;
+SELECT
+  *
+FROM
+  budgets b
+  join expenses e ON b.budget_id = e.budget_id
+WHERE
+  b.budget_id = 5;
+SELECT
+  *
+FROM
+  expenses e
+  JOIN budgets b ON e.budget_id = b.budget_id
+WHERE
+  expenses_id = 1;
+SELECT
+  *
+FROM
+  user_info;
+SELECT
+  *
+FROM
+  budgets b
+  JOIN expenses e ON b.budget_id = e.budget_id
+WHERE
+  user_id = 1
+  AND b.budget_id = 3;

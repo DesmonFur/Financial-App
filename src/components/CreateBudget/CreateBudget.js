@@ -116,7 +116,7 @@ export class createBudget extends Component {
   };
 
   push = () => {
-    this.props.history.push("/dashboard");
+    this.props.history.push("/allbudgets");
   };
 
   handleChange = e => {

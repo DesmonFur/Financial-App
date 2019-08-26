@@ -55,7 +55,7 @@ export class SideBar extends Component {
       <div>
         <HeaderRow>
           <div>
-            <h1>Calendar</h1>
+            {/* <h1>Calendar</h1> */}
           </div>
           <BudgetBalance>
             <NumberFormat

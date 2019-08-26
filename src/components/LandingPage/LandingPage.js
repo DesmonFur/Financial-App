@@ -57,7 +57,7 @@ export class LandingPage extends Component {
         const { email, budgets, user_id } = res.data.user;
         // console.log("budgets", budgets);
         this.props.setUser({ email, budgets, user_id });
-        this.props.history.push("/dashboard");
+        this.props.history.push("/allbudgets");
       });
     } catch {
       alert("Account not found, click register below");

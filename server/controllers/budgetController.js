@@ -10,14 +10,15 @@ module.exports = {
   },
   createBudget: async (req, res) => {
     const db = req.app.get("db");
-    const { budget_name, budget_balance,default_balance } = req.body;
+    const { budget_name, budget_balance,default_balance,creation_date } = req.body;
     const { user_id } = req.session.user;
     console.log("body", req.body);
     const budget = await db.create_user_budget([
       user_id,
       budget_name,
       budget_balance,
-      default_balance
+      default_balance,
+      creation_date
     ]);
     // res.sendStatus(200)
     res.status(200).send(budget);

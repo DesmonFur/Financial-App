@@ -39,8 +39,10 @@
     align-items: flex-start;
     justify-content: center;
     margin-left: .4vw;
-    background-color:blue;
+    background-color:#E5F5F9;
 }
+
+
 
 .budgetlist {
     color: green;
