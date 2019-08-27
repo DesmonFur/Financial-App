@@ -295,7 +295,7 @@ export class OneBudget extends Component {
       // });
       this.getExpensesProps();
       this.getBalance();
-      
+
       // console.log("this.props.expenses_id", this.props);
     }
   };
@@ -371,122 +371,378 @@ export class OneBudget extends Component {
                 {" "}
                 &#9660; Immediate Obligations
               </Header>
-
               {!editing ? (
-          <div className="rent-mortgage">
-          <h4 onDoubleClick={this.edit}>
-            {`Rent/Mortage`}
-            {/* <input
-              onChange={e => handleChange(e)}
-              type="number"
-              name="rent_or_mortgage"
-              defaultValue={keys.rent_or_mortgage}
-            /> */}
-              </h4>
-            <NumberFormat
-              value={keys.rent_or_mortgage}
-              displayType={"text"}
-              thousandSeparator={true}
-              prefix={"$"}
-              decimalScale={2}
-              fixedDecimalScale={true}
-              id="budgeted"
-            />
-            <NumberFormat
-              value={keys.rent_or_mortgage}
-              displayType={"text"}
-              thousandSeparator={true}
-              prefix={"$"}
-              decimalScale={2}
-              fixedDecimalScale={true}
-              id="budgeted"
-            />
-            <NumberFormat
-              value={keys.rent_or_mortgage}
-              displayType={"text"}
-              thousandSeparator={true}
-              prefix={"$"}
-              decimalScale={2}
-              fixedDecimalScale={true}
-              id="budgeted"
-            />
-        </div>
+                <div className="rent-mortgage">
+                  <h4>Rent/Mortage</h4>
+                  <NumberFormat
+                    value={keys.rent_or_mortgage}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.rent_or_mortgage}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
               ) : (
                 <div className="rent-mortgage">
-                  <h4 onDoubleClick={this.updateBalance}>
-                    {`Rent/Mortage`}
-                    <input
-                      onChange={e => handleChange(e)}
-                      type="number"
-                      name="rent_or_mortgage"
-                      defaultValue={keys.rent_or_mortgage}
-                    />
-                      </h4>
-                    <NumberFormat
-                      value={keys.rent_or_mortgage}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                      prefix={"$"}
-                      decimalScale={2}
-                      fixedDecimalScale={true}
-                      id="budgeted"
-                    />
-                    <NumberFormat
-                      value={keys.rent_or_mortgage}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                      prefix={"$"}
-                      decimalScale={2}
-                      fixedDecimalScale={true}
-                      id="budgeted"
-                    />
-                    <NumberFormat
-                      value={keys.rent_or_mortgage}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                      prefix={"$"}
-                      decimalScale={2}
-                      fixedDecimalScale={true}
-                      id="budgeted"
-                    />
+                  <h4>Rent/Mortage</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="rent_or_mortgage"
+                    defaultValue={this.state.rent_or_mortgage}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={this.state.rent_or_mortgage}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
                 </div>
               )}
-
-              <h1>{`Electric  $${this.state.electric}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="electric"
-                defaultValue={this.state.electric}
-              />
-              <h1>{`Water  $${this.state.water}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="water"
-                defaultValue={keys.water}
-              />
-              <h1>{`Internet  $${this.state.internet}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="internet"
-                defaultValue={keys.internet}
-              />
-              <h1>{`Groceries  $${this.state.groceries}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="groceries"
-                defaultValue={keys.groceries}
-              />
-              <h1>{`Transportation  $${this.state.transportation}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="transportation"
-                defaultValue={this.state.transportation}
-              />
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Electric</h4>
+                  <NumberFormat
+                    value={keys.electric}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.electric}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Electric</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="electric"
+                    defaultValue={keys.electric}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.electric}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Water</h4>
+                  <NumberFormat
+                    value={keys.water}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.water}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Water</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="water"
+                    defaultValue={keys.water}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.water}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Internet</h4>
+                  <NumberFormat
+                    value={keys.internet}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.internet}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Internet</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="internet"
+                    defaultValue={keys.internet}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.internet}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Groceries</h4>
+                  <NumberFormat
+                    value={keys.groceries}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.groceries}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Groceries</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="groceries"
+                    defaultValue={keys.groceries}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.groceries}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Transportation</h4>
+                  <NumberFormat
+                    value={keys.transportation}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.transportation}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Transportation</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="transportation"
+                    defaultValue={keys.transportation}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.transportation}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
             </div>
           )}
           {!openCat2 ? (
@@ -496,48 +752,383 @@ export class OneBudget extends Component {
           ) : (
             <div className="category-list" id="true-expenses">
               <Header onClick={this.cat2}> &#9660; True Expenses</Header>
-              <h1>{`auto_maintenance  $${this.state.auto_maintenance}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="auto_maintenance"
-                defaultValue={this.state.auto_maintenance}
-              />
-              <h1>{`home_maintenance  $${this.state.home_maintenance}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="home_maintenance"
-                defaultValue={this.state.home_maintenance}
-              />
-              <h1>{`Medical  $${this.state.medical}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="medical"
-                defaultValue={this.state.medical}
-              />
-              <h1>{`Clothing  $${this.state.clothing}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="clothing"
-                defaultValue={this.state.clothing}
-              />
-              <h1>{`gifts  $${this.state.gifts}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="gifts"
-                defaultValue={keys.gifts}
-              />
-              <h1>{`Computer_Replacement  $${this.state.computer_replacement}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="computer_replacement"
-                defaultValue={keys.computer_replacement}
-              />
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Auto Maintenance</h4>
+                  <NumberFormat
+                    value={keys.auto_maintenance}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.auto_maintenance}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Auto Maintenance</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="auto_maintenance"
+                    defaultValue={keys.auto_maintenance}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.auto_maintenance}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Home Maintenance</h4>
+                  <NumberFormat
+                    value={keys.home_maintenance}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.home_maintenance}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>House Maintenance</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="home_maintenance"
+                    defaultValue={keys.home_maintenance}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.home_maintenance}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Medical</h4>
+                  <NumberFormat
+                    value={keys.medical}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.medical}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Medical</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="medical"
+                    defaultValue={keys.medical}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.medical}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Clothing</h4>
+                  <NumberFormat
+                    value={keys.clothing}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.clothing}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Clothing</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="clothing"
+                    defaultValue={keys.clothing}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.clothing}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Gifts</h4>
+                  <NumberFormat
+                    value={keys.gifts}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.gifts}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Gifts</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="gifts"
+                    defaultValue={keys.gifts}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.gifts}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Computer Replacement</h4>
+                  <NumberFormat
+                    value={keys.computer_replacement}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.computer_replacement}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Computer Replacement</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="computer_replacement"
+                    defaultValue={keys.computer_replacement}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.computer_replacement}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
             </div>
           )}
           {!openCat3 ? (
@@ -547,20 +1138,132 @@ export class OneBudget extends Component {
           ) : (
             <div className="category-list" id="debt-payments">
               <Header onClick={this.cat3}> &#9660; Debt Payments</Header>
-              <h1>{`Student Loan  $${this.state.student_loan}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="student_loan"
-                defaultValue={keys.student_loan}
-              />
-              <h1>{`auto_loan  $${this.state.auto_loan}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="auto_loan"
-                defaultValue={keys.auto_loan}
-              />
+
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Student Loan</h4>
+                  <NumberFormat
+                    value={keys.student_loan}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.student_loan}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4> Student Loan </h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="student_loan"
+                    defaultValue={keys.student_loan}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.student_loan}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Auto Loan</h4>
+                  <NumberFormat
+                    value={keys.auto_loan}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.auto_loan}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Auto Loan</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="auto_loan"
+                    defaultValue={keys.auto_loan}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.auto_loan}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
             </div>
           )}
           {!openCat4 ? (
@@ -570,20 +1273,258 @@ export class OneBudget extends Component {
           ) : (
             <div className="category-list" id="quality-of-life-goals">
               <Header onClick={this.cat4}> &#9660; Qualiy of life goals</Header>
-              <h1>{`Vacation  $${this.state.vacation}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="vacation"
-                defaultValue={keys.vacation}
-              />
-              <h1>{`Fitness  $${this.state.fitness}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="fitness"
-                defaultValue={keys.fitness}
-              />
+
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Vacation</h4>
+                  <NumberFormat
+                    value={keys.vacation}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.vacation}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Vacation</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="vacation"
+                    defaultValue={keys.vacation}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.vacation}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Fitness</h4>
+                  <NumberFormat
+                    value={keys.fitness}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.fitness}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Fitness</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="fitness"
+                    defaultValue={keys.fitness}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.fitness}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Computer Replacement</h4>
+                  <NumberFormat
+                    value={keys.computer_replacement}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.computer_replacement}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Computer Replacement</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="computer_replacement"
+                    defaultValue={keys.computer_replacement}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.computer_replacement}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Education</h4>
+                  <NumberFormat
+                    value={keys.education}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.education}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Education</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="education"
+                    defaultValue={keys.education}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.education}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
               <h1>{`Education  $${this.state.education}`}</h1>
               <input
                 onChange={e => handleChange(e)}
@@ -600,13 +1541,134 @@ export class OneBudget extends Component {
           ) : (
             <div className="category-list" id="just-for-fun">
               <Header onClick={this.cat5}> &#9660; Just for Fun</Header>
-              <h1>{`Dining Out  $${this.state.dining_out}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="dining_out"
-                defaultValue={keys.dining_out}
-              />
+              
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Dining Out</h4>
+                  <NumberFormat
+                    value={keys.dining_out}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.dining_out}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Dining Out</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="computer_replacement"
+                    defaultValue={keys.dining_out}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.dining_out}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+
+              
+{!editing ? (
+                <div className="rent-mortgage">
+                  <h4>Gaming</h4>
+                  <NumberFormat
+                    value={keys.gaming}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.gaming}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Gaming</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="gaming"
+                    defaultValue={keys.gaming}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.computer_replacement}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
+            
               <h1>{`gaming  $${this.state.gaming}`}</h1>
               <input
                 onChange={e => handleChange(e)}

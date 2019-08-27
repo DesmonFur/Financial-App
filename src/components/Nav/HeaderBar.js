@@ -8,11 +8,26 @@ import { connect } from "react-redux";
 export class HeaderBar extends Component {
   state = {
     budgets: [],
-    allBudgets: 0
+    allBudgets: 0,
+    text: {
+      recipient: "",
+      textmessage: ""
+    }
+  };
+
+  sendText = () => {
+    const { text } = this.state;
+    axios.get(
+      `/send-text?recipient=${text.recipient}&textmessage$=${text.textmessage}`
+    );
+    fetch(
+      `http://localhost:8000/send-text?recipient=${text.recipient}&textmessage=${text.textmessage}`
+    ).catch(err => console.log(err));
   };
 
   componentDidMount() {
     const { user_id, budgets } = this.props;
+
     axios
       .get(`/api/getUserBudgets/${user_id}`)
       .then(res => {
@@ -48,39 +63,57 @@ export class HeaderBar extends Component {
       );
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-    console.log('ONE BUDGET BUDGET',this.props)
-    if (this.state.allBudgets !== this.state.allBudgets) {
-  const { user_id, budgets } = this.props;
-    axios
-      .get(`/api/getUserBudgets/${user_id}`)
-      .then(res => {
-        this.setState({
-          budgets: res.data
-        });
-        if (budgets !== undefined || budgets !== 2) {
-          console.log(
-            res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
-          );
-          let all = res.data
-            .map(b => b.budget_balance)
-            .reduce((acc, cv) => acc + cv);
-          this.setState({
-            allBudgets: all
-          });
-        }
-      })
-    }
-  };
+  // componentDidUpdate = (prevProps, prevState) => {
+  //   if (prevState !== this.state) {
+  // const { user_id, budgets } = this.props;
+  //   axios
+  //     .get(`/api/getUserBudgets/${user_id}`)
+  //     .then(res => {
+  //       this.setState({
+  //         budgets: res.data
+  //       });
+  //       if (budgets !== undefined || budgets !== 2) {
+  //         console.log(
+  //           res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
+  //         );
+  //         let all = res.data
+  //           .map(b => b.budget_balance)
+  //           .reduce((acc, cv) => acc + cv);
+  //         this.setState({
+  //           allBudgets: all
+  //         });
+  //       }
+  //     })
+  //   }
+  // };
 
   render() {
-    const { allBudgets } = this.state;
+    const { allBudgets, text } = this.state;
 
     return (
       <div>
         <HeaderRow>
           <div>
-            <h1>Calendar</h1>
+            {/* <label> YOUR PHONE NUMBER </label>
+            <br />
+            <input
+              value={text.recipient}
+              onChange={e =>
+                this.setState({ text: { ...text, recipient: e.target.value } })
+              }
+            />
+            <label>Message</label>
+            <br />
+            <textarea
+              value={text.textmessage}
+              rows="3"
+              onChange={e =>
+                this.setState({
+                  text: { ...text, textmessage: e.target.value }
+                })
+              }
+            ></textarea>
+            <button onClick={this.sendText}>SEND MESSAGE</button> */}
           </div>
           {allBudgets > 0 ? (
             <BudgetBalance>
@@ -92,7 +125,7 @@ export class HeaderBar extends Component {
                 decimalScale={2}
                 fixedDecimalScale={true}
               />
-                 <SpanBox annotation>To be Budgeted</SpanBox>
+              <SpanBox annotation>To be Budgeted</SpanBox>
             </BudgetBalance>
           ) : (
             <BudgetBalance negative>

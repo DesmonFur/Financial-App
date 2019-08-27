@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import NumberFormat from "react-number-format";
-import Swal from "sweetalert2";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 export class SideBar extends Component {
   state = {
     budgets: [],
-    allBudgets: 0
+    allBudgets: 0,
+    text: {
+      recipient: "",
+      textmessage: ""
+    }
   };
 
   componentDidMount() {
@@ -54,7 +57,9 @@ export class SideBar extends Component {
       <div>
         {this.props.location !== "/allbudgets" ? (
           <HeaderRow>
-            <div>{/* <h1>Calendar</h1> */}</div>
+            <div>
+              {/* <h1>Calendar</h1> */}
+            </div>
           </HeaderRow>
         ) : (
           <HeaderRow>
