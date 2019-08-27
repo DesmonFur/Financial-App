@@ -43,7 +43,8 @@ export class OneBudget extends Component {
     openCat3: false,
     openCat4: false,
     openCat5: false,
-    total_inflow: 0
+    total_inflow: 0,
+    isLoading: undefined
   };
 
   edit = () => {
@@ -192,41 +193,44 @@ export class OneBudget extends Component {
   getExpensesProps = () => {
     // console.log('this is expense id',this.props.budget[0].expenses_id);
     const { expenses_id } = this.props.budget[0];
-    axios.get(`/api/getexpenses/${expenses_id}`).then(res => {
-      // console.log("expenses_id", expenses_id);
+    axios
+      .get(`/api/getexpenses/${expenses_id}`)
+      .then(res => {
+        // console.log("expenses_id", expenses_id);
 
-      this.setState({
-        // expenses: res.data,
-        rent_or_mortgage: res.data[0].rent_or_mortgage,
-        electric: res.data[0].electric,
-        water: res.data[0].water,
-        internet: res.data[0].internet,
-        groceries: res.data[0].groceries,
-        transportation: res.data[0].transportation,
-        auto_maintenance: res.data[0].auto_maintenance,
-        home_maintenance: res.data[0].home_maintenance,
-        medical: res.data[0].medical,
-        clothing: res.data[0].clothing,
-        gifts: res.data[0].gifts,
-        computer_replacement: res.data[0].computer_replacement,
-        student_loan: res.data[0].student_loan,
-        auto_loan: res.data[0].auto_loan,
-        vacation: res.data[0].vacation,
-        fitness: res.data[0].fitness,
-        education: res.data[0].education,
-        dining_out: res.data[0].dining_out,
-        gaming: res.data[0].gaming,
-        fun_money: res.data[0].fun_money,
-        dates: res.data[0].dates,
-        balance: res.data[0].budget_balance,
-        expenses_id: res.data[0].expenses_id,
-        defaultBalance: res.data[0].default_balance,
-        budgets: res.data,
-        budget_id: res.data[0].budget_id,
-        total_budgeted: res.data[0].total_budgeted
-      });
-      // console.log(res.data);
-    });
+        this.setState({
+          // expenses: res.data,
+          rent_or_mortgage: res.data[0].rent_or_mortgage,
+          electric: res.data[0].electric,
+          water: res.data[0].water,
+          internet: res.data[0].internet,
+          groceries: res.data[0].groceries,
+          transportation: res.data[0].transportation,
+          auto_maintenance: res.data[0].auto_maintenance,
+          home_maintenance: res.data[0].home_maintenance,
+          medical: res.data[0].medical,
+          clothing: res.data[0].clothing,
+          gifts: res.data[0].gifts,
+          computer_replacement: res.data[0].computer_replacement,
+          student_loan: res.data[0].student_loan,
+          auto_loan: res.data[0].auto_loan,
+          vacation: res.data[0].vacation,
+          fitness: res.data[0].fitness,
+          education: res.data[0].education,
+          dining_out: res.data[0].dining_out,
+          gaming: res.data[0].gaming,
+          fun_money: res.data[0].fun_money,
+          dates: res.data[0].dates,
+          balance: res.data[0].budget_balance,
+          expenses_id: res.data[0].expenses_id,
+          defaultBalance: res.data[0].default_balance,
+          budgets: res.data,
+          budget_id: res.data[0].budget_id,
+          total_budgeted: res.data[0].total_budgeted
+        });
+        // console.log(res.data);
+      })
+      .then(json => this.setState({ done: true }));
   };
 
   updateExpenses = expenses_id => {
@@ -335,7 +339,8 @@ export class OneBudget extends Component {
       openCat3,
       openCat4,
       openCat5,
-      total_budgeted
+      total_budgeted,
+      done
     } = this.state;
     const { handleChange } = this;
 
@@ -343,19 +348,13 @@ export class OneBudget extends Component {
     let mapped = budgets.map(keys => {
       return (
         <div className="onebudget" key={keys.expenses_id}>
-          {/* <Button onClick={() => this.updateExpenses(keys.expenses_id)}>
-            POST UPDATE TO EXPENSES
-          </Button> */}
-          {/* <Button onClick={this.getExpensesProps}> GET EXPENSES PROPS </Button> */}
-          {/* <Button onClick={this.total}>CLICK TO REDUCE</Button> */}
-          {/* <Link to={"/allbudgets"}>
-            <Button> AllBudgets </Button>
-          </Link> */}
+       <h1 id='budget'>{keys.budget_name}</h1>
+
           <div className="top-labels">
             <h6 id="category-label">Category</h6>
             <h6>Budgeted</h6>
             <h6>Activity</h6>
-            <h6>Available</h6>
+            <h6 id="available-label">Available</h6>
           </div>
 
           {!openCat1 ? (
@@ -410,7 +409,7 @@ export class OneBudget extends Component {
                     onChange={e => handleChange(e)}
                     type="number"
                     name="rent_or_mortgage"
-                    defaultValue={this.state.rent_or_mortgage}
+                    defaultValue={keys.rent_or_mortgage}
                     onDoubleClick={this.updateBalance}
                   />
                   <NumberFormat
@@ -1402,69 +1401,6 @@ export class OneBudget extends Component {
 
               {!editing ? (
                 <div className="rent-mortgage">
-                  <h4>Computer Replacement</h4>
-                  <NumberFormat
-                    value={keys.computer_replacement}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                    decimalScale={2}
-                    fixedDecimalScale={true}
-                    id="budgeted"
-                    onDoubleClick={this.edit}
-                  />
-                  <NumberFormat
-                    value={0}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                    decimalScale={2}
-                    fixedDecimalScale={true}
-                    id="budgeted"
-                  />
-                  <NumberFormat
-                    value={keys.computer_replacement}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                    decimalScale={2}
-                    fixedDecimalScale={true}
-                    id="budgeted"
-                  />
-                </div>
-              ) : (
-                <div className="rent-mortgage">
-                  <h4>Computer Replacement</h4>
-                  <input
-                    onChange={e => handleChange(e)}
-                    type="number"
-                    name="computer_replacement"
-                    defaultValue={keys.computer_replacement}
-                    onDoubleClick={this.updateBalance}
-                  />
-                  <NumberFormat
-                    value={0}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                    decimalScale={2}
-                    fixedDecimalScale={true}
-                    id="budgeted"
-                  />
-                  <NumberFormat
-                    value={keys.computer_replacement}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                    decimalScale={2}
-                    fixedDecimalScale={true}
-                    id="budgeted"
-                  />
-                </div>
-              )}
-
-              {!editing ? (
-                <div className="rent-mortgage">
                   <h4>Education</h4>
                   <NumberFormat
                     value={keys.education}
@@ -1525,13 +1461,6 @@ export class OneBudget extends Component {
                   />
                 </div>
               )}
-              <h1>{`Education  $${this.state.education}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="education"
-                defaultValue={keys.education}
-              />
             </div>
           )}
           {!openCat5 ? (
@@ -1541,7 +1470,7 @@ export class OneBudget extends Component {
           ) : (
             <div className="category-list" id="just-for-fun">
               <Header onClick={this.cat5}> &#9660; Just for Fun</Header>
-              
+
               {!editing ? (
                 <div className="rent-mortgage">
                   <h4>Dining Out</h4>
@@ -1580,7 +1509,7 @@ export class OneBudget extends Component {
                   <input
                     onChange={e => handleChange(e)}
                     type="number"
-                    name="computer_replacement"
+                    name="dining_out"
                     defaultValue={keys.dining_out}
                     onDoubleClick={this.updateBalance}
                   />
@@ -1605,8 +1534,7 @@ export class OneBudget extends Component {
                 </div>
               )}
 
-              
-{!editing ? (
+              {!editing ? (
                 <div className="rent-mortgage">
                   <h4>Gaming</h4>
                   <NumberFormat
@@ -1658,7 +1586,7 @@ export class OneBudget extends Component {
                     id="budgeted"
                   />
                   <NumberFormat
-                    value={keys.computer_replacement}
+                    value={keys.gaming}
                     displayType={"text"}
                     thousandSeparator={true}
                     prefix={"$"}
@@ -1668,21 +1596,69 @@ export class OneBudget extends Component {
                   />
                 </div>
               )}
-            
-              <h1>{`gaming  $${this.state.gaming}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="gaming"
-                defaultValue={keys.gaming}
-              />
-              <h1>{`Fun Money  $${this.state.fun_money}`}</h1>
-              <input
-                onChange={e => handleChange(e)}
-                type="number"
-                name="fun_money"
-                defaultValue={keys.fun_money}
-              />
+
+              {!editing ? (
+                <div className="rent-mortgage">
+                  <h4> Fun Money </h4>
+                  <NumberFormat
+                    value={keys.fun_money}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                    onDoubleClick={this.edit}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.fun_money}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              ) : (
+                <div className="rent-mortgage">
+                  <h4>Fun Money</h4>
+                  <input
+                    onChange={e => handleChange(e)}
+                    type="number"
+                    name="fun_money"
+                    defaultValue={keys.fun_money}
+                    onDoubleClick={this.updateBalance}
+                  />
+                  <NumberFormat
+                    value={0}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                  <NumberFormat
+                    value={keys.fun_money}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    id="budgeted"
+                  />
+                </div>
+              )}
             </div>
           )}
 
@@ -1727,12 +1703,13 @@ export class OneBudget extends Component {
                 id="number"
               />
             </h1>
+            <hr />
           </div>
         </div>
       );
     });
     // console.log(this.state.rent_or_mortgage);
-    return <Budge>{mapped} </Budge>;
+    return <Budge> {mapped} </Budge>;
   }
 }
 
@@ -1744,8 +1721,12 @@ const Budge = styled.div`
 
 const Header = styled.div`
   cursor: pointer;
-  font-size: 25px;
+  font-size: 18px;
 `;
+
+const BudgetName = styled.h1`
+position:absolute;
+`
 
 function mapStateToProps(reduxState) {
   const {

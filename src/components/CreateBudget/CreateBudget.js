@@ -14,7 +14,7 @@ export class createBudget extends Component {
     this.state = {
       budget_balance: 0,
       default_balance: 0,
-      budget_name: "",
+      budget_name: null,
       budget_id: 0,
       expenses: []
     };
@@ -99,16 +99,17 @@ export class createBudget extends Component {
               type: "success",
               title: "Awesome...",
               text: "Your Budget has been Successfully Created!"
-            }).then(function(){window.location.reload()})
-            console.log(this.props.location);
+            }).then(function() {
+              window.location.reload();
+            });
           });
       })
       .catch(() =>
         Swal.fire({
           type: "error",
           title: "Oops...",
-          text: "Something went wrong!",
-          footer: "<a href>Why do I have this issue?</a>"
+          text: "Check your input fields",
+          footer: "Budget balance Can not exceed $2,147,483,648.00 "
         })
       );
 
@@ -135,7 +136,12 @@ export class createBudget extends Component {
           <h1>Create Budget </h1>
         </Title>
         <Heading3>Give it a nickname</Heading3>
-        <Input onChange={this.handleChange} type="text" name="budget_name" />
+        <Input
+          onChange={this.handleChange}
+          type="text"
+          name="budget_name"
+          required
+        />
         <Heading3>What is your current account balance?</Heading3>
 
         <NumberFormat
@@ -151,11 +157,12 @@ export class createBudget extends Component {
           onChange={this.handleChange}
           type="number"
           name="budget_balance"
+          required
         />
-          <CreateButton onClick={this.postEverything}>
-            {" "}
-            Create Budget
-          </CreateButton>
+        <CreateButton onClick={this.postEverything}>
+          {" "}
+          Create Budget
+        </CreateButton>
       </CreatedWrapper>
     );
   }
@@ -168,7 +175,7 @@ const Title = styled.div`
   align-items: center;
 `;
 
-const CreateButton = styled.button`
+export const CreateButton = styled.button`
   /* display: inline-block; */
   font-size: 1em;
   margin: 1em;
@@ -181,6 +188,7 @@ const CreateButton = styled.button`
   color: ${props => (props.primary ? "black" : "black")};
   /* display: block; */
   font-size: ${props => (props.sized ? "0.8em" : "1.3em")};
+  width:${props => props.small ? '9vw' : null}
 `;
 
 const Heading3 = styled.h3`

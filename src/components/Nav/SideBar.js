@@ -100,14 +100,14 @@ const HeaderRow = styled.div`
   justify-content: space-around;
   flex-direction: column;
   position: absolute;
-  width: 20vw;
+  width: 27vw;
   border-left: 1px solid grey;
   color: black;
   right: 0;
-  top: 10vh;
+  top: 16vh;
   background: #e5f5f9;
   color: white;
-  height: 90vh;
+  height: 84vh;
   align-items: center;
 `;
 

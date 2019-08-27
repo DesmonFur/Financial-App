@@ -3,23 +3,32 @@ module.exports = {
     const db = req.app.get("db");
     const { user_id } = req.session.user;
     console.log("user_session", req.session.user.user_id);
-    const user = await db.join_all_user_budgets([user_id]);
+    const user = await db
+      .join_all_user_budgets([user_id])
+      .catch(err => console.log(err));
     //    delete user[0].hash;
     //    delete user[1].hash;
     res.status(200).send(user);
   },
   createBudget: async (req, res) => {
     const db = req.app.get("db");
-    const { budget_name, budget_balance,default_balance,creation_date } = req.body;
-    const { user_id } = req.session.user;
-    console.log("body", req.body);
-    const budget = await db.create_user_budget([
-      user_id,
+    const {
       budget_name,
       budget_balance,
       default_balance,
       creation_date
-    ]);
+    } = req.body;
+    const { user_id } = req.session.user;
+    console.log("body", req.body);
+    const budget = await db
+      .create_user_budget([
+        user_id,
+        budget_name,
+        budget_balance,
+        default_balance,
+        creation_date
+      ])
+      .catch(err => console.log(err));
     // res.sendStatus(200)
     res.status(200).send(budget);
   },
@@ -73,7 +82,7 @@ module.exports = {
       gaming,
       fun_money,
       dates
-    ]);
+    ]).catch(err => console.log(err))
 
     res.status(200).send(expenses);
   },
@@ -219,36 +228,35 @@ module.exports = {
       budget_name,
       budget_balance
     ]);
-    res.status(200).send(budget)
+    res.status(200).send(budget);
   },
-  updateBudget: async (req,res) => {
-    const db = req.app.get('db')
-    const {budget_id, budget_balance} = req.body
-    console.log(req.body)
-     const balance =  await db.update_budget_balance([budget_balance, budget_id])
-      res.status(200).send(balance)
+  updateBudget: async (req, res) => {
+    const db = req.app.get("db");
+    const { budget_id, budget_balance } = req.body;
+    console.log(req.body);
+    const balance = await db.update_budget_balance([budget_balance, budget_id]);
+    res.status(200).send(balance);
   },
-  
-  updateTotalExpenses: async (req,res) => {
-    const db = req.app.get('db')
-    const {budget_id, total_budgeted} = req.body
-    console.log('TOTAL BUDGETED', req.body)
-     const balance =  await db.update_total_budgeted([total_budgeted, budget_id])
-      res.status(200).send(balance)
+
+  updateTotalExpenses: async (req, res) => {
+    const db = req.app.get("db");
+    const { budget_id, total_budgeted } = req.body;
+    console.log("TOTAL BUDGETED", req.body);
+    const balance = await db.update_total_budgeted([total_budgeted, budget_id]);
+    res.status(200).send(balance);
   },
-  createTotalExpenses: async (req,res) => {
-    const db = req.app.get('db')
-    const {budget_id, total_budgeted} = req.body 
-    console.log('TOTAL BUDGETED', req.body)
-    const balance = await db.create_total_budgeted([budget_id, total_budgeted])
-    res.status(200).send(balance)
+  createTotalExpenses: async (req, res) => {
+    const db = req.app.get("db");
+    const { budget_id, total_budgeted } = req.body;
+    console.log("TOTAL BUDGETED", req.body);
+    const balance = await db.create_total_budgeted([budget_id, total_budgeted]);
+    res.status(200).send(balance);
   },
-  sumBudgets: async (req,res) => {
-    const db = req.app.get('db')
-    const {user_id} = req.session.user 
-    console.log(user_id)
-    const balance = await db.total_user_budgets([user_id])
-    res.status(200).send(balance)
+  sumBudgets: async (req, res) => {
+    const db = req.app.get("db");
+    const { user_id } = req.session.user;
+    console.log(user_id);
+    const balance = await db.total_user_budgets([user_id]);
+    res.status(200).send(balance);
   }
-  
 };

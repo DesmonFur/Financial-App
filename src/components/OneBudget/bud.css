@@ -2,10 +2,12 @@
     display: flex;
     border-top: 1px solid gray;
     position: relative;
-    right: 41vh;
+    /* right: 41vh; */
     top: 13vh;
     flex-direction: column;
-    width: 59.5vw;
+    width: 86.4vw;
+    /* border: 3px solid red; */
+    /* overflow: auto */
 }
 
 #number {
@@ -14,18 +16,19 @@
 }
 
 hr {
-    width: 14vw;
-
+    width: 20vw;
+    position: relative;
+    left: 1.5vw;
 }
 
 .budget-info {
     /* border:1px solid red; */
-    width: 5vw;
+    width: 15vw;
     position: absolute;
-    left: 126vh;
+    left: 62vw;
     display: flex;
     flex-direction: column;
-    height: 75vh;
+    height: 85vh;
     justify-content: space-evenly;
     text-transform: uppercase;
     /* font-size: 200rem; */
@@ -65,17 +68,26 @@ hr {
 
 .top-labels {
     display: flex;
-    /* border-top:1px solid grey; */
-    justify-content: space-around;
+    /* border:1px solid red; */
+    justify-content: space-between;
     align-items: center;
-    margin: 10px;
+    /* margin: 0; */
+    position: relative;
+    /* right: 10px; */
+    width: 59.45vw;
 }
 
 #category-label {
     display: flex;
     /* border: 1px solid green; */
     position: relative;
-    right: 6vh;
+    left: 1vw;
+}
+
+#available-label {
+    display: flex;
+    position: relative;
+    right: 1vw
 }
 
 .category-list {
@@ -86,7 +98,8 @@ hr {
     justify-content: center;
     margin-left: .4vw;
     background-color: #E5F5F9;
-    width:59.9vw;
+    width: 59.04vw;
+    font-size: 15px;
 }
 
 
@@ -97,50 +110,76 @@ hr {
     top: 29vh;
     display: flex;
     flex-direction: column;
+    /* font-size: 15px; */
     /* left:20vw */
 }
 
 .budgetlist>input {
     display: flex;
-    border: 3px solid red;
+    /* border: 3px solid red; */
     position: relative;
     /* left: 5vw; */
     /* top: 50vh; */
 }
 
-#immediate-obligations{
+#immediate-obligations {
     display: flex;
-    border: 1px solid grey;
-}
-#immediate-obligations > input{
-    font-size: 5px;
-    position: relative;
-    left:10vw;
-    border: 1px solid red;
-}
-#true-expenses{
-    display: flex;
-    border: 1px solid grey;
-}
-#debt-payments{
-    display: flex;
-    border: 1px solid grey;
-}
-#quality-of-life-goals{
-    display: flex;
-    border: 1px solid grey;
-}
-#just-for-fun{
-    display: flex;
-    border: 1px solid grey;
+    border-top: .1px solid grey;
+
 }
 
-.rent-mortgage{
+#immediate-obligations>input {
+    font-size: 5px;
+    position: relative;
+    left: 10vw;
+    /* border: 1px solid red; */
+}
+
+#true-expenses {
+    display: flex;
+    border-top: .1px solid grey;
+
+}
+
+#debt-payments {
+    display: flex;
+    border-top: .1px solid grey;
+
+}
+
+#quality-of-life-goals {
+    display: flex;
+    border-top: .1px solid grey;
+}
+
+#just-for-fun {
+    display: flex;
+    border-bottom: .1px solid grey;
+    border-top: .1px solid grey;
+}
+
+.rent-mortgage {
     display: flex;
     justify-content: space-between;
-    width: 59.7vw;
-    border:1px solid gray;
+    width: 59.04vw;
+    border-top: .1px solid gray;
     align-content: center;
     align-items: center;
     background-color: white;
+    padding: .52px;
+    /* font-size: 15px; */
+}
+
+#budget {
+    position: fixed;
+    top:5vh;
+    right:10vw;
+    text-decoration: underline;
+    color: white;
+    text-decoration-color: rgb(177, 171, 171);
+    text-decoration-style: dashed;
+}
+
+.rent-mortgage > h4 {
+    font-size: 18px;
 }

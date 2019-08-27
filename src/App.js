@@ -35,7 +35,8 @@ export class App extends Component {
               <Nav />
 
         <HeaderBar />
-        <SideBar />
+        {location.pathname === '/allbudgets' || location.pathname === '/createBudget' ? <> </> : <SideBar />}
+        {/* <SideBar /> */}
             </div>
           )}
         </div>
@@ -46,14 +47,7 @@ export class App extends Component {
     );
   }
 }
-const Headers = styled.div`
-  display: flex;
-  background-color: black;
-  border: 1px solid red;
-  width: 100vw;
-  height: 100vh;
-  justify-content: space-between;
-`;
+
 
 export default connect(
   null,

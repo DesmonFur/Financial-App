@@ -59,9 +59,7 @@ export class Dashboard extends Component {
         // }
         // return data
       })
-      .catch(() =>
-   console.log('no worries')
-      );
+      .catch(() => console.log("no worries"));
   }
 
   render() {

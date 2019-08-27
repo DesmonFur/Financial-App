@@ -6,6 +6,16 @@ import { getExpenseId, expenseFn, getBudget } from "../../ducks/reducer";
 import NumberFormat from "react-number-format";
 import { connect } from "react-redux";
 import Swal from "sweetalert2";
+import {
+  BudgetInfo,
+  Inflow,
+  Date,
+  BudgetTitle,
+  Header,
+  Heading,
+  Delete
+} from "./AllBudgetsStyle";
+
 class AllBudgets extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +34,7 @@ class AllBudgets extends Component {
       },
       buttonsStyling: false
     });
+
     swag
       .fire({
         title: "Are you sure?",
@@ -48,25 +59,14 @@ class AllBudgets extends Component {
             )
             .catch(err => alert("failled to delete"));
           swag.fire("Deleted!", "Your file has been deleted.", "success");
-          window.location.reload()
+          window.location.reload();
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel
         ) {
-          swag.fire("Cancelled", "Your imaginary file is safe :)", "error");
+          swag.fire("Cancelled", "Your Budget is safe :)", "error");
         }
       });
-    // axios
-    //   .delete(`/api/deleteBudget/${budget_id}/${user_id}`)
-    //   .then(
-    //     axios.get(`/api/budgets/${user_id}`).then(res => {
-    //       // console.log(res.data);
-    //       this.setState({
-    //         budgets: res.data
-    //       });
-    //     })
-    //   )
-    //   .catch(err => alert("failled to delete"));
   };
 
   pickBudget = budget_id => {
@@ -120,17 +120,19 @@ class AllBudgets extends Component {
             {budget_name}
           </BudgetTitle>
           {/* </Link> */}
-          <h4>{creation_date}</h4>
+          <Date>{creation_date}</Date>
           {/* <span onClick={this.balance}> {budget_balance}</span> */}
 
-          <NumberFormat
-            value={budget_balance}
-            displayType={"text"}
-            thousandSeparator={true}
-            prefix={"$"}
-            decimalScale={2}
-            fixedDecimalScale={true}
-          />
+          <Inflow>
+            <NumberFormat
+              value={budget_balance}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"$"}
+              decimalScale={2}
+              fixedDecimalScale={true}
+            />
+          </Inflow>
           <Delete onClick={() => this.deleteBudget(budget_id)}>&#10008;</Delete>
         </BudgetInfo>
       );
@@ -149,44 +151,6 @@ class AllBudgets extends Component {
     );
   }
 }
-
-const BudgetInfo = styled.div`
-  display: flex;
-  border: 1px solid red;
-  justify-content: space-between;
-  position: relative;
-  right: 20vw;
-  top: 15vh;
-  width: 60vw;
-  color: black;
-  background-color:rgb(229, 245, 249);
-  align-items: center;
-  align-content:center;
-`;
-
-const Heading = styled.h5`
-  color: black;
-`;
-
-const Header = styled.div`
-  display: flex;
-  border: 1px solid red;
-  position: absolute;
-  top: 10vh;
-  width: 60vw;
-  left: 20vw;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgb(229, 245, 249) ;
-`;
-
-const Delete = styled.span`
-  cursor: pointer;
-`;
-
-const BudgetTitle = styled.h4`
-  cursor: pointer;
-`;
 
 function mapStateToProps(reduxState) {
   console.log("reduxstate", reduxState);

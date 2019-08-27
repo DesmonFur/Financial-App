@@ -4,6 +4,7 @@ import axios from "axios";
 import NumberFormat from "react-number-format";
 import Swal from "sweetalert2";
 import { connect } from "react-redux";
+import { CreateButton } from "../CreateBudget/CreateBudget";
 
 export class HeaderBar extends Component {
   state = {
@@ -93,8 +94,8 @@ export class HeaderBar extends Component {
     return (
       <div>
         <HeaderRow>
-          <div>
-            {/* <label> YOUR PHONE NUMBER </label>
+          <TwilioContact>
+            <Label> YOUR PHONE NUMBER </Label>
             <br />
             <input
               value={text.recipient}
@@ -102,7 +103,7 @@ export class HeaderBar extends Component {
                 this.setState({ text: { ...text, recipient: e.target.value } })
               }
             />
-            <label>Message</label>
+            <Label message>Message</Label>
             <br />
             <textarea
               value={text.textmessage}
@@ -113,8 +114,10 @@ export class HeaderBar extends Component {
                 })
               }
             ></textarea>
-            <button onClick={this.sendText}>SEND MESSAGE</button> */}
-          </div>
+            <CreateButton small sized onClick={this.sendText}>
+              SEND MESSAGE
+            </CreateButton>
+          </TwilioContact>
           {allBudgets > 0 ? (
             <BudgetBalance>
               <NumberFormat
@@ -152,10 +155,10 @@ const HeaderRow = styled.div`
   display: flex;
   justify-content: space-around;
   position: absolute;
-  width: 80vw;
-  /* border-bottom: px solid grey; */
+  width: 86vw;
+  border-bottom: 1px solid grey;
   color: black;
-  left: 20vw;
+  left: 14vw;
   background: #003540;
   color: white;
   height: 10vh;
@@ -195,12 +198,26 @@ const BudgetBalance = styled.div`
   text-rendering: auto; */
   text-size-adjust: 100%;
   width: 222.109px;
+  /* width: 222.109px; */
   font-size: 30px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   /* -webkit-box-flex: 1;
 -webkit-font-smoothing: subpixel-antialiased; */
+`;
+
+const TwilioContact = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60vh;
+  right: 87vw;
+`;
+
+const Label = styled.label`
+  position: relative;
+  top: 4vh;
 `;
 
 function mapStateToProps(reduxState) {
