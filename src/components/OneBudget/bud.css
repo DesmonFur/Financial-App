@@ -10,6 +10,7 @@
     /* overflow: auto */
 }
 
+
 #number {
     color: rgb(88, 134, 151);
     font-weight: 900;
@@ -35,8 +36,23 @@ hr {
     color: rgb(88, 134, 151);
 }
 
+#budgeted {
+    position: absolute;
+    left:21.5vw;
+}
+
+#activity {
+    position: absolute;
+    left:38vw;
+}
+
+#available {
+    position: absolute;
+    right:27vw;
+}
+
 #total-budgeted {
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -46,7 +62,7 @@ hr {
 }
 
 #total-balance {
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -56,7 +72,7 @@ hr {
 }
 
 #total-inflow {
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -168,6 +184,15 @@ hr {
     background-color: white;
     padding: .52px;
     /* font-size: 15px; */
+}
+
+.rent-mortgage > input {
+    /* border: 1px solid red; */
+    position: absolute;
+    left: 18vw;
+    height:3vh;
+    width: 7vw;
+
 }
 
 #budget {

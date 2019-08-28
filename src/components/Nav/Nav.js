@@ -32,6 +32,10 @@ export class Nav extends Component {
     });
   };
 
+  allBudgetPush = () => {
+    this.props.history.push("/allbudgets");
+  };
+
   render() {
     console.log(this.props);
     const { email } = this.props;
@@ -39,43 +43,41 @@ export class Nav extends Component {
     return (
       <Contain>
         {/* <img src="" alt=""/> */}
-        <span>My Budget </span>
-        <span>{email} </span>
+        <RightTop>My Budget </RightTop>
+        <RightTop>{email} </RightTop>
         <Link to="/">
           <Logout onClick={this.logout}>Logout</Logout>
         </Link>
 
         {this.props.location.pathname === "/allbudgets" ? (
           <div>
-            <Link to="/allbudgets">
-              <AlignBudgets location right>
-                {" "}
-                <img src="https://img.icons8.com/wired/54/000000/bank-building.png"></img>{" "}
-                &#9655; AllBudgets{" "}
-              </AlignBudgets>
-            </Link>
+            <AlignBudgets onClick={this.allBudgetPush} location right>
+              {" "}
+              <img src="https://img.icons8.com/dotty/58/000000/bank-building.png"></img>{" "}
+              <AllBudgetTab>All &nbsp; Budgets </AllBudgetTab>
+            </AlignBudgets>
           </div>
         ) : (
-          <Link to="/allbudgets">
-            <AlignBudgets right>
-              {" "}
-              <img src="https://img.icons8.com/wired/54/000000/bank-building.png"></img>{" "}
-              &#9655; AllBudgets{" "}
-            </AlignBudgets>
-          </Link>
+          <AlignBudgets onClick={this.allBudgetPush} right>
+            {" "}
+            <img src="https://img.icons8.com/dotty/58/000000/bank-building.png"></img>{" "}
+            <AllBudgetTab> All &nbsp; Budgets </AllBudgetTab>
+          </AlignBudgets>
         )}
 
         {dropDownClosed ? (
           <div>
             <AlignNav onClick={this.toggle}>
+              <img src="https://img.icons8.com/ios/50/000000/important-mail.png" />{" "}
               &#9655; Budget
               <Dashboard />
             </AlignNav>
           </div>
         ) : (
           <div>
-            <AlignNav onClick={this.toggle}>
+            <AlignNav location onClick={this.toggle}>
               {" "}
+              <img src="https://img.icons8.com/ios/50/000000/important-mail.png" />{" "}
               &#9661; Budget
               <Dashboard />
             </AlignNav>
@@ -98,25 +100,44 @@ function mapStateToProps(reduxState) {
   return { email, user_id };
 }
 
+const Image = styled.img`
+  color: white;
+`;
+
+const AllBudgetTab = styled.span`
+  position: relative;
+  right: 3vw;
+  top: 1vh;
+`;
+
+const RightTop = styled.span`
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+`;
+
 const AlignNav = styled.span`
   display: flex;
-  border: 0.2px solid grey;
+  border-bottom: 0.1px solid grey;
   justify-content: ${props => (props.right ? "space-around" : "space-around")};
+  background-color: ${props => (props.location ? "#00596F" : "")};
   cursor: pointer;
   color: white;
 `;
 
 const AlignBudgets = styled.span`
   display: flex;
-  border: 0.2px solid grey;
-  justify-content: ${props => (props.right ? "space-around" : "space-around")};
+  border-bottom: 0.1px solid grey;
+  justify-content: space-between;
   cursor: pointer;
   color: white;
-  background-color: ${props => (props.location ? "darkblue" : "")};;
+  background-color: ${props => (props.location ? "#00596F" : "")};
 `;
 
 const Logout = styled.span`
   color: white;
+  display:flex;
+  justify-content:flex-start;
 `;
 
 const Button = styled.button`
@@ -133,6 +154,9 @@ const Button = styled.button`
   /* display: block; */
   font-size: .6em
   width: 5vw;
+  &:hover {
+    background-color: rgb(200, 249, 254);
+  }
 `;
 
 const NavCreateTab = styled.button`

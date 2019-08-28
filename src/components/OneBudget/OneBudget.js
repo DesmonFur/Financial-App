@@ -8,6 +8,7 @@ import AllBudgets from ".././AllBudgets/AllBudgets";
 import { Button } from "../LandingPage/Landing.js";
 import NumberFormat from "react-number-format";
 import "./bud.css";
+import {Swal} from 'sweetalert2'
 export class OneBudget extends Component {
   state = {
     rent_or_mortgage: 0,
@@ -289,46 +290,48 @@ export class OneBudget extends Component {
         this.getExpensesProps(res.data[0].expenses_id);
       });
   };
-
-  componentDidUpdate = (prevProps, prevState) => {
-    if (prevProps !== this.props) {
-      const { expenses_id } = this.props;
-      // axios.get(`/api/getexpenses/${expenses_id}`).then(res => {
-      //   const { data: expenses } = res;
-      //   this.props.getBudgetExpenses({ expenses });
-      // });
-      this.getExpensesProps();
-      this.getBalance();
-
-      // console.log("this.props.expenses_id", this.props);
-    }
-  };
-
+  
   getBalance = () => {
     const { user_id } = this.props;
     console.log(user_id);
     axios
-      .get("/api/sumUserBudgets")
-      .then(res => {
-        console.log(res.data[0].sum);
-
-        this.setState({
-          total_inflow: res.data[0].sum
-        });
-      })
-      .catch(() => console.log("hitttttt"));
+    .get("/api/sumUserBudgets")
+    .then(res => {
+      console.log(res.data[0].sum);
+      
+      this.setState({
+        total_inflow: res.data[0].sum
+      });
+    })
+    .catch(() => console.log("hitttttt"));
   };
+
 
   handleChange = e => {
     this.setState({
       [e.target.name]:
-        e.target.type === "number" ? parseInt(e.target.value) : e.target.value
+      e.target.type === "number" ? parseInt(e.target.value) : e.target.value
     });
     // console.log(e.target.value);
   };
-
+  
+  
+    componentDidUpdate = (prevProps, prevState) => {
+      if (prevProps !== this.props) {
+        const { expenses_id } = this.props;
+        // axios.get(`/api/getexpenses/${expenses_id}`).then(res => {
+        //   const { data: expenses } = res;
+        //   this.props.getBudgetExpenses({ expenses });
+        // });
+        this.getExpensesProps();
+        this.getBalance();
+  
+        // console.log("this.props.expenses_id", this.props);
+      }
+    };
   render() {
     const { expenses, budget } = this.props;
+    console.log(this.props, "SDAFLJALFJSKFPJEAPFEJPJPJ");
     const {
       editing,
       budgets,
@@ -343,12 +346,12 @@ export class OneBudget extends Component {
       done
     } = this.state;
     const { handleChange } = this;
-
+    
     // console.log("Gotten State from componentDidUPdate", this.state);
     let mapped = budgets.map(keys => {
       return (
-        <div className="onebudget" key={keys.expenses_id}>
-       <h1 id='budget'>{keys.budget_name}</h1>
+        <OneBudgets key={keys.expenses_id}>
+          <h1 id="budget">{keys.budget_name}</h1>
 
           <div className="top-labels">
             <h6 id="category-label">Category</h6>
@@ -390,7 +393,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.rent_or_mortgage}
@@ -399,8 +402,8 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
-                  />
+                    id="available"
+                    />
                 </div>
               ) : (
                 <div className="rent-mortgage">
@@ -411,7 +414,7 @@ export class OneBudget extends Component {
                     name="rent_or_mortgage"
                     defaultValue={keys.rent_or_mortgage}
                     onDoubleClick={this.updateBalance}
-                  />
+                    />
                   <NumberFormat
                     value={0}
                     displayType={"text"}
@@ -419,8 +422,8 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
-                  />
+                    id="activity"
+                    />
                   <NumberFormat
                     value={this.state.rent_or_mortgage}
                     displayType={"text"}
@@ -428,8 +431,8 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
-                  />
+                    id="available"
+                    />
                 </div>
               )}
               {!editing ? (
@@ -444,7 +447,7 @@ export class OneBudget extends Component {
                     fixedDecimalScale={true}
                     id="budgeted"
                     onDoubleClick={this.edit}
-                  />
+                    />
                   <NumberFormat
                     value={0}
                     displayType={"text"}
@@ -452,8 +455,8 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
-                  />
+                    id="activity"
+                    />
                   <NumberFormat
                     value={keys.electric}
                     displayType={"text"}
@@ -461,8 +464,8 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
-                  />
+                    id="available"
+                    />
                 </div>
               ) : (
                 <div className="rent-mortgage">
@@ -473,7 +476,7 @@ export class OneBudget extends Component {
                     name="electric"
                     defaultValue={keys.electric}
                     onDoubleClick={this.updateBalance}
-                  />
+                    />
                   <NumberFormat
                     value={0}
                     displayType={"text"}
@@ -481,8 +484,8 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
-                  />
+                    id="activity"
+                    />
                   <NumberFormat
                     value={keys.electric}
                     displayType={"text"}
@@ -490,8 +493,8 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
-                  />
+                    id="available"
+                    />
                 </div>
               )}
               {!editing ? (
@@ -506,7 +509,7 @@ export class OneBudget extends Component {
                     fixedDecimalScale={true}
                     id="budgeted"
                     onDoubleClick={this.edit}
-                  />
+                    />
                   <NumberFormat
                     value={0}
                     displayType={"text"}
@@ -514,8 +517,8 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
-                  />
+                    id="activity"
+                    />
                   <NumberFormat
                     value={keys.water}
                     displayType={"text"}
@@ -523,8 +526,8 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
-                  />
+                    id="available"
+                    />
                 </div>
               ) : (
                 <div className="rent-mortgage">
@@ -543,7 +546,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.water}
@@ -552,7 +555,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -576,7 +579,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.internet}
@@ -585,7 +588,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -605,7 +608,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.internet}
@@ -614,7 +617,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -638,7 +641,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.groceries}
@@ -647,7 +650,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -667,7 +670,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.groceries}
@@ -676,7 +679,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -700,7 +703,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.transportation}
@@ -709,7 +712,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -729,7 +732,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.transportation}
@@ -738,7 +741,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -771,7 +774,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.auto_maintenance}
@@ -780,7 +783,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -800,7 +803,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.auto_maintenance}
@@ -809,7 +812,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -834,7 +837,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.home_maintenance}
@@ -843,7 +846,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -863,7 +866,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.home_maintenance}
@@ -872,7 +875,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -897,7 +900,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.medical}
@@ -906,7 +909,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -926,7 +929,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.medical}
@@ -935,7 +938,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -960,7 +963,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.clothing}
@@ -969,7 +972,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -989,7 +992,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.clothing}
@@ -998,7 +1001,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -1023,7 +1026,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.gifts}
@@ -1032,7 +1035,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -1052,7 +1055,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.gifts}
@@ -1061,7 +1064,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -1086,7 +1089,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.computer_replacement}
@@ -1095,7 +1098,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -1115,7 +1118,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.computer_replacement}
@@ -1124,7 +1127,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -1158,7 +1161,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.student_loan}
@@ -1167,7 +1170,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -1187,7 +1190,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.student_loan}
@@ -1196,7 +1199,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -1221,7 +1224,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.auto_loan}
@@ -1230,7 +1233,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -1250,7 +1253,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.auto_loan}
@@ -1259,7 +1262,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -1293,7 +1296,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.vacation}
@@ -1302,7 +1305,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -1322,7 +1325,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.vacation}
@@ -1331,7 +1334,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -1356,7 +1359,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.fitness}
@@ -1365,7 +1368,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -1385,7 +1388,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.fitness}
@@ -1394,7 +1397,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -1419,7 +1422,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.education}
@@ -1428,7 +1431,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -1448,7 +1451,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.education}
@@ -1457,7 +1460,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -1491,7 +1494,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.dining_out}
@@ -1500,7 +1503,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -1520,7 +1523,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.dining_out}
@@ -1529,7 +1532,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -1554,7 +1557,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.gaming}
@@ -1563,7 +1566,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -1583,7 +1586,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.gaming}
@@ -1592,7 +1595,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -1617,7 +1620,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.fun_money}
@@ -1626,7 +1629,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               ) : (
@@ -1646,7 +1649,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="activity"
                   />
                   <NumberFormat
                     value={keys.fun_money}
@@ -1655,7 +1658,7 @@ export class OneBudget extends Component {
                     prefix={"$"}
                     decimalScale={2}
                     fixedDecimalScale={true}
-                    id="budgeted"
+                    id="available"
                   />
                 </div>
               )}
@@ -1705,7 +1708,7 @@ export class OneBudget extends Component {
             </h1>
             <hr />
           </div>
-        </div>
+        </OneBudgets>
       );
     });
     // console.log(this.state.rent_or_mortgage);
@@ -1725,8 +1728,20 @@ const Header = styled.div`
 `;
 
 const BudgetName = styled.h1`
-position:absolute;
-`
+  position: absolute;
+`;
+
+const OneBudgets = styled.div`
+  display: flex;
+  border-top: 1px solid gray;
+  position: relative;
+  /* right: 41vh; */
+  top: 13vh;
+  flex-direction: column;
+  width: 86.4vw;
+  /* border: 3px solid red; */
+  /* overflow: auto */
+`;
 
 function mapStateToProps(reduxState) {
   const {
@@ -1734,9 +1749,17 @@ function mapStateToProps(reduxState) {
     totalExpenses,
     expenses,
     budget,
-    expenses_id
+    expenses_id,
+    budgets
   } = reduxState;
-  return { budget_balance, totalExpenses, expenses, budget, expenses_id };
+  return {
+    budget_balance,
+    totalExpenses,
+    expenses,
+    budget,
+    expenses_id,
+    budgets
+  };
 }
 
 export default connect(

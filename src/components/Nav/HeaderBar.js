@@ -46,18 +46,6 @@ export class HeaderBar extends Component {
             allBudgets: all
           });
         }
-        // const data = this.state.data;
-
-        // if(data.datasets)
-        // {
-        //   let colors = ["rgba(255,0,200,0.75)"]
-        //   data.datasets.forEach((set, i) => {
-        //     set.backgroundColor = this.setGradientColor(canvas,colors[i])
-        //     set.borderColor = 'white';
-        //     set.borderWidth = 2;
-        //   })
-        // }
-        // return data
       })
       .catch(() =>
         Swal.fire("Welcome to Xpense!", "First things first, Create a budget")

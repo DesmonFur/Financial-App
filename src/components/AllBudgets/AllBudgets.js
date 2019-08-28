@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { getExpenseId, expenseFn, getBudget } from "../../ducks/reducer";
+import { getExpenseId, getBudget } from "../../ducks/reducer";
 import NumberFormat from "react-number-format";
 import { connect } from "react-redux";
 import Swal from "sweetalert2";
@@ -89,6 +89,7 @@ class AllBudgets extends Component {
       this.getAllBudgets();
     }
   }
+
   getAllBudgets = () => {
     const { user_id, props } = this.props;
     axios.get(`/api/getUserBudgets/${user_id}`).then(res => {
@@ -101,15 +102,15 @@ class AllBudgets extends Component {
   render() {
     const { editing, expenses, budgets } = this.state;
     // console.log('total budgeted',budget.total_budgeted)
-    console.log("user budgets", budgets);
+    // console.log("user budgets", budgets);
     // console.log("all props", this.props);
     // console.log("budgets", this.state.budgets);
-    console.log("expenses", this.state.expenses);
+    // console.log("expenses", this.state.expenses);
     // console.log("everything", this.state.budgets[0].expenses_id);
-    console.log(this.props);
+    // console.log(this.props);
     let mappedBudgets = budgets.map(budget => {
       const { budget_name, budget_balance, budget_id, creation_date } = budget;
-      console.log(budget_id);
+      // console.log(budget_id);
       return (
         <BudgetInfo key={budget.budget_id}>
           {/* console.log(budgets) */}
@@ -161,4 +162,4 @@ function mapStateToProps(reduxState) {
 export default connect(
   mapStateToProps,
   { getExpenseId, getBudget }
-)(AllBudgets);
+)(AllBudgets); 

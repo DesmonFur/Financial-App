@@ -105,7 +105,7 @@ class AllBudgets extends Component {
 
 const BudgetInfo = styled.div`
   display: flex;
-  border: 1px solid red;
+  border-bottom: 1px solid grey;
   justify-content: space-between;
   position: relative;
   /* font-weight: bold; */

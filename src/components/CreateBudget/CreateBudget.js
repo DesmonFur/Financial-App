@@ -186,10 +186,12 @@ export const CreateButton = styled.button`
   width: 15vw;
   background: ${props => (props.primary ? "'#8AA5AD'" : "#F8F9FE")};
   color: ${props => (props.primary ? "black" : "black")};
-  /* display: block; */
   font-size: ${props => (props.sized ? "0.8em" : "1.3em")};
-  width:${props => props.small ? '9vw' : null}
-`;
+  width: ${props => (props.small ? "9vw" : null)};
+  &:hover {
+    background-color: rgb(200, 249, 254);
+  }
+  `;
 
 const Heading3 = styled.h3`
   /* border: 1px solid red; */
@@ -227,7 +229,7 @@ const CreatedWrapper = styled.div`
   height: 70%;
   width: 40%;
   top: 20vh;
-  right: 29.5vw;
+  right: 23.5vw;
   color: black;
   border: 3px solid #8aa5ad;
 `;

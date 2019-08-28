@@ -34,7 +34,9 @@ module.exports = {
     const user = await db.find_user_info([email]);
     const user_budgets = await db.find_user_budgets([email]);
     if (user.length === 0) {
-      return res.status(400).send({ message: "Email not found" });
+      return res.status(400).send({ message: "Email not found" }).catch(
+        alert('not found')
+      )
     }
     // console.log("User Budgets", user_budgets);
     // console.log("User", user);
