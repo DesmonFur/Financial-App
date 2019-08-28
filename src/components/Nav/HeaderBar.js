@@ -28,53 +28,40 @@ export class HeaderBar extends Component {
 
   componentDidMount() {
     const { user_id, budgets } = this.props;
+  this.getBack()
+    setInterval(() => 
+   this.getBack()
+      , 2000)
+  }
 
+
+
+
+
+  getBack = () => {
+    const { user_id, budgets } = this.props;
     axios
-      .get(`/api/getUserBudgets/${user_id}`)
-      .then(res => {
-        this.setState({
-          budgets: res.data
-        });
-        if (budgets !== undefined || budgets !== 2) {
-          console.log(
-            res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
+    .get(`/api/getUserBudgets/${user_id}`)
+    .then(res => {
+      this.setState({
+        budgets: res.data
+      });
+      if (budgets !== undefined || budgets !== 2) {
+        console.log(
+          res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
           );
           let all = res.data
-            .map(b => b.budget_balance)
-            .reduce((acc, cv) => acc + cv);
+          .map(b => b.budget_balance)
+          .reduce((acc, cv) => acc + cv);
           this.setState({
             allBudgets: all
           });
         }
       })
       .catch(() =>
-        Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
-      );
-  }
-
-  // componentDidUpdate = (prevProps, prevState) => {
-  //   if (prevState !== this.state) {
-  // const { user_id, budgets } = this.props;
-  //   axios
-  //     .get(`/api/getUserBudgets/${user_id}`)
-  //     .then(res => {
-  //       this.setState({
-  //         budgets: res.data
-  //       });
-  //       if (budgets !== undefined || budgets !== 2) {
-  //         console.log(
-  //           res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
-  //         );
-  //         let all = res.data
-  //           .map(b => b.budget_balance)
-  //           .reduce((acc, cv) => acc + cv);
-  //         this.setState({
-  //           allBudgets: all
-  //         });
-  //       }
-  //     })
-  //   }
-  // };
+      Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
+      )
+  };
 
   render() {
     const { allBudgets, text } = this.state;
@@ -106,7 +93,7 @@ export class HeaderBar extends Component {
               SEND MESSAGE
             </CreateButton>
           </TwilioContact>
-          {allBudgets > 0 ? (
+          {allBudgets >= -1 ? (
             <BudgetBalance>
               <NumberFormat
                 value={allBudgets}

@@ -3,12 +3,8 @@ import styled from "styled-components";
 import axios from "axios";
 import { getBudgetExpenses, getBudgetBalanceInfo } from "../../ducks/reducer";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import AllBudgets from ".././AllBudgets/AllBudgets";
-import { Button } from "../LandingPage/Landing.js";
 import NumberFormat from "react-number-format";
 import "./bud.css";
-import {Swal} from 'sweetalert2'
 export class OneBudget extends Component {
   state = {
     rent_or_mortgage: 0,
@@ -290,45 +286,43 @@ export class OneBudget extends Component {
         this.getExpensesProps(res.data[0].expenses_id);
       });
   };
-  
+
   getBalance = () => {
     const { user_id } = this.props;
     console.log(user_id);
     axios
-    .get("/api/sumUserBudgets")
-    .then(res => {
-      console.log(res.data[0].sum);
-      
-      this.setState({
-        total_inflow: res.data[0].sum
-      });
-    })
-    .catch(() => console.log("hitttttt"));
-  };
+      .get("/api/sumUserBudgets")
+      .then(res => {
+        console.log(res.data[0].sum);
 
+        this.setState({
+          total_inflow: res.data[0].sum
+        });
+      })
+      .catch(() => console.log("hitttttt"));
+  };
 
   handleChange = e => {
     this.setState({
       [e.target.name]:
-      e.target.type === "number" ? parseInt(e.target.value) : e.target.value
+        e.target.type === "number" ? parseInt(e.target.value) : e.target.value
     });
     // console.log(e.target.value);
   };
-  
-  
-    componentDidUpdate = (prevProps, prevState) => {
-      if (prevProps !== this.props) {
-        const { expenses_id } = this.props;
-        // axios.get(`/api/getexpenses/${expenses_id}`).then(res => {
-        //   const { data: expenses } = res;
-        //   this.props.getBudgetExpenses({ expenses });
-        // });
-        this.getExpensesProps();
-        this.getBalance();
-  
-        // console.log("this.props.expenses_id", this.props);
-      }
-    };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevProps !== this.props) {
+      const { expenses_id } = this.props;
+      // axios.get(`/api/getexpenses/${expenses_id}`).then(res => {
+      //   const { data: expenses } = res;
+      //   this.props.getBudgetExpenses({ expenses });
+      // });
+      this.getExpensesProps();
+      this.getBalance();
+
+      // console.log("this.props.expenses_id", this.props);
+    }
+  };
   render() {
     const { expenses, budget } = this.props;
     console.log(this.props, "SDAFLJALFJSKFPJEAPFEJPJPJ");
@@ -346,7 +340,7 @@ export class OneBudget extends Component {
       done
     } = this.state;
     const { handleChange } = this;
-    
+
     // console.log("Gotten State from componentDidUPdate", this.state);
     let mapped = budgets.map(keys => {
       return (
@@ -403,7 +397,7 @@ export class OneBudget extends Component {
                     decimalScale={2}
                     fixedDecimalScale={true}
                     id="available"
-                    />
+                  />
                 </div>
               ) : (
                 <div className="rent-mortgage">
@@ -414,7 +408,7 @@ export class OneBudget extends Component {
                     name="rent_or_mortgage"
                     defaultValue={keys.rent_or_mortgage}
                     onDoubleClick={this.updateBalance}
-                    />
+                  />
                   <NumberFormat
                     value={0}
                     displayType={"text"}
@@ -423,7 +417,7 @@ export class OneBudget extends Component {
                     decimalScale={2}
                     fixedDecimalScale={true}
                     id="activity"
-                    />
+                  />
                   <NumberFormat
                     value={this.state.rent_or_mortgage}
                     displayType={"text"}
@@ -432,7 +426,7 @@ export class OneBudget extends Component {
                     decimalScale={2}
                     fixedDecimalScale={true}
                     id="available"
-                    />
+                  />
                 </div>
               )}
               {!editing ? (
@@ -447,7 +441,7 @@ export class OneBudget extends Component {
                     fixedDecimalScale={true}
                     id="budgeted"
                     onDoubleClick={this.edit}
-                    />
+                  />
                   <NumberFormat
                     value={0}
                     displayType={"text"}
@@ -456,7 +450,7 @@ export class OneBudget extends Component {
                     decimalScale={2}
                     fixedDecimalScale={true}
                     id="activity"
-                    />
+                  />
                   <NumberFormat
                     value={keys.electric}
                     displayType={"text"}
@@ -465,7 +459,7 @@ export class OneBudget extends Component {
                     decimalScale={2}
                     fixedDecimalScale={true}
                     id="available"
-                    />
+                  />
                 </div>
               ) : (
                 <div className="rent-mortgage">
@@ -476,7 +470,7 @@ export class OneBudget extends Component {
                     name="electric"
                     defaultValue={keys.electric}
                     onDoubleClick={this.updateBalance}
-                    />
+                  />
                   <NumberFormat
                     value={0}
                     displayType={"text"}
@@ -485,7 +479,7 @@ export class OneBudget extends Component {
                     decimalScale={2}
                     fixedDecimalScale={true}
                     id="activity"
-                    />
+                  />
                   <NumberFormat
                     value={keys.electric}
                     displayType={"text"}
@@ -494,7 +488,7 @@ export class OneBudget extends Component {
                     decimalScale={2}
                     fixedDecimalScale={true}
                     id="available"
-                    />
+                  />
                 </div>
               )}
               {!editing ? (
@@ -509,7 +503,7 @@ export class OneBudget extends Component {
                     fixedDecimalScale={true}
                     id="budgeted"
                     onDoubleClick={this.edit}
-                    />
+                  />
                   <NumberFormat
                     value={0}
                     displayType={"text"}
@@ -518,7 +512,7 @@ export class OneBudget extends Component {
                     decimalScale={2}
                     fixedDecimalScale={true}
                     id="activity"
-                    />
+                  />
                   <NumberFormat
                     value={keys.water}
                     displayType={"text"}
@@ -527,7 +521,7 @@ export class OneBudget extends Component {
                     decimalScale={2}
                     fixedDecimalScale={true}
                     id="available"
-                    />
+                  />
                 </div>
               ) : (
                 <div className="rent-mortgage">
