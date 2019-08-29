@@ -5,6 +5,7 @@ import { getBudgetExpenses, getBudgetBalanceInfo } from "../../ducks/reducer";
 import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
 import "./bud.css";
+import {withRouter} from 'react-router-dom'
 export class OneBudget extends Component {
   state = {
     rent_or_mortgage: 0,
@@ -108,7 +109,7 @@ export class OneBudget extends Component {
     } = this.state;
 
     axios.get(`/api/specificBudget/${budget_id}`).then(res => {
-      console.log("res.data", res.data);
+      // console.log("res.data", res.data);
       this.setState({
         balance: res.data[0].budget_balance,
         total_budgeted: res.data[0].total_budgeted
@@ -136,7 +137,7 @@ export class OneBudget extends Component {
       defaultBalance,
       previous_total
     } = this.state;
-    console.log("hit", budget_id);
+    // console.log("hit", budget_id);
     // console.log(this.state)
     for (let key in this.state) {
       // console.log(this.state)
@@ -227,7 +228,7 @@ export class OneBudget extends Component {
         });
         // console.log(res.data);
       })
-      .then(json => this.setState({ done: true }));
+      .catch();
   };
 
   updateExpenses = expenses_id => {
@@ -282,18 +283,18 @@ export class OneBudget extends Component {
         dates
       })
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         this.getExpensesProps(res.data[0].expenses_id);
       });
   };
 
   getBalance = () => {
     const { user_id } = this.props;
-    console.log(user_id);
+    // console.log(user_id);
     axios
       .get("/api/sumUserBudgets")
       .then(res => {
-        console.log(res.data[0].sum);
+        // console.log(res.data[0].sum);
 
         this.setState({
           total_inflow: res.data[0].sum
@@ -325,7 +326,7 @@ export class OneBudget extends Component {
   };
   render() {
     const { expenses, budget } = this.props;
-    console.log(this.props, "SDAFLJALFJSKFPJEAPFEJPJPJ");
+    // console.log(this.props, "SDAFLJALFJSKFPJEAPFEJPJPJ");
     const {
       editing,
       budgets,
@@ -419,7 +420,7 @@ export class OneBudget extends Component {
                     id="activity"
                   />
                   <NumberFormat
-                    value={this.state.rent_or_mortgage}
+                    value={keys.rent_or_mortgage}
                     displayType={"text"}
                     thousandSeparator={true}
                     prefix={"$"}
@@ -1759,4 +1760,4 @@ function mapStateToProps(reduxState) {
 export default connect(
   mapStateToProps,
   { getBudgetBalanceInfo, getBudgetExpenses }
-)(OneBudget);
+)(withRouter((OneBudget)))

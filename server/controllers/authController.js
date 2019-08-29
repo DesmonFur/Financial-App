@@ -5,7 +5,7 @@ module.exports = {
     try {
       const db = req.app.get("db");
       const { email, password } = req.body;
-      console.log("32332", req.body);
+  
 
       const user = await db.find_email([email]);
       if (user.length > 0) {
@@ -15,7 +15,7 @@ module.exports = {
       const hash = bcrypt.hashSync(password, salt);
       const newUser = await db.insert_user_info({ email, hash });
       req.session.user = newUser[0];
-      console.log(req.session);
+     
       delete newUser[0].hash;
       res.status(200).send({
         message: "Logged in",
@@ -30,7 +30,7 @@ module.exports = {
   login: async (req, res) => {
     const db = req.app.get("db");
     const { email, password } = req.body;
-    console.log("Req.body", req.body);
+
     const user = await db.find_user_info([email]);
     const user_budgets = await db.find_user_budgets([email]);
     if (user.length === 0) {
@@ -38,14 +38,12 @@ module.exports = {
         alert('not found')
       )
     }
-    // console.log("User Budgets", user_budgets);
-    // console.log("User", user);
+   
     const result = bcrypt.compareSync(password, user[0].hash);
     if (result) {
       delete user[0].hash;
       req.session.user = user[0];
       req.session.user.budgets = user_budgets;
-      console.log(req.session);
       return res.status(200).send({
         message: "Logged in",
         user: req.session.user,

@@ -37,7 +37,7 @@ export class LandingPage extends Component {
     axios
       .post("/auth/register", { email, password })
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         const { email, password } = res.data.user;
         this.props.setUser({ email, password });
         this.props.history.push("/createBudget");

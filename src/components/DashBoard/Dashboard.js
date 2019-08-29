@@ -15,9 +15,9 @@ export class Dashboard extends Component {
 
   getSum = () => {
     const { user_id } = this.props;
-    console.log(user_id);
+    // console.log(user_id);
     axios.get("/api/sumUserBudgets").then(res => {
-      console.log(res.data[0].sum);
+      // console.log(res.data[0].sum);
 
       this.setState({
         sumBudgets: res.data[0].sum
@@ -34,9 +34,9 @@ export class Dashboard extends Component {
           budgets: res.data
         });
         if (budgets !== undefined || budgets !== 2) {
-          console.log(
-            res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
-          );
+          // console.log(
+          //   res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
+          // );
           let all = res.data
             .map(b => b.budget_balance)
             .reduce((acc, cv) => acc + cv);
@@ -65,8 +65,8 @@ export class Dashboard extends Component {
   render() {
     const { allBudgets, sumBudgets } = this.state;
 
-    console.log(this.props);
-    console.log(sumBudgets);
+    // console.log(this.props);
+    // console.log(sumBudgets);
 
     return (
       <div>

@@ -187,10 +187,10 @@ hr {
 }
 
 .rent-mortgage > input {
-    /* border: 1px solid red; */
+    border: none;
     position: absolute;
-    left: 18vw;
-    height:3vh;
+    left: 22vw;
+    height:2vh;
     width: 7vw;
 
 }
@@ -206,5 +206,5 @@ hr {
 }
 
 .rent-mortgage > h4 {
-    font-size: 18px;
+    font-size: 19px;
 }

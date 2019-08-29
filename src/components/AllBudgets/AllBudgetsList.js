@@ -65,7 +65,7 @@ class AllBudgets extends Component {
     // console.log("budgets", this.state.budgets);
     // console.log("expenses", this.state.expenses);
     // console.log("everything", this.state.budgets[0].expenses_id);
-    console.log(this.props);
+    // console.log(this.props);
     let mappedBudgets = budgets.map(budget => {
       const { budget_name, budget_balance, budget_id } = budget;
       console.log(budget_id);
@@ -73,7 +73,7 @@ class AllBudgets extends Component {
         <BudgetInfo key={budget.budget_id}>
           {/* console.log(budgets) */}
           {/* <Button onClick={this.updateExpenses}>POST UPDATE TO EXPENSES</Button> */}
-          <Link to='/dashboard'>
+          <Link to="/dashboard">
             <ShowExpenses Button onClick={() => this.pickBudget(budget_id)}>
               {" "}
               {budget_name}
@@ -113,12 +113,12 @@ const BudgetInfo = styled.div`
   font-family: Arial, Helvetica, sans-serif;
 `;
 
-const ShowExpenses = styled.span `
-color: white
-`
+const ShowExpenses = styled.span`
+  color: white;
+`;
 
 function mapStateToProps(reduxState) {
-  console.log("reduxstate", reduxState);
+  /* console.log("reduxstate", reduxState); */
   const { user_id, budget } = reduxState;
   return { user_id, budget };
 }

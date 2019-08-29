@@ -4,6 +4,7 @@ import axios from "axios";
 import NumberFormat from "react-number-format";
 import Swal from "sweetalert2";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { CreateButton } from "../CreateBudget/CreateBudget";
 
 export class HeaderBar extends Component {
@@ -28,39 +29,40 @@ export class HeaderBar extends Component {
 
   componentDidMount() {
     const { user_id, budgets } = this.props;
-  this.getBack()
-    setInterval(() => 
-   this.getBack()
-      , 2000)
+    console.log(this.props);
+    console.log(this.state);
+    this.getBack();
+    setInterval(() => this.getBack(), 3000);
   }
 
-
-
-
+  welcomeAlert = () => {
+    Swal.fire("Welcome to Xpense!", "First things first, Create a budget");
+  };
 
   getBack = () => {
     const { user_id, budgets } = this.props;
+    console.log(this.props.budgets);
     axios
-    .get(`/api/getUserBudgets/${user_id}`)
-    .then(res => {
-      this.setState({
-        budgets: res.data
-      });
-      if (budgets !== undefined || budgets !== 2) {
-        console.log(
-          res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
-          );
+      .get(`/api/getUserBudgets/${user_id}`)
+      .then(res => {
+        this.setState({
+          budgets: res.data
+        });
+        if (budgets !== undefined) {
+          // console.log(
+          //   res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
+          //   );
           let all = res.data
-          .map(b => b.budget_balance)
-          .reduce((acc, cv) => acc + cv);
+            .map(b => b.budget_balance)
+            .reduce((acc, cv) => acc + cv);
           this.setState({
             allBudgets: all
           });
         }
       })
       .catch(() =>
-      Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
-      )
+        Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
+      );
   };
 
   render() {
@@ -203,4 +205,4 @@ function mapStateToProps(reduxState) {
 export default connect(
   mapStateToProps
   // { getBudgetExpenses }
-)(HeaderBar);
+)(withRouter(HeaderBar));

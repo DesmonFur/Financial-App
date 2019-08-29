@@ -17,7 +17,7 @@ export class App extends Component {
         this.props.setUser(res.data.user);
         // console.log("USER SESSION", res.data);
       } catch {
-        console.log("USER NEEDS TO LOG IN");
+        // console.log("USER NEEDS TO LOG IN");
         this.props.history.push("/");
       }
     });

@@ -129,7 +129,7 @@ export class createBudget extends Component {
   render() {
     // console.log(this.state.budget_id);
     // console.log(this.state.expenses);
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <CreatedWrapper>
         <Title>

@@ -37,7 +37,7 @@ export class Nav extends Component {
   };
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     const { email } = this.props;
     const { dropDownClosed, allbudgets } = this.state;
     return (
@@ -136,8 +136,8 @@ const AlignBudgets = styled.span`
 
 const Logout = styled.span`
   color: white;
-  display:flex;
-  justify-content:flex-start;
+  display: flex;
+  justify-content: flex-start;
 `;
 
 const Button = styled.button`
