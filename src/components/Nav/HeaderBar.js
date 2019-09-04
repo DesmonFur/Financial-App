@@ -27,12 +27,18 @@ export class HeaderBar extends Component {
     ).catch(err => console.log(err));
   };
 
+  
+  componentDidUpdate(){
+    // setInterval(() => this.getBack(), 5000);
+    // alert('tf')
+  }
+
   componentDidMount() {
     const { user_id, budgets } = this.props;
-    console.log(this.props);
-    console.log(this.state);
+    // console.log(this.props);
+    // console.log(this.state);
     this.getBack();
-    setInterval(() => this.getBack(), 3000);
+    setInterval(() => this.getBack(), 2000);
   }
 
   welcomeAlert = () => {
@@ -41,7 +47,7 @@ export class HeaderBar extends Component {
 
   getBack = () => {
     const { user_id, budgets } = this.props;
-    console.log(this.props.budgets);
+    // console.log(this.props.budgets);
     axios
       .get(`/api/getUserBudgets/${user_id}`)
       .then(res => {
@@ -61,7 +67,8 @@ export class HeaderBar extends Component {
         }
       })
       .catch(() =>
-        Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
+        // Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
+        console.log("don't look at me")
       );
   };
 

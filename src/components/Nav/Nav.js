@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import AllBudgetsList from "../AllBudgets/AllBudgetsList";
 import Dashboard from "../DashBoard/Dashboard";
 import styled from "styled-components";
-import { CreateButton } from "../CreateBudget/CreateBudget";
 
 export class Nav extends Component {
   constructor(props) {
@@ -39,10 +38,9 @@ export class Nav extends Component {
   render() {
     // console.log(this.props);
     const { email } = this.props;
-    const { dropDownClosed, allbudgets } = this.state;
+    const { dropDownClosed} = this.state;
     return (
       <Contain>
-        {/* <img src="" alt=""/> */}
         <RightTop>My Budget </RightTop>
         <RightTop>{email} </RightTop>
         <Link to="/">
@@ -100,9 +98,6 @@ function mapStateToProps(reduxState) {
   return { email, user_id };
 }
 
-const Image = styled.img`
-  color: white;
-`;
 
 const AllBudgetTab = styled.span`
   position: relative;
@@ -152,7 +147,7 @@ const Button = styled.button`
   background: ${props => (props.primary ? "'#8AA5AD'" : "#F8F9FE")};
   color: ${props => (props.primary ? "black" : "black")};
   /* display: block; */
-  font-size: .6em
+  font-size: .6em;
   width: 5vw;
   &:hover {
     background-color: rgb(200, 249, 254);
@@ -162,7 +157,7 @@ const Button = styled.button`
 const NavCreateTab = styled.button`
 cursor: pointer;
 text-decoration:none;
-color:white
+color:white;
 display:flex;
 /* border:1px solid red; */
 background-color:#56abbd;
@@ -172,7 +167,7 @@ border-radius:40%;
   background-color:white;
   cursor: pointer;
 text-decoration:none;
-color:white
+color:white;
 display:flex;
 /* border:1px solid red; */
 background:transparent;

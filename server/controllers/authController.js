@@ -15,7 +15,6 @@ module.exports = {
       const hash = bcrypt.hashSync(password, salt);
       const newUser = await db.insert_user_info({ email, hash });
       req.session.user = newUser[0];
-     
       delete newUser[0].hash;
       res.status(200).send({
         message: "Logged in",
