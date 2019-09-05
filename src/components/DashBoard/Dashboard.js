@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
 import NumberFormat from "react-number-format";
-import Swal from "sweetalert2";
-import AllBudgets from "../AllBudgets/AllBudgets";
+
 // import { getBudgetExpenses } from "../../ducks/reducer.js";
 export class Dashboard extends Component {
   state = {
@@ -14,10 +12,8 @@ export class Dashboard extends Component {
   };
 
   getSum = () => {
-    const { user_id } = this.props;
-    console.log(user_id);
+ 
     axios.get("/api/sumUserBudgets").then(res => {
-      console.log(res.data[0].sum);
 
       this.setState({
         sumBudgets: res.data[0].sum
@@ -34,9 +30,7 @@ export class Dashboard extends Component {
           budgets: res.data
         });
         if (budgets !== undefined || budgets !== 2) {
-          console.log(
-            res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
-          );
+     
           let all = res.data
             .map(b => b.budget_balance)
             .reduce((acc, cv) => acc + cv);
@@ -59,43 +53,14 @@ export class Dashboard extends Component {
         // }
         // return data
       })
-      .catch(() =>
-   console.log('no worries')
-      );
+      .catch(() => console.log("no worries"));
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevProps !== this.props) {
-  //     // this.getExpensesProps();
-  //     const { user_id, budgets } = this.props;
-  //     axios.get(`/api/getUserBudgets/${user_id}`).then(res => {
-  //       this.setState({
-  //         budgets: res.data
-  //       });
-  //       if (budgets !== undefined || budgets !== 2) {
-  //         console.log(
-  //           res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
-  //         );
-  //         let all = res.data
-  //           .map(b => b.budget_balance)
-  //           .reduce((acc, cv) => acc + cv);
-  //         this.setState({
-  //           allBudgets: all
-  //         });
-  //         this.getSum();
-  //       }
-  //     });
-  //     // .catch(() =>
-  //     //   Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
-  //     // );
-  //   }
-  // }
-
   render() {
-    const { allBudgets, sumBudgets } = this.state;
+    const { sumBudgets } = this.state;
 
-    console.log(this.props);
-    console.log(sumBudgets);
+    // console.log(this.props);
+    // console.log(sumBudgets);
 
     return (
       <div>

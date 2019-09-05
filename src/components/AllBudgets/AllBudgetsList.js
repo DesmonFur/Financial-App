@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { withRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { getExpenseId, expenseFn, getBudget } from "../../ducks/reducer";
+import { getExpenseId, getBudget } from "../../ducks/reducer";
 import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
 class AllBudgets extends Component {
@@ -49,7 +49,7 @@ class AllBudgets extends Component {
     }
   }
   getAllBudgets = () => {
-    const { user_id, props } = this.props;
+    const { user_id } = this.props;
     axios.get(`/api/getUserBudgets/${user_id}`).then(res => {
       this.setState({
         budgets: res.data
@@ -58,14 +58,14 @@ class AllBudgets extends Component {
   };
 
   render() {
-    const { editing, expenses, budgets } = this.state;
+    const {  budgets } = this.state;
     // console.log('total budgeted',budget.total_budgeted)
     // console.log("user budgets", budgets);
     // console.log("all props", this.props);
     // console.log("budgets", this.state.budgets);
     // console.log("expenses", this.state.expenses);
     // console.log("everything", this.state.budgets[0].expenses_id);
-    console.log(this.props);
+    // console.log(this.props);
     let mappedBudgets = budgets.map(budget => {
       const { budget_name, budget_balance, budget_id } = budget;
       console.log(budget_id);
@@ -73,7 +73,7 @@ class AllBudgets extends Component {
         <BudgetInfo key={budget.budget_id}>
           {/* console.log(budgets) */}
           {/* <Button onClick={this.updateExpenses}>POST UPDATE TO EXPENSES</Button> */}
-          <Link to='/dashboard'>
+          <Link to="/dashboard">
             <ShowExpenses Button onClick={() => this.pickBudget(budget_id)}>
               {" "}
               {budget_name}
@@ -105,7 +105,7 @@ class AllBudgets extends Component {
 
 const BudgetInfo = styled.div`
   display: flex;
-  border: 1px solid red;
+  border-bottom: 1px solid grey;
   justify-content: space-between;
   position: relative;
   /* font-weight: bold; */
@@ -113,12 +113,12 @@ const BudgetInfo = styled.div`
   font-family: Arial, Helvetica, sans-serif;
 `;
 
-const ShowExpenses = styled.span `
-color: white
-`
+const ShowExpenses = styled.span`
+  color: white;
+`;
 
 function mapStateToProps(reduxState) {
-  console.log("reduxstate", reduxState);
+  /* console.log("reduxstate", reduxState); */
   const { user_id, budget } = reduxState;
   return { user_id, budget };
 }

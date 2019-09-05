@@ -1,11 +1,16 @@
 const express = require("express");
 const massive = require("massive");
+const cors = require('cors')
 require("dotenv").config();
 const app = express();
 const session = require("express-session");
-const { CONNECTION_STRING, PORT, SESSION_SECRET } = process.env;
+const { CONNECTION_STRING, PORT, SESSION_SECRET,TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN,MY_PHONE_NUMBER } = process.env;
+
+
+
 const authCtrl = require("./controllers/authController");
 const budgCtrl = require("./controllers/budgetController");
+
 app.use(express.json());
 app.use( express.static( `${__dirname}/../build` ) );
 app.use(
@@ -18,6 +23,33 @@ app.use(
     }
   })
 );
+app.use(cors());
+
+
+// twilio
+const accountSid = TWILIO_ACCOUNT_SID
+const authToken = TWILIO_AUTH_TOKEN
+const client = require('twilio')(accountSid, authToken)
+
+// client.messages.create({
+//   to:MY_PHONE_NUMBER,
+//   from: '+18645684901',
+//   body: 'This is'
+// }).then((message) => console.log(message.sid))
+
+// app.get('/sms', (req,res) => {
+//   res.send('welcome to express')
+// })
+app.get('/send-text', (req,res) => {
+  const { recipient, textmessage} = req.query
+  
+  client.messages.create({
+    body:textmessage,
+    to: "+1" + recipient,
+    from: '+18645684901'
+  }).then((message) => console.log(message.body) )
+})
+
 
 app.get("/auth/session", authCtrl.getSession);
 app.get("/api/getUserBudgets/:user_id", budgCtrl.getUserBudgets);

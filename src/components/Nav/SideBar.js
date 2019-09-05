@@ -2,13 +2,17 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import NumberFormat from "react-number-format";
-import Swal from "sweetalert2";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 export class SideBar extends Component {
   state = {
     budgets: [],
-    allBudgets: 0
+    allBudgets: 0,
+    text: {
+      recipient: "",
+      textmessage: ""
+    }
   };
 
   componentDidMount() {
@@ -20,9 +24,9 @@ export class SideBar extends Component {
           budgets: res.data
         });
         if (budgets !== undefined || budgets !== 2) {
-          console.log(
-            res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
-          );
+          // console.log(
+          //   res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
+          // );
           let all = res.data
             .map(b => b.budget_balance)
             .reduce((acc, cv) => acc + cv);
@@ -43,9 +47,7 @@ export class SideBar extends Component {
         // }
         // return data
       })
-      .catch(() =>
-      console.log('caught error')
-      );
+      .catch(() => console.log("caught error"));
   }
 
   render() {
@@ -53,10 +55,30 @@ export class SideBar extends Component {
 
     return (
       <div>
-        <HeaderRow>
-          <div>
-            {/* <h1>Calendar</h1> */}
-          </div>
+        {this.props.location !== "/allbudgets" ? (
+          <HeaderRow>
+            <div>
+              {/* <h1>Calendar</h1> */}
+            </div>
+          </HeaderRow>
+        ) : (
+          <HeaderRow>
+            <div>{/* <h1>Calendar</h1> */}</div>
+            <BudgetBalance>
+              <h1>Calendar</h1>
+              <NumberFormat
+                value={allBudgets}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"$"}
+                decimalScale={2}
+                fixedDecimalScale={true}
+              />
+            </BudgetBalance>
+          </HeaderRow>
+        )}
+        {/* <HeaderRow>
+          <div><h1>Calendar</h1></div>
           <BudgetBalance>
             <NumberFormat
               value={allBudgets}
@@ -67,7 +89,7 @@ export class SideBar extends Component {
               fixedDecimalScale={true}
             />
           </BudgetBalance>
-        </HeaderRow>
+        </HeaderRow> */}
       </div>
     );
   }
@@ -78,22 +100,17 @@ const HeaderRow = styled.div`
   justify-content: space-around;
   flex-direction: column;
   position: absolute;
-  width: 20vw;
-  border: 1px solid red;
+  width: 27vw;
+  border-left: 1px solid grey;
   color: black;
   right: 0;
-  top: 10vh;
+  top: 16vh;
   background: #e5f5f9;
   color: white;
-  height: 90vh;
+  height: 84vh;
   align-items: center;
 `;
 
-const SpanBox = styled.span`
-  font-size: ${props => (props.annotation ? "12px" : "30px")};
-  font-style: ${props => (props.annotation ? "italic" : "normal")};
-  color: ${props => (props.annotation ? "black" : "normal")};
-`;
 const BudgetBalance = styled.div`
   background-color: ${props => (props.negative ? "rgb(211, 60, 45)" : "green")};
   height: 6vh;
@@ -108,4 +125,4 @@ function mapStateToProps(reduxState) {
 export default connect(
   mapStateToProps
   // { getBudgetExpenses }
-)(SideBar);
+)(withRouter(SideBar));

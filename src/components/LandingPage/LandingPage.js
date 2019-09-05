@@ -11,6 +11,7 @@ import {
   Wrapper,
   Container
 } from "./Landing";
+import Swal from "sweetalert2";
 export class LandingPage extends Component {
   state = {
     emailInput: "",
@@ -36,13 +37,16 @@ export class LandingPage extends Component {
     axios
       .post("/auth/register", { email, password })
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         const { email, password } = res.data.user;
         this.props.setUser({ email, password });
         this.props.history.push("/createBudget");
       })
       .catch(() => {
-        alert("Email is already in use.");
+        Swal.fire({
+          type: "error",
+          title: "Email already registered"
+        });
       });
   };
 
@@ -60,7 +64,10 @@ export class LandingPage extends Component {
         this.props.history.push("/allbudgets");
       });
     } catch {
-      alert("Account not found, click register below");
+      Swal.fire({
+        type: "error",
+        title: "Email already registered"
+      });
     }
   };
 

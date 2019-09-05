@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "../LandingPage/Landing.js";
 import { connect } from "react-redux";
 import axios from "axios";
 import { setUser } from "../../ducks/reducer";
@@ -14,7 +12,7 @@ export class createBudget extends Component {
     this.state = {
       budget_balance: 0,
       default_balance: 0,
-      budget_name: "",
+      budget_name: null,
       budget_id: 0,
       expenses: []
     };
@@ -99,16 +97,17 @@ export class createBudget extends Component {
               type: "success",
               title: "Awesome...",
               text: "Your Budget has been Successfully Created!"
-            }).then(function(){window.location.reload()})
-            console.log(this.props.location);
+            }).then(function() {
+              window.location.reload();
+            });
           });
       })
       .catch(() =>
         Swal.fire({
           type: "error",
           title: "Oops...",
-          text: "Something went wrong!",
-          footer: "<a href>Why do I have this issue?</a>"
+          text: "Check your input fields",
+          footer: "Budget balance Can not exceed $2,147,483,648.00 "
         })
       );
 
@@ -128,14 +127,19 @@ export class createBudget extends Component {
   render() {
     // console.log(this.state.budget_id);
     // console.log(this.state.expenses);
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <CreatedWrapper>
         <Title>
           <h1>Create Budget </h1>
         </Title>
         <Heading3>Give it a nickname</Heading3>
-        <Input onChange={this.handleChange} type="text" name="budget_name" />
+        <Input
+          onChange={this.handleChange}
+          type="text"
+          name="budget_name"
+          required
+        />
         <Heading3>What is your current account balance?</Heading3>
 
         <NumberFormat
@@ -151,13 +155,12 @@ export class createBudget extends Component {
           onChange={this.handleChange}
           type="number"
           name="budget_balance"
+          required
         />
-        <Link to="/dashboard">
-          <CreateButton onClick={this.postEverything}>
-            {" "}
-            Create Budget
-          </CreateButton>
-        </Link>
+        <CreateButton onClick={this.postEverything}>
+          {" "}
+          Create Budget
+        </CreateButton>
       </CreatedWrapper>
     );
   }
@@ -170,7 +173,7 @@ const Title = styled.div`
   align-items: center;
 `;
 
-const CreateButton = styled.button`
+export const CreateButton = styled.button`
   /* display: inline-block; */
   font-size: 1em;
   margin: 1em;
@@ -181,9 +184,12 @@ const CreateButton = styled.button`
   width: 15vw;
   background: ${props => (props.primary ? "'#8AA5AD'" : "#F8F9FE")};
   color: ${props => (props.primary ? "black" : "black")};
-  /* display: block; */
   font-size: ${props => (props.sized ? "0.8em" : "1.3em")};
-`;
+  width: ${props => (props.small ? "9vw" : null)};
+  &:hover {
+    background-color: rgb(200, 249, 254);
+  }
+  `;
 
 const Heading3 = styled.h3`
   /* border: 1px solid red; */
@@ -221,7 +227,7 @@ const CreatedWrapper = styled.div`
   height: 70%;
   width: 40%;
   top: 20vh;
-  right: 29.5vw;
+  right: 23.5vw;
   color: black;
   border: 3px solid #8aa5ad;
 `;

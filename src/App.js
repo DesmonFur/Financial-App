@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import { setUser } from "./ducks/reducer";
 import OneBudget from "./components/OneBudget/OneBudget";
 import HeaderBar from "./components/Nav/HeaderBar";
-import styled from "styled-components";
 import { SideBar } from "./components/Nav/SideBar";
 export class App extends Component {
   componentDidMount() {
@@ -17,7 +16,7 @@ export class App extends Component {
         this.props.setUser(res.data.user);
         // console.log("USER SESSION", res.data);
       } catch {
-        console.log("USER NEEDS TO LOG IN");
+        // console.log("USER NEEDS TO LOG IN");
         this.props.history.push("/");
       }
     });
@@ -35,7 +34,8 @@ export class App extends Component {
               <Nav />
 
         <HeaderBar />
-        <SideBar />
+        {location.pathname === '/allbudgets' || location.pathname === '/createBudget' ? <> </> : <SideBar />}
+        {/* <SideBar /> */}
             </div>
           )}
         </div>
@@ -46,14 +46,7 @@ export class App extends Component {
     );
   }
 }
-const Headers = styled.div`
-  display: flex;
-  background-color: black;
-  border: 1px solid red;
-  width: 100vw;
-  height: 100vh;
-  justify-content: space-between;
-`;
+
 
 export default connect(
   null,

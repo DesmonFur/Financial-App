@@ -66,6 +66,9 @@ export const Button = styled.button`
   color: ${props => (props.primary ? "black" : "black")};
   /* display: block; */
   font-size: ${props => (props.sized ? "0.8em" : "1.3em")};
+  &:hover {
+    background-color: rgb(220, 240, 244);
+  }
 `;
 
 export const Form = styled.input`

@@ -4,25 +4,59 @@ import axios from "axios";
 import NumberFormat from "react-number-format";
 import Swal from "sweetalert2";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { CreateButton } from "../CreateBudget/CreateBudget";
 
 export class HeaderBar extends Component {
   state = {
     budgets: [],
-    allBudgets: 0
+    allBudgets: 0,
+    text: {
+      recipient: "",
+      textmessage: ""
+    }
   };
 
+  sendText = () => {
+    const { text } = this.state;
+    axios.get(
+      `/send-text?recipient=${text.recipient}&textmessage$=${text.textmessage}`
+    );
+    fetch(
+      `http://localhost:8000/send-text?recipient=${text.recipient}&textmessage=${text.textmessage}`
+    ).catch(err => console.log(err));
+  };
+
+  
+  componentDidUpdate(){
+    // setInterval(() => this.getBack(), 5000);
+    // alert('tf')
+  }
+
   componentDidMount() {
+    // console.log(this.props);
+    // console.log(this.state);
+    this.getBack();
+    setInterval(() => this.getBack(), 2000);
+  }
+
+  welcomeAlert = () => {
+    Swal.fire("Welcome to Xpense!", "First things first, Create a budget");
+  };
+
+  getBack = () => {
     const { user_id, budgets } = this.props;
+    // console.log(this.props.budgets);
     axios
       .get(`/api/getUserBudgets/${user_id}`)
       .then(res => {
         this.setState({
           budgets: res.data
         });
-        if (budgets !== undefined || budgets !== 2) {
-          console.log(
-            res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
-          );
+        if (budgets !== undefined) {
+          // console.log(
+          //   res.data.map(b => b.budget_balance).reduce((acc, cv) => acc + cv)
+          //   );
           let all = res.data
             .map(b => b.budget_balance)
             .reduce((acc, cv) => acc + cv);
@@ -30,34 +64,44 @@ export class HeaderBar extends Component {
             allBudgets: all
           });
         }
-        // const data = this.state.data;
-
-        // if(data.datasets)
-        // {
-        //   let colors = ["rgba(255,0,200,0.75)"]
-        //   data.datasets.forEach((set, i) => {
-        //     set.backgroundColor = this.setGradientColor(canvas,colors[i])
-        //     set.borderColor = 'white';
-        //     set.borderWidth = 2;
-        //   })
-        // }
-        // return data
       })
       .catch(() =>
-        Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
+        // Swal.fire("Welcome to Xpense!", "First things first, Create a budget")
+        console.log("don't look at me")
       );
-  }
+  };
 
   render() {
-    const { allBudgets } = this.state;
+    const { allBudgets, text } = this.state;
 
     return (
       <div>
         <HeaderRow>
-          <div>
-            <h1>Calendar</h1>
-          </div>
-          {allBudgets > 0 ? (
+          <TwilioContact>
+            <Label> YOUR PHONE NUMBER </Label>
+            <br />
+            <input
+              value={text.recipient}
+              onChange={e =>
+                this.setState({ text: { ...text, recipient: e.target.value } })
+              }
+            />
+            <Label message>Message</Label>
+            <br />
+            <textarea
+              value={text.textmessage}
+              rows="3"
+              onChange={e =>
+                this.setState({
+                  text: { ...text, textmessage: e.target.value }
+                })
+              }
+            ></textarea>
+            <CreateButton small sized onClick={this.sendText}>
+              SEND MESSAGE
+            </CreateButton>
+          </TwilioContact>
+          {allBudgets >= -1 ? (
             <BudgetBalance>
               <NumberFormat
                 value={allBudgets}
@@ -67,7 +111,7 @@ export class HeaderBar extends Component {
                 decimalScale={2}
                 fixedDecimalScale={true}
               />
-                 <SpanBox annotation>To be Budgeted</SpanBox>
+              <SpanBox annotation>To be Budgeted</SpanBox>
             </BudgetBalance>
           ) : (
             <BudgetBalance negative>
@@ -94,10 +138,10 @@ const HeaderRow = styled.div`
   display: flex;
   justify-content: space-around;
   position: absolute;
-  width: 80vw;
-  border: 1px solid red;
+  width: 86vw;
+  border-bottom: 1px solid grey;
   color: black;
-  left: 20vw;
+  left: 14vw;
   background: #003540;
   color: white;
   height: 10vh;
@@ -137,12 +181,26 @@ const BudgetBalance = styled.div`
   text-rendering: auto; */
   text-size-adjust: 100%;
   width: 222.109px;
+  /* width: 222.109px; */
   font-size: 30px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   /* -webkit-box-flex: 1;
 -webkit-font-smoothing: subpixel-antialiased; */
+`;
+
+const TwilioContact = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60vh;
+  right: 87vw;
+`;
+
+const Label = styled.label`
+  position: relative;
+  top: 4vh;
 `;
 
 function mapStateToProps(reduxState) {
@@ -153,4 +211,4 @@ function mapStateToProps(reduxState) {
 export default connect(
   mapStateToProps
   // { getBudgetExpenses }
-)(HeaderBar);
+)(withRouter(HeaderBar));
