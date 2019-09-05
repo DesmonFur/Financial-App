@@ -5,7 +5,7 @@ import { getBudgetExpenses, getBudgetBalanceInfo } from "../../ducks/reducer";
 import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
 import "./bud.css";
-import {withRouter} from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 export class OneBudget extends Component {
   state = {
     rent_or_mortgage: 0,
@@ -100,13 +100,7 @@ export class OneBudget extends Component {
   // };
 
   dynamic = () => {
-    const {
-      balance,
-      total_budgeted,
-      budget_id,
-      previous_total,
-      defaultBalance
-    } = this.state;
+    const { budget_id } = this.state;
 
     axios.get(`/api/specificBudget/${budget_id}`).then(res => {
       // console.log("res.data", res.data);
@@ -133,14 +127,11 @@ export class OneBudget extends Component {
       budget_id,
       editing,
       dates,
-      budgets,
       defaultBalance,
       previous_total
     } = this.state;
-    // console.log("hit", budget_id);
-    // console.log(this.state)
+// eslint-disable-next-line
     for (let key in this.state) {
-      // console.log(this.state)
       if (
         Number.isInteger(this.state[key]) &&
         this.state[key] !== balance &&
@@ -166,38 +157,28 @@ export class OneBudget extends Component {
               // previous_total: total_budgeted
             });
           });
-        // console.log(this.state[key]);
       }
     }
 
     this.dynamic();
     this.dynamic();
-    // this.props.getBudgetBalanceInfo({ budget_balance, totalExpenses });
   };
   updateBalance = () => {
-    // const { editing, totalExpenses } = this.state;
-    // const { budget_balance, budget_id } = this.props;
-    // console.log(budget_balance, budget_id);
     const { expenses_id } = this.props.budget[0];
-    // console.log("updatebalanceid", expenses_id);
+
     this.updateExpenses(expenses_id);
     this.getExpensesProps();
     this.edit();
     this.total();
     this.dynamic();
-    // console.log("state string/number", this.state);
   };
 
   getExpensesProps = () => {
-    // console.log('this is expense id',this.props.budget[0].expenses_id);
     const { expenses_id } = this.props.budget[0];
     axios
       .get(`/api/getexpenses/${expenses_id}`)
       .then(res => {
-        // console.log("expenses_id", expenses_id);
-
         this.setState({
-          // expenses: res.data,
           rent_or_mortgage: res.data[0].rent_or_mortgage,
           electric: res.data[0].electric,
           water: res.data[0].water,
@@ -255,8 +236,7 @@ export class OneBudget extends Component {
       fun_money,
       dates
     } = this.state;
-    // const { expenses_id } = this.props.budget;
-    // console.log(this.state);
+
     axios
       .put(`/api/updateexpenses/${expenses_id}`, {
         expenses_id,
@@ -283,19 +263,14 @@ export class OneBudget extends Component {
         dates
       })
       .then(res => {
-        // console.log(res.data);
         this.getExpensesProps(res.data[0].expenses_id);
       });
   };
 
   getBalance = () => {
-    const { user_id } = this.props;
-    // console.log(user_id);
     axios
       .get("/api/sumUserBudgets")
       .then(res => {
-        // console.log(res.data[0].sum);
-
         this.setState({
           total_inflow: res.data[0].sum
         });
@@ -308,12 +283,10 @@ export class OneBudget extends Component {
       [e.target.name]:
         e.target.type === "number" ? parseInt(e.target.value) : e.target.value
     });
-    // console.log(e.target.value);
   };
 
-  componentDidUpdate = (prevProps, prevState) => {
+  componentDidUpdate = prevProps => {
     if (prevProps !== this.props) {
-      const { expenses_id } = this.props;
       // axios.get(`/api/getexpenses/${expenses_id}`).then(res => {
       //   const { data: expenses } = res;
       //   this.props.getBudgetExpenses({ expenses });
@@ -325,24 +298,20 @@ export class OneBudget extends Component {
     }
   };
   render() {
-    const { expenses, budget } = this.props;
     // console.log(this.props, "SDAFLJALFJSKFPJEAPFEJPJPJ");
     const {
       editing,
       budgets,
       balance,
-      defaultBalance,
+
       openCat1,
       openCat2,
       openCat3,
       openCat4,
-      openCat5,
-      total_budgeted,
-      done
+      openCat5
     } = this.state;
     const { handleChange } = this;
 
-    // console.log("Gotten State from componentDidUPdate", this.state);
     let mapped = budgets.map(keys => {
       return (
         <OneBudgets key={keys.expenses_id}>
@@ -1722,10 +1691,6 @@ const Header = styled.div`
   font-size: 18px;
 `;
 
-const BudgetName = styled.h1`
-  position: absolute;
-`;
-
 const OneBudgets = styled.div`
   display: flex;
   border-top: 1px solid gray;
@@ -1760,4 +1725,4 @@ function mapStateToProps(reduxState) {
 export default connect(
   mapStateToProps,
   { getBudgetBalanceInfo, getBudgetExpenses }
-)(withRouter((OneBudget)))
+)(withRouter(OneBudget));

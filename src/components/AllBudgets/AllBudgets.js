@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
-import styled from "styled-components";
 import { getExpenseId, getBudget } from "../../ducks/reducer";
 import NumberFormat from "react-number-format";
 import { connect } from "react-redux";
@@ -91,7 +89,7 @@ class AllBudgets extends Component {
   }
 
   getAllBudgets = () => {
-    const { user_id, props } = this.props;
+    const { user_id } = this.props;
     axios.get(`/api/getUserBudgets/${user_id}`).then(res => {
       this.setState({
         budgets: res.data
@@ -100,7 +98,7 @@ class AllBudgets extends Component {
   };
 
   render() {
-    const { editing, expenses, budgets } = this.state;
+    const { budgets } = this.state;
     // console.log('total budgeted',budget.total_budgeted)
     // console.log("user budgets", budgets);
     // console.log("all props", this.props);

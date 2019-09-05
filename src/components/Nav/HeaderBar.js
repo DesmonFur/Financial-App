@@ -34,7 +34,6 @@ export class HeaderBar extends Component {
   }
 
   componentDidMount() {
-    const { user_id, budgets } = this.props;
     // console.log(this.props);
     // console.log(this.state);
     this.getBack();

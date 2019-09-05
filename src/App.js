@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import { setUser } from "./ducks/reducer";
 import OneBudget from "./components/OneBudget/OneBudget";
 import HeaderBar from "./components/Nav/HeaderBar";
-import styled from "styled-components";
 import { SideBar } from "./components/Nav/SideBar";
 export class App extends Component {
   componentDidMount() {

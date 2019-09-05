@@ -51,14 +51,14 @@ export class Nav extends Component {
           <div>
             <AlignBudgets onClick={this.allBudgetPush} location right>
               {" "}
-              <img src="https://img.icons8.com/dotty/58/000000/bank-building.png"></img>{" "}
+              <img src="https://img.icons8.com/dotty/58/000000/bank-building.png" alt='bank-building'></img>{" "}
               <AllBudgetTab>All &nbsp; Budgets </AllBudgetTab>
             </AlignBudgets>
           </div>
         ) : (
           <AlignBudgets onClick={this.allBudgetPush} right>
             {" "}
-            <img src="https://img.icons8.com/dotty/58/000000/bank-building.png"></img>{" "}
+            <img src="https://img.icons8.com/dotty/58/000000/bank-building.png" alt='bank-building'></img>{" "}
             <AllBudgetTab> All &nbsp; Budgets </AllBudgetTab>
           </AlignBudgets>
         )}
@@ -66,7 +66,7 @@ export class Nav extends Component {
         {dropDownClosed ? (
           <div>
             <AlignNav onClick={this.toggle}>
-              <img src="https://img.icons8.com/ios/50/000000/important-mail.png" />{" "}
+              <img src="https://img.icons8.com/ios/50/000000/important-mail.png" alt='mail-envelope' />{" "}
               &#9655; Budget
               <Dashboard />
             </AlignNav>
@@ -75,7 +75,7 @@ export class Nav extends Component {
           <div>
             <AlignNav location onClick={this.toggle}>
               {" "}
-              <img src="https://img.icons8.com/ios/50/000000/important-mail.png" />{" "}
+              <img src="https://img.icons8.com/ios/50/000000/important-mail.png" alt='mail-envelope' />{" "}
               &#9661; Budget
               <Dashboard />
             </AlignNav>
@@ -154,27 +154,6 @@ const Button = styled.button`
   }
 `;
 
-const NavCreateTab = styled.button`
-cursor: pointer;
-text-decoration:none;
-color:white;
-display:flex;
-/* border:1px solid red; */
-background-color:#56abbd;
-width:8vw;
-border-radius:40%;
-&:hover {
-  background-color:white;
-  cursor: pointer;
-text-decoration:none;
-color:white;
-display:flex;
-/* border:1px solid red; */
-background:transparent;
-width:8vw;
-border-radius:60%;
-} 
-`;
 
 const Contain = styled.div`
   display: flex;

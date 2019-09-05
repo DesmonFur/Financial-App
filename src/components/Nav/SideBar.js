@@ -111,11 +111,6 @@ const HeaderRow = styled.div`
   align-items: center;
 `;
 
-const SpanBox = styled.span`
-  font-size: ${props => (props.annotation ? "12px" : "30px")};
-  font-style: ${props => (props.annotation ? "italic" : "normal")};
-  color: ${props => (props.annotation ? "black" : "normal")};
-`;
 const BudgetBalance = styled.div`
   background-color: ${props => (props.negative ? "rgb(211, 60, 45)" : "green")};
   height: 6vh;

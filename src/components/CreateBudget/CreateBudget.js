@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "../LandingPage/Landing.js";
 import { connect } from "react-redux";
 import axios from "axios";
 import { setUser } from "../../ducks/reducer";
