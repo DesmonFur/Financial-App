@@ -5,7 +5,6 @@ module.exports = {
     try {
       const db = req.app.get("db");
       const { email, password } = req.body;
-  
 
       const user = await db.find_email([email]);
       if (user.length > 0) {
@@ -29,15 +28,15 @@ module.exports = {
   login: async (req, res) => {
     const db = req.app.get("db");
     const { email, password } = req.body;
-
-    const user = await db.find_user_info([email]);
+    const user = await db.find_email([email]);
     const user_budgets = await db.find_user_budgets([email]);
     if (user.length === 0) {
-      return res.status(400).send({ message: "Email not found" }).catch(
-        alert('not found')
-      )
+      return res
+        .status(400)
+        .send({ message: "Email not found" })
+        .catch(alert("not found"));
     }
-   
+
     const result = bcrypt.compareSync(password, user[0].hash);
     if (result) {
       delete user[0].hash;
@@ -53,7 +52,7 @@ module.exports = {
   getSession: (req, res) => {
     if (req.session) {
       res.status(200).send(req.session);
-    } 
+    }
   },
 
   logout: (req, res) => {

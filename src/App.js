@@ -33,9 +33,14 @@ export class App extends Component {
             <div>
               <Nav />
 
-        <HeaderBar />
-        {location.pathname === '/allbudgets' || location.pathname === '/createBudget' ? <> </> : <SideBar />}
-        {/* <SideBar /> */}
+              <HeaderBar />
+              {location.pathname === "/allbudgets" ||
+              location.pathname === "/createBudget" ? (
+                <> </>
+              ) : (
+                <SideBar />
+              )}
+              {/* <SideBar /> */}
             </div>
           )}
         </div>
@@ -46,7 +51,6 @@ export class App extends Component {
     );
   }
 }
-
 
 export default connect(
   null,
