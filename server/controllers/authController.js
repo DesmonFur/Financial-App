@@ -34,7 +34,7 @@ module.exports = {
       return res
         .status(400)
         .send({ message: "Email not found" })
-        .catch(alert("not found"));
+        .catch(console.log('not found'));
     }
 
     const result = bcrypt.compareSync(password, user[0].hash);
